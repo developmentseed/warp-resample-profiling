@@ -1,0 +1,31 @@
+name: resample
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - rioxarray
+  - xarray
+  - earthaccess
+  - dask-core
+  - distributed
+  - flox
+  - fsspec
+  - h5netcdf
+  - h5py
+  - hdf5
+  - netcdf4
+  - numpy
+  - pip
+  - pre-commit
+  - pytest
+  - pytest-cov
+  - pytest-env
+  - pytest-xdist
+  - pytest-timeout
+  - rasterio
+  - scipy
+  - sparse
+  - zarr
+  - xesmf
+  - geoutils
+  - pyresample
