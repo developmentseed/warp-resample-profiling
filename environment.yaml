@@ -29,3 +29,8 @@ dependencies:
   - xesmf
   - geoutils
   - pyresample
+  - memray
+  - jupyter
+  - virtualizarr
+  - pip:
+      - morecantile
