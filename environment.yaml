@@ -1,4 +1,4 @@
-name: resample
+name: warp-resample-profiling
 channels:
   - conda-forge
   - nodefaults
@@ -34,3 +34,4 @@ dependencies:
   - virtualizarr
   - pip:
       - morecantile
+      - pyinstrument
