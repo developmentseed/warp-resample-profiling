@@ -29,9 +29,9 @@ def warp_resample(
     if format == "MEM":
         output = ""
     elif format == "netCDF":
-        output = "output/resampled.nc4"
+        output = "output/gdal-resampled.nc4"
     else:
-        output = f"output/resampled.{format}"
+        output = f"output/gdal-resampled.{format}"
     ds = gdal.GetDriverByName(format).Create(output, width, height, 1, gdal.GDT_Float32)
     gt = [
         outputBounds[0],
