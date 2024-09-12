@@ -18,18 +18,19 @@ Compare memory and time performance for generating a zoom level 0 256 x 256 rast
 Out-of-scope:
 
 - [xarray-regrid](https://github.com/EXCITED-CO2/xarray-regrid/) - only regrids within the same rectilinear coordinate system
+- [weatherbench2/regridding](https://github.com/google-research/weatherbench2/blob/main/weatherbench2/regridding.py) - only seems to regrid within the same rectilinear coordinate system
 
-These methods will be run on the full resolution dataset as well as a 2x and 4x downsampled versions to better understand the time and memory complexity. Nearest neighbor interpolation will be used for the first comparison.
+These methods will be run on the full resolution dataset as well as a 2x and 4x downsampled versions to better understand the time and memory complexity. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured.
 
 ## Planned extensions
 
-- Compare to results when using a virtual dataset (e.g., VRT, Kerchunk reference file)
+- Compare to results when using a virtual dataset (e.g., VRT, Kerchunk reference file).
 - Compare results when reading from a dataset stored locally versus in cloud object storage.
 
 ## Possible extensions
 
-- Compare other resampling methods (e.g., bilinear, conservative)
-- Compare with methods that don't rely on existing packages (e.g., [Conservative regridding with Xarray, GeoPandas, and Sparse](https://discourse.pangeo.io/t/conservative-region-aggregation-with-xarray-geopandas-and-sparse/2715) and [KDTree wrappers](https://github.com/arctic-carbon/eddy-footprint/blob/46935785ced10f24263cd740f81b0aaf02d9bf33/eddy_footprint/spatial.py#L38-L45))
+- Compare other resampling methods (e.g., bilinear, conservative).
+- Compare with methods that don't rely on existing packages (e.g., [Conservative regridding with Xarray, GeoPandas, and Sparse](https://discourse.pangeo.io/t/conservative-region-aggregation-with-xarray-geopandas-and-sparse/2715) and [KDTree wrappers](https://github.com/arctic-carbon/eddy-footprint/blob/46935785ced10f24263cd740f81b0aaf02d9bf33/eddy_footprint/spatial.py#L38-L45)).
 
 ## References
 
