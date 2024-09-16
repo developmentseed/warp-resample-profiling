@@ -1,5 +1,5 @@
 # Inherit from a JupyterHub compatible Docker image
-FROM quay.io/pangeo/pangeo-notebook:2024.09.11
+FROM quay.io/jupyter/base-notebook:2024-07-25
 
 # Add conda packages
 COPY binder/environment.yml /tmp/environment.yml
