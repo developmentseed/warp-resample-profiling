@@ -1,0 +1,42 @@
+# // Copyright (c) 2i2c-org
+# // Distributed under the terms of the Modified BSD License.
+
+name: Build and push container image
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "README.md"
+      - "LICENSE"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set Environment Variables
+        run: |
+
+          echo "DATE_TAG=$(TZ='America/Seattle' date +'%Y.%m.%d')" >> "$GITHUB_ENV"
+
+      - name: Checkout files in repo
+        uses: actions/checkout@main
+
+      - name: Build and push the image to quay.io ${{ matrix.environment }}
+        uses: jupyterhub/repo2docker-action@master
+        with:
+          # Make sure username & password/token pair matches your registry credentials
+          DOCKER_USERNAME: ${{ secrets.QUAY_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
+          DOCKER_REGISTRY: "quay.io"
+          ADDITIONAL_TAG: ${{ env.DATE_TAG }}
+
+          # Disable pushing a 'latest' tag, as this often just causes confusion
+          # LATEST_TAG_OFF: true
+          #
+          IMAGE_NAME: "developmentseed/warp-resample-profiling"
