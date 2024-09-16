@@ -32,6 +32,7 @@ dependencies:
   - jupyter
   - virtualizarr
   # For development on the Hub
+  - git
   - code-server>=3.2
   - jupyter-vscode-proxy
   - pip:
