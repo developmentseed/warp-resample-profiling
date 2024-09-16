@@ -8,7 +8,7 @@ input_file="${data_dir}/${input_file_base}.nc"
 input_dataset="NETCDF:${input_file}:analysed_sst"
 
 # Processing methods
-methods=("gdal")
+methods=("gdal" "rioxarray")
 
 # Common processing parameters
 srcSRS="EPSG:4326"
@@ -18,6 +18,7 @@ output_bounds="-20037508.342789244,-20037508.34278925,20037508.34278925,20037508
 
 # Method specific processing parameters
 gdal_opts="--format MEM"
+rioxarray_opts="--write-netcdf False"
 
 # Format arguments to python scripts
 args="--filename ${input_dataset} --srcSRS ${srcSRS} --dstSRS ${dstSRS} --tilesize ${tilesize}  --outputBounds=${output_bounds}"
@@ -28,6 +29,8 @@ for method in "${methods[@]}"; do
     module="src/resample-${method}.py"
     if [ "$method" = "gdal" ]; then
         method_args="${args} ${gdal_opts}"
+    elif [ "$method" = "rioxarray" ]; then
+        method_args="${args} ${rioxarray_opts}"
     else
         method_args=${args}
     fi
