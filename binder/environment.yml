@@ -31,6 +31,9 @@ dependencies:
   - memray
   - jupyter
   - virtualizarr
+  # For development on the Hub
+  - code-server>=3.2
+  - jupyter-vscode-proxy
   - pip:
       - morecantile
       - pyinstrument
