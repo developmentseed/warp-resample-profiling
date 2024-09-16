@@ -24,7 +24,6 @@ dependencies:
   - pytest-timeout
   - rasterio
   - scipy
-  - sparse
   - zarr
   - xesmf
   - geoutils
