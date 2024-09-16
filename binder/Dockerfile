@@ -3,7 +3,7 @@ FROM quay.io/jupyter/base-notebook:2024-07-25
 
 # Add conda packages
 COPY binder/environment.yml /tmp/environment.yml
-RUN mamba env update --prefix ${NB_PYTHON_PREFIX} --file /tmp/environment.yml
+RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml
 
 # Use solution from https://github.com/NASA-Openscapes/corn/blob/main/ci/Dockerfile
 # for installing VS Code extensions.
