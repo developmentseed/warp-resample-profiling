@@ -31,8 +31,6 @@ def warp_resample(
         write_netcdf (bool): store output array to a NetCDF file
     """
     if virtualized:
-        input_fp = f"{input_fp.split(':')[1].split('.')[0]}.json"
-        print(input_fp)
         fs = fsspec.filesystem("reference", fo=input_fp)
         m = fs.get_mapper("")
         ds = xr.open_dataset(
@@ -83,15 +81,8 @@ if __name__ == "__main__":
             20037508.342789244,
         ],
     )
-    parser.add_argument(
-        "--write-netcdf", default=False, type=bool, help="Write output to netcdf"
-    )
-    parser.add_argument(
-        "--virtualized",
-        default=False,
-        type=bool,
-        help="Input dataset has been virtualized",
-    )
+    parser.add_argument("--write-netcdf", action=argparse.BooleanOptionalAction)
+    parser.add_argument("--virtualized", action=argparse.BooleanOptionalAction)
 
     args = parser.parse_args()
     warp_resample(
