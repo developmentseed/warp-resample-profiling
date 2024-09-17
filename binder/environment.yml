@@ -14,7 +14,7 @@ dependencies:
   - h5py
   - hdf5
   - netcdf4
-  - numpy
+  - numpy=2.1.1
   - pip
   - pre-commit
   - pytest
@@ -24,7 +24,6 @@ dependencies:
   - pytest-timeout
   - rasterio
   - scipy
-  - sparse
   - zarr
   - xesmf
   - geoutils
@@ -32,6 +31,10 @@ dependencies:
   - memray
   - jupyter
   - virtualizarr
+  # For development on the Hub
+  - git
+  - code-server>=3.2
+  - jupyter-vscode-proxy
   - pip:
       - morecantile
       - pyinstrument
