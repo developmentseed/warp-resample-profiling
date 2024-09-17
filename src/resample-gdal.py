@@ -10,7 +10,7 @@ gdal.UseExceptions()
 def warp_resample(
     *,
     input_fp: str,
-    format: str,
+    output_format: str,
     width: int,
     height: int,
     dstSRS: str,
@@ -27,13 +27,15 @@ def warp_resample(
         dstSRS (str): target SRS
         outputBounds (tuple): bounds of the output array as (xmin, ymin, xmax, ymax)
     """
-    if format == "MEM":
+    if output_format == "MEM":
         output = ""
-    elif format == "netCDF":
+    elif output_format == "netCDF":
         output = "output/gdal-resampled.nc4"
     else:
-        output = f"output/gdal-resampled.{format}"
-    ds = gdal.GetDriverByName(format).Create(output, width, height, 1, gdal.GDT_Float32)
+        output = f"output/gdal-resampled.{output_format}"
+    ds = gdal.GetDriverByName(output_format).Create(
+        output, width, height, 1, gdal.GDT_Float32
+    )
     gt = [
         outputBounds[0],
         (outputBounds[2] - outputBounds[0]) / width,
@@ -78,6 +80,6 @@ if __name__ == "__main__":
         dstSRS=args.dstSRS,
         width=args.tilesize,
         height=args.tilesize,
-        format=args.format,
+        output_format=args.format,
         outputBounds=args.outputBounds,
     )
