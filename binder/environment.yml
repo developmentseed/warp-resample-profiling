@@ -35,6 +35,8 @@ dependencies:
   - git
   - code-server>=3.2
   - jupyter-vscode-proxy
+  # For visualizing results
+  - hvplot
   - pip:
       - morecantile
       - pyinstrument
