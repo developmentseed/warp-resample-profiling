@@ -5,6 +5,17 @@ from utils import parse_bounds
 from rasterio.warp import calculate_default_transform
 import fsspec
 import xarray as xr
+import os
+
+# Env variables from titiler performance tuning
+os.environ["GDAL_CACHEMAX"] = "75%"
+os.environ["GDAL_INGESTED_BYTES_AT_OPEN"] = "32768"
+os.environ["GDAL_DISABLE_READDIR_ON_OPEN"] = "EMPTY_DIR"
+os.environ["GDAL_HTTP_MERGE_CONSECUTIVE_RANGES"] = "YES"
+os.environ["GDAL_HTTP_MULTIPLEX"] = "YES"
+os.environ["GDAL_HTTP_VERSION"] = "2"
+os.environ["VSI_CACHE"] = "TRUE"
+os.environ["VSI_CACHE_SIZE"] = "536870912"
 
 
 def warp_resample(
@@ -16,7 +27,9 @@ def warp_resample(
     dstSRS: str,
     outputBounds: tuple,
     write_netcdf: bool = False,
-    virtualized: bool = False,
+    backend: str = False,
+    default_cache_type: str = None,
+    variable: str = None,
     **kwargs,
 ):
     """Warp resample using GDAL
@@ -30,13 +43,17 @@ def warp_resample(
         outputBounds (tuple): bounds of the output array as (xmin, ymin, xmax, ymax)
         write_netcdf (bool): store output array to a NetCDF file
     """
-    if virtualized:
+    if backend == "kerchunk":
         fs = fsspec.filesystem("reference", fo=input_fp)
         m = fs.get_mapper("")
         ds = xr.open_dataset(
-            m, engine="kerchunk", chunks={}
+            m, engine="kerchunk"
         )  # normal xarray.Dataset object, wrapping dask/numpy arrays etc.
         da = ds
+    elif backend == "h5netcdf":
+        fs = fsspec.filesystem("s3", default_cache_type=default_cache_type)
+        fo = fs.open(input_fp)
+        da = xr.open_dataset(fo, engine="h5netcdf", lock=False)[variable]
     else:
         da = rx.open_rasterio(input_fp)  # , mask_and_scale=True)
     da = da.rio.write_crs(srcSRS)
@@ -82,7 +99,11 @@ if __name__ == "__main__":
         ],
     )
     parser.add_argument("--write-netcdf", action=argparse.BooleanOptionalAction)
-    parser.add_argument("--virtualized", action=argparse.BooleanOptionalAction)
+    parser.add_argument(
+        "--backend", choices=["gdal", "kerchunk", "h5netcdf"], default="gdal"
+    )
+    parser.add_argument("--caching", choices=["readahead", "none"], default=None)
+    parser.add_argument("--variable", type=str, default=None)
 
     args = parser.parse_args()
     warp_resample(
@@ -93,5 +114,7 @@ if __name__ == "__main__":
         height=args.tilesize,
         outputBounds=args.outputBounds,
         write_netcdf=args.write_netcdf,
-        virtualized=args.virtualized,
+        backend=args.backend,
+        default_cache_type=args.caching,
+        variable=args.variable,
     )

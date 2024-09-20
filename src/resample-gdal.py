@@ -3,8 +3,19 @@ from pyproj.crs import CRS
 
 import argparse
 from utils import parse_bounds
+import os
 
 gdal.UseExceptions()
+
+# Env variables from titiler performance tuning
+os.environ["GDAL_CACHEMAX"] = "75%"
+os.environ["GDAL_INGESTED_BYTES_AT_OPEN"] = "32768"
+os.environ["GDAL_DISABLE_READDIR_ON_OPEN"] = "EMPTY_DIR"
+os.environ["GDAL_HTTP_MERGE_CONSECUTIVE_RANGES"] = "YES"
+os.environ["GDAL_HTTP_MULTIPLEX"] = "YES"
+os.environ["GDAL_HTTP_VERSION"] = "2"
+os.environ["VSI_CACHE"] = "TRUE"
+os.environ["VSI_CACHE_SIZE"] = "536870912"
 
 
 def warp_resample(

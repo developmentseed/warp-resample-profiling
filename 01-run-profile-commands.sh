@@ -5,7 +5,7 @@ data_dir="earthaccess_data"
 results_dir="results"
 bucket="podaac-ops-cumulus-protected/MUR-JPL-L4-GLOB-v4.1"
 input_file_base="20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1"
-
+variable="analysed_sst"
 
 # Common processing parameters
 srcSRS="EPSG:4326"
@@ -18,6 +18,7 @@ output_bounds="-20037508.342789244,-20037508.34278925,20037508.34278925,20037508
 local=true
 remote=true
 virtual=true
+h5netcdf=true
 
 # shellcheck disable=SC2086 # We want to expand arguments
 run_pyinstrument() {
@@ -75,7 +76,7 @@ if [ "$local" = true ] ; then
         fi
         # Run pyinstrument for timing performance
         python_command="${module} ${method_args}"
-        results_suffix="${method}-${input_file_base}"
+        results_suffix="${method}-local-${input_file_base}"
         profile "${results_suffix}" "${python_command}"
 
     done
@@ -111,8 +112,26 @@ if [ "$virtual" = true ] ; then
     # Profile rioxarray for a virual dataset
     method="rioxarray"
     module="src/resample-${method}.py"
-    method_args="${args} --virtualized"
+    method_args="${args} --backend kerchunk"
     python_command="${module} ${method_args}"
     results_suffix="${method}-virtual-${input_file_base}"
+    profile "${results_suffix}" "${python_command}"
+fi
+
+
+if [ "$h5netcdf" = true ] ; then
+    # Format arguments to python scripts
+    input_file="s3://${bucket}/${input_file_base}.nc"
+    args=$(common_args "${input_file}")
+    # Profile rioxarray for a virual dataset
+    method="rioxarray"
+    module="src/resample-${method}.py"
+    method_args="${args} --backend h5netcdf --caching none --variable ${variable}"
+    python_command="${module} ${method_args}"
+    results_suffix="${method}-h5netcdf-no-cache-${input_file_base}"
+    profile "${results_suffix}" "${python_command}"
+    method_args="${args} --backend h5netcdf --caching readahead --variable ${variable}"
+    python_command="${module} ${method_args}"
+    results_suffix="${method}-h5netcdf-readahead-${input_file_base}"
     profile "${results_suffix}" "${python_command}"
 fi
