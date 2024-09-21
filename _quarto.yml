@@ -1,5 +1,9 @@
 project:
   type: website
+  render:
+    - "pages/*.qmd"
+    - "examples/*.ipynb"
+    - "!examples/*.py"
 
 website:
   page-navigation: true
@@ -18,6 +22,12 @@ website:
     contents:
       - href: pages/index.qmd
         text: Welcome
+      - href: examples/earthdata-download.ipynb
+        text: Download dataset for example
+      - href: examples/resample-gdal.ipynb
+        text: GDAL Python API Reprojection
+      - href: examples/resample-rioxarray.ipynb
+        text: Rioxarray Reprojection
 
 format:
   html:
