@@ -1,0 +1,33 @@
+project:
+  type: website
+
+website:
+  page-navigation: true
+  title: "Warp resampling"
+  site-url: "https://developmentseed.org/warp-resample-profiling"
+  repo-url: https://github.com/developmentseed/warp-resample-profiling
+  repo-actions: [edit, issue]
+
+  page-footer:
+    right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
+
+  sidebar:
+    style: "docked"
+    search: true
+    collapse-level: 2
+    contents:
+      - href: pages/index.qmd
+        text: Welcome
+
+format:
+  html:
+    theme:
+      light: [cosmo]
+      dark: [cosmo, theme-dark.scss]
+    code-copy: true
+    code-overflow: wrap
+    css: styles.css
+    toc: true
+    toc-depth: 3
+filters:
+  - quarto

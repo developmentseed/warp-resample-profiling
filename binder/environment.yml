@@ -3,18 +3,33 @@ channels:
   - conda-forge
   - nodefaults
 dependencies:
-  - rioxarray
-  - xarray
-  - earthaccess
   - dask-core
   - distributed
   - flox
+  - numpy=2.1.1
+  - xarray
+  # IO libraries
+  - earthaccess
   - fsspec
   - h5netcdf
   - h5py
   - hdf5
   - netcdf4
-  - numpy=2.1.1
+  - zarr
+  - libgdal # core C++ library and all plugins
+  # Resampling libraries
+  - geoutils
+  - pyresample
+  - rasterio
+  - rioxarray
+  - scipy
+  - virtualizarr
+  - xesmf
+  # For profiling
+  - pyinstrument
+  - memray
+  # For development
+  - jupyter
   - pip
   - pre-commit
   - pytest
@@ -22,21 +37,15 @@ dependencies:
   - pytest-env
   - pytest-xdist
   - pytest-timeout
-  - rasterio
-  - scipy
-  - zarr
-  - xesmf
-  - geoutils
-  - pyresample
-  - memray
-  - jupyter
-  - virtualizarr
   # For development on the Hub
   - git
-  - code-server>=3.2
+  - code-server
   - jupyter-vscode-proxy
   # For visualizing results
   - hvplot
+  # For building the quarto book
+  - jupytext
   - pip:
       - morecantile
-      - pyinstrument
+      # For development on the Hub
+      - gh-scoped-creds
