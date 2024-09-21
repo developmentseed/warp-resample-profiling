@@ -8,7 +8,7 @@ RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml
 # Insall quarto
 
 RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.57/quarto-1.5.57-linux-amd64.deb
-RUN dpkg -i quarto-1.5.57-linux-amd64.deb
+RUN sudo dpkg -i quarto-1.5.57-linux-amd64.deb
 
 # Use solution from https://github.com/NASA-Openscapes/corn/blob/main/ci/Dockerfile
 # for installing VS Code extensions.
