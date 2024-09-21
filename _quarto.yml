@@ -25,12 +25,12 @@ website:
       - section: Dataset preparation
         contents:
           - href: examples/earthdata-download.ipynb
-            text: Download dataset for example
+            text: Download and virtualize dataset
       - section: GDAL Python API
         contents:
           - href: examples/resample-gdal-netcdf-vsis3.ipynb
             text: NetCDF Driver + vsis3
-      - section: GDAL Python API
+      - section: Rioxarray
         contents:
           - href: examples/resample-rioxarray-netcdf-vsis3.ipynb
             text: NetCDF Driver + vsis3
