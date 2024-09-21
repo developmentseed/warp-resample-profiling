@@ -22,12 +22,18 @@ website:
     contents:
       - href: pages/index.qmd
         text: Welcome
-      - href: examples/earthdata-download.ipynb
-        text: Download dataset for example
-      - href: examples/resample-gdal.ipynb
-        text: GDAL Python API Reprojection
-      - href: examples/resample-rioxarray.ipynb
-        text: Rioxarray Reprojection
+      - section: Dataset preparation
+        contents:
+          - href: examples/earthdata-download.ipynb
+            text: Download dataset for example
+      - section: GDAL Python API
+        contents:
+          - href: examples/resample-gdal-netcdf-vsis3.ipynb
+            text: NetCDF Driver + vsis3
+      - section: GDAL Python API
+        contents:
+          - href: examples/resample-rioxarray-netcdf-vsis3.ipynb
+            text: NetCDF Driver + vsis3
 
 format:
   html:

@@ -109,14 +109,13 @@ cdk.context.json
 # VS Code
 .vscode/
 
-# Data
-earthaccess_data/
 
 /.quarto/
 *_cache/
 _site/
 
-output/
-results/
 
+examples/earthaccess_data/
+examples/output/
+examples/results/
 examples/*.py
