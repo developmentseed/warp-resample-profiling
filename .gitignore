@@ -113,6 +113,10 @@ cdk.context.json
 earthaccess_data/
 
 /.quarto/
+*_cache/
+_site/
 
 output/
 results/
+
+examples/*.py
