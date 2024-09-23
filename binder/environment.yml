@@ -6,7 +6,7 @@ dependencies:
   - dask-core
   - distributed
   - flox
-  - numpy=2.1.1
+  - numpy
   - xarray
   - sparse
   # Preparing virtual datasets
