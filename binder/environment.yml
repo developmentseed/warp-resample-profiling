@@ -27,6 +27,7 @@ dependencies:
   - rioxarray
   - scipy
   - xesmf>=0.8.0
+  - odc-geo
   # For profiling
   - pyinstrument
   - memray
