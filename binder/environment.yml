@@ -24,7 +24,7 @@ dependencies:
   - rioxarray
   - scipy
   - virtualizarr
-  - xesmf
+  - xesmf>=0.8.0
   # For profiling
   - pyinstrument
   - memray
