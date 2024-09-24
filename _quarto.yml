@@ -30,10 +30,30 @@ website:
         contents:
           - href: examples/resample-gdal-netcdf-vsis3.ipynb
             text: NetCDF Driver + vsis3
+      - section: Rasterio
+        contents:
+          - href: examples/resample-rasterio-netcdf-vsis3.ipynb
+            text: NetCDF Driver + vsis3
       - section: Rioxarray
         contents:
           - href: examples/resample-rioxarray-netcdf-vsis3.ipynb
             text: NetCDF Driver + vsis3
+      - section: Open Data Cube
+        contents:
+          - href: examples/resample-odc-h5netcdf-.ipynb
+            text: NetCDF Driver + vsis3
+      - section: Pyresample
+        contents:
+          - href: examples/resample-pyresample-h5netcdf-.ipynb
+            text: h5netcdf Driver
+      - section: XESMF
+        contents:
+          - href: examples/future-resample-xesmf-h5netcdf-.ipynb
+            text: (Pending) h5netcdf Driver
+      - section: Profiling results
+        contents:
+          - href: examples/process-results.ipynb
+            text: Memory and time usage
 
 format:
   html:
