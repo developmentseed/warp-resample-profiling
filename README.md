@@ -22,6 +22,8 @@ Out-of-scope:
 - [xarray-regrid](https://github.com/EXCITED-CO2/xarray-regrid/) - only regrids within the same rectilinear coordinate system
 - [weatherbench2/regridding](https://github.com/google-research/weatherbench2/blob/main/weatherbench2/regridding.py) - only seems to regrid within the same rectilinear coordinate system
 - [dinosaur](https://github.com/google-research/dinosaur/blob/67c686945a8e4dd24ab23bcee806ce69c8d4f853/dinosaur/horizontal_interpolation.py#L241) - only seems to regrid within the same rectilinear coordinate system
+- [pygmt.grdproject](https://www.pygmt.org/latest/api/generated/pygmt.grdproject.html#pygmt.grdproject) - [web mercator not amongst supported projections](https://www.pygmt.org/latest/projections/index.html)
+- [verde](https://www.fatiando.org/verde/latest/) - not used for raster -> raster resampling (only points -> raster)
 
 These methods will be run on the full resolution dataset as well as a 2x and 4x downsampled versions to better understand the time and memory complexity. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured.
 
