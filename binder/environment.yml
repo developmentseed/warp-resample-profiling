@@ -11,7 +11,8 @@ dependencies:
   - sparse
   # Preparing virtual datasets
   # - virtualizarr # Only use during preparation because dependency for numpy>=2.0.0 conflicts with sparse, xemsf
-  # IO libraries
+  # IO / auth libraries
+  - boto3
   - earthaccess
   - fiona
   - fsspec
