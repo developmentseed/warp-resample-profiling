@@ -15,6 +15,7 @@ Compare memory and time performance for generating a zoom level 0 256 x 256 rast
 - [raster_tools.warp.reproject](https://um-rmrs.github.io/raster_tools/reference/generated/raster_tools.warp.reproject.html)
 - [odc.geo.xr.xr_reproject](https://odc-geo.readthedocs.io/en/latest/_api/odc.geo.xr.xr_reproject.html)
 - [xcube.resampling](https://xcube.readthedocs.io/en/latest/api.html#cube-resampling)
+- [geowombat.config.update](https://geowombat.readthedocs.io/en/latest/tutorial-crs.html#transforming-a-crs-on-the-fly)
 
 Out-of-scope:
 
