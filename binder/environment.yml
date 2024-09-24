@@ -30,6 +30,7 @@ dependencies:
   - scipy
   - xesmf>=0.8.0
   - odc-geo
+  - xcube
   # For profiling
   - pyinstrument
   - memray
