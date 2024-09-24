@@ -13,7 +13,7 @@ Compare memory and time performance for generating a zoom level 0 256 x 256 rast
 - [xesmf.Regridder](https://xesmf.readthedocs.io/en/stable/user_api.html#xesmf.frontend.Regridder)
 - [geoutils.Raster.reproject](https://geoutils.readthedocs.io/en/stable/gen_modules/geoutils.Raster.reproject.html#geoutils.Raster.reproject)
 - [raster_tools.warp.reproject](https://um-rmrs.github.io/raster_tools/reference/generated/raster_tools.warp.reproject.html)
-- [odc.geo.xr.xr_reproject](https://odc-geo.readthedocs.io/en/latest/_api/](https://odc-geo.readthedocs.io/en/latest/_api/odc.geo.xr.xr_reproject.html)
+- [odc.geo.xr.xr_reproject](https://odc-geo.readthedocs.io/en/latest/_api/odc.geo.xr.xr_reproject.html)
 - [xcube.resampling](https://xcube.readthedocs.io/en/latest/api.html#cube-resampling)
 
 Out-of-scope:
