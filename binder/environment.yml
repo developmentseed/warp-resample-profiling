@@ -13,6 +13,7 @@ dependencies:
   # - virtualizarr # Only use during preparation because dependency for numpy>=2.0.0 conflicts with sparse, xemsf
   # IO libraries
   - earthaccess
+  - fiona
   - fsspec
   - h5netcdf
   - h5py
