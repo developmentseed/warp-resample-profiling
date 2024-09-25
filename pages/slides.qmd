@@ -129,7 +129,7 @@ Visualization
 
 - Development Seed
 - Pangeo Community
-    - special thanks to Justus and Michael
+    - special thanks to Justus, Michael, and Deepak
 - NASA IMPACT
 
 ## What's next for resampling in Python
