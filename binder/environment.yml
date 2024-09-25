@@ -19,6 +19,7 @@ dependencies:
   - h5netcdf
   - h5py
   - hdf5
+  - kerchunk
   - netcdf4
   - zarr
   - libgdal # core C++ library and all plugins
