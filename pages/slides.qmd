@@ -1,0 +1,136 @@
+---
+title: Geospatial reprojection in Python
+subtitle: Work-in-progress guidebook and profiling results (Sept. 2024).
+author:
+  - "Authors + Credits: Max Jones, Optimized Data Delivery team (especially Aimee), Pangeo Community (especially Justus and Michael)"
+format:
+  revealjs:
+    incremental: false
+    theme: [default, custom.scss]
+---
+
+## A bit of background about me and this work
+
+![](_static/devseed.png){width=500 fig-align="center"}
+
+![](_static/pangeo_logo.png){width=500 fig-align="center"}
+
+![](_static/gmt.png){width=500 fig-align="center"}
+
+
+## {background-iframe="https://www.pangeo.io/showcase"}
+
+## Caveats
+
+- Work in progress!
+- Recording will quickly become out-of-date
+- Verify/fix code before use
+
+## Definitions
+
+Reprojection - changing the projection of a dataset from one coordinate reference system (CRS) to another
+
+```{=html}
+<iframe width="1000" height="500" src="https://py.geocompx.org/06-reproj#fig-reprojection-geo-proj-1" title=Geocompx"></iframe>
+```
+
+## Definitions
+
+Resampling/regridding - changing the grid structure (often resolution)
+
+```{=html}
+<iframe width="1000" height="500" src="https://guide.cloudnativegeo.org/cloud-optimized-geotiffs/cogs-examples.html#overviews"  title="CNG COG overviews"></iframe>
+```
+
+## Definitions {fullscreen=true}
+
+Warp resampling - changing the resolution and projection of a dataset
+
+<iframe class="stretch" position="center" scolling="no" height="500" data-src="https://imgs.xkcd.com/comics/bad_map_projection_the_greenland_special.png"  title="XKCD"></iframe>
+
+
+## Grid structures
+
+
+- Rectilinear - described by one-dimensional latitude and longitude coordinates
+    - Regular - described by one x,y coordinate and the resolution
+- Curvilinear - described by two-dimensional latitude and longitude coordinates
+- Unstructured - Grids in which the grid coordinates require a list of nodes
+
+::: footer
+Review [NCAR's climate data guide for more information](https://climatedataguide.ucar.edu/climate-tools/regridding-overview)
+:::
+
+## Resampling algorithms
+
+- Nearest neighbor
+- Bilinear
+- Cubic
+- Spline
+- Inverse distance
+- Bucket / binning (average, min, max, mode, med, quartile, sum, rms)
+- Spectral
+- Triangulation
+- Conservative
+
+::: footer
+Review [NCAR's climate data guide for more information](https://climatedataguide.ucar.edu/climate-tools/regridding-overview)
+:::
+
+## Some of the many reasons to warp resample
+
+Co-registering datasets
+
+- Mosaicing
+- Statistical analyses
+- Machine learning
+
+Visualization
+
+- Rendering (minimize distortion)
+- Building overviews
+
+## {background-iframe="https://link.excalidraw.com/readonly/BQFLzxzvMI6qbfebJZBT"}
+
+## {background-iframe="https://developmentseed.org/warp-resample-profiling"}
+
+## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/earthdata-download.html"}
+
+## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/resample-gdal-netcdf-vsis3.html"}
+
+## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/resample-odc-h5netcdf-.html"}
+
+## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/future-resample-xesmf-h5netcdf-.html"}
+
+## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/process-results.html"}
+
+## {background-iframe="https://link.excalidraw.com/readonly/BQFLzxzvMI6qbfebJZBT"}
+
+## Observations and opinions
+
+- Lots of kernels were killed in the making of this presentation
+    - we need a demo using a bounded-memory  approach (Cubed!)
+- There are some awesome data cube libraries in Python
+    - let's work with the developers to make them even better...and not build another one
+- Xarray's data model is intuitive for a lot of people
+    - use accessors to extend it's functionality rather than a new data class
+
+## What's next for the guide
+
+- Small tile from a large dataset
+- Add information about grid structures supported
+- Add information about resampling methods supported
+- Test with virtualized data
+- Test with cloud optimized data
+- Test with other resampling algorithms
+
+## Thanks
+
+- Development Seed
+- Pangeo Community
+    - special thanks to Justus and Michael
+- NASA IMPACT
+
+## What's next for resampling in Python
+
+Let's discuss!

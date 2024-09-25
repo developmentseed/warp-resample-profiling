@@ -1,0 +1,37 @@
+/*-- scss:defaults --*/
+
+// fonts
+$presentation-font-size-root: 27px !default;
+
+// colors
+$body-color: #000 !default;
+$selection-bg: #26351c !default;
+
+// headings
+$presentation-heading-color: #333 !default;
+
+.wrap {
+  width: 400px;
+  height: 600px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.frame {
+  width: 1200px;
+  height: 1800px;
+  border: 0;
+  -ms-transform: scale(0.25);
+  -moz-transform: scale(0.25);
+  -o-transform: scale(0.25);
+  -webkit-transform: scale(0.25);
+  transform: scale(0.25);
+
+  -ms-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+
+/*-- scss:rules --*/

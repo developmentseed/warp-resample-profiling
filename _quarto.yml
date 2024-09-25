@@ -15,7 +15,6 @@ website:
     right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
 
   sidebar:
-    pinned: true
     style: "docked"
     search: true
     collapse-level: 2
@@ -27,6 +26,8 @@ website:
     contents:
       - href: index.qmd
         text: Welcome
+      - href: pages/slides.qmd
+        text: Overview Slides
       - section: Dataset preparation
         contents:
           - href: examples/earthdata-download.ipynb
@@ -83,7 +84,7 @@ website:
 format:
   html:
     theme:
-      light: [cosmo]
+      light: [cosmo, theme.scss] # from https://github.com/sta210-s22/website/blob/main/_quarto.yml
       dark: [cosmo, theme-dark.scss]
     code-copy: true
     code-overflow: wrap
