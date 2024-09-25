@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Geospatial reprojection in Python (2024)</title>
+<title>Warp resampling – Geospatial reprojection in Python (2024)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -348,14 +348,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#geospatial-reprojection-in-python-2024" id="toc-geospatial-reprojection-in-python-2024" class="nav-link active" data-scroll-target="#geospatial-reprojection-in-python-2024">Geospatial reprojection in Python (2024)</a>
-  <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a>
-  <ul class="collapse">
-  <li><a href="#environment-setup" id="toc-environment-setup" class="nav-link" data-scroll-target="#environment-setup">Environment Setup</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#caveat" id="toc-caveat" class="nav-link" data-scroll-target="#caveat">Caveat</a></li>
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#memory-and-time-profiling" id="toc-memory-and-time-profiling" class="nav-link" data-scroll-target="#memory-and-time-profiling">Memory and time profiling</a>
+  <ul class="collapse">
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#planned-extensions" id="toc-planned-extensions" class="nav-link" data-scroll-target="#planned-extensions">Planned extensions</a></li>
+  <li><a href="#possible-extensions" id="toc-possible-extensions" class="nav-link" data-scroll-target="#possible-extensions">Possible extensions</a></li>
+  <li><a href="#environment-setup" id="toc-environment-setup" class="nav-link" data-scroll-target="#environment-setup">Environment Setup</a></li>
   </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a>
+  <ul class="collapse">
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/developmentseed/warp-resample-profiling/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -363,28 +367,94 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Warp resampling</h1>
+<p class="subtitle lead">Geospatial reprojection in Python (2024)</p>
+</div>
 
 
 
-<section id="geospatial-reprojection-in-python-2024" class="level1">
-<h1>Geospatial reprojection in Python (2024)</h1>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>This a work-in-progress guidebook on existing warp resampling / reprojection methods in Python, along with some memory and statistical wall-time profiling results.</p>
+</section>
+<section id="caveat" class="level2">
+<h2 class="anchored" data-anchor-id="caveat">Caveat</h2>
+<p>This is a WIP guidebook. We are presenting early on in the development to guide discussions and future work. The output from different resampling methods has not yet been verified, important parameters (e.g., target no_data values) have not been set, and not all methods have been implemented. We encourage people to contribute by building on the notebooks in the <code>examples</code> directory or participating in discussions on this repo or on the Pangeo discourse.</p>
+</section>
+<section id="memory-and-time-profiling" class="level2">
+<h2 class="anchored" data-anchor-id="memory-and-time-profiling">Memory and time profiling</h2>
+<p>Resampling and reprojection (i.e., warp resampling) are essential steps for generating raster tiles for browser based visualization. Further, warp resampling is often one of the most time consuming and memory intensive portions of the tile generation process. The importance and complexity of this step motivates an exploration of different warp resampling options.</p>
+<section id="goals" class="level3">
+<h3 class="anchored" data-anchor-id="goals">Goals</h3>
+<p>Compare memory and time performance for generating a zoom level 0 256 x 256 raster from one timestep and variable of the MUR SST dataset using the following approaches:</p>
+<ul>
+<li><a href="https://gdal.org/en/latest/api/python/utilities.html#osgeo.gdal.Warp">osgeo.warp</a></li>
+<li><a href="https://rasterio.readthedocs.io/en/stable/api/rasterio.warp.html#rasterio.warp.reproject">rasterio.warp.reproject</a></li>
+<li><a href="https://corteva.github.io/rioxarray/html/rioxarray.html#rioxarray.raster_array.RasterArray.reproject">rioxarray.reproject</a></li>
+<li><a href="https://pyresample.readthedocs.io/en/stable/api/pyresample.html#pyresample.resampler.resample_blocks">pyresample.resample_blocks</a></li>
+<li><a href="https://xesmf.readthedocs.io/en/stable/user_api.html#xesmf.frontend.Regridder">xesmf.Regridder</a></li>
+<li><a href="https://geoutils.readthedocs.io/en/stable/gen_modules/geoutils.Raster.reproject.html#geoutils.Raster.reproject">geoutils.Raster.reproject</a></li>
+<li><a href="https://um-rmrs.github.io/raster_tools/reference/generated/raster_tools.warp.reproject.html">raster_tools.warp.reproject</a></li>
+<li><a href="https://odc-geo.readthedocs.io/en/latest/_api/odc.geo.xr.xr_reproject.html">odc.geo.xr.xr_reproject</a></li>
+<li><a href="https://xcube.readthedocs.io/en/latest/api.html#cube-resampling">xcube.resampling</a></li>
+<li><a href="https://geowombat.readthedocs.io/en/latest/tutorial-crs.html#transforming-a-crs-on-the-fly">geowombat.config.update</a></li>
+</ul>
+<p>Out-of-scope:</p>
+<ul>
+<li><a href="https://github.com/EXCITED-CO2/xarray-regrid/">xarray-regrid</a> - only regrids within the same rectilinear coordinate system</li>
+<li><a href="https://github.com/google-research/weatherbench2/blob/main/weatherbench2/regridding.py">weatherbench2/regridding</a> - only seems to regrid within the same rectilinear coordinate system</li>
+<li><a href="https://github.com/google-research/dinosaur/blob/67c686945a8e4dd24ab23bcee806ce69c8d4f853/dinosaur/horizontal_interpolation.py#L241">dinosaur</a> - only seems to regrid within the same rectilinear coordinate system</li>
+<li><a href="https://www.pygmt.org/latest/api/generated/pygmt.grdproject.html#pygmt.grdproject">pygmt.grdproject</a> - <a href="https://www.pygmt.org/latest/projections/index.html">web mercator not amongst supported projections</a></li>
+<li><a href="https://www.fatiando.org/verde/latest/">verde</a> - not used for raster -&gt; raster resampling (only points -&gt; raster)</li>
+</ul>
+<p>These methods will be run on the full resolution dataset. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured.</p>
+</section>
+<section id="planned-extensions" class="level3">
+<h3 class="anchored" data-anchor-id="planned-extensions">Planned extensions</h3>
+<ul>
+<li>Compare to results when using a 2x and 4x downsampled versions to better understand the time and memory complexity</li>
+<li>Compare to results when using a virtual dataset (e.g., VRT, Kerchunk reference file).</li>
+<li>Compare results when reading from a dataset stored locally versus in cloud object storage.</li>
+<li>Compare to results when using a cloud-optimized dataset (Zarr).</li>
+</ul>
+</section>
+<section id="possible-extensions" class="level3">
+<h3 class="anchored" data-anchor-id="possible-extensions">Possible extensions</h3>
+<ul>
+<li>Compare other resampling methods (e.g., bilinear, conservative).</li>
+<li>Compare with methods that don’t rely on existing packages (e.g., <a href="https://discourse.pangeo.io/t/conservative-region-aggregation-with-xarray-geopandas-and-sparse/2715">Conservative regridding with Xarray, GeoPandas, and Sparse</a> and <a href="https://github.com/arctic-carbon/eddy-footprint/blob/46935785ced10f24263cd740f81b0aaf02d9bf33/eddy_footprint/spatial.py#L38-L45">KDTree wrappers</a>).</li>
+</ul>
+</section>
 <section id="environment-setup" class="level3">
 <h3 class="anchored" data-anchor-id="environment-setup">Environment Setup</h3>
 <p>The notebooks can be run on a JupyterHub environment using the docker image <code>quay.io/developmentseed/warp-resample-profiling:latest</code>, which is created using <code>repo2docker</code> using the Dockerfile contained within the <code>binder</code> directory.</p>
 </section>
-<section id="caveat" class="level3">
-<h3 class="anchored" data-anchor-id="caveat">Caveat</h3>
-<p>This is a WIP guidebook. We are presenting early on in the development to guide discussions and future work. The output from different resampling methods has not yet been verified, important parameters (e.g., target no_data values) have not been set, and not all methods have been implemented. We encourage people to contribute by building on the notebooks in the <code>examples</code> directory or participating in discussions on this repo or on the Pangeo discourse.</p>
 </section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><a href="https://discourse.pangeo.io/t/whats-next-software-regridding/3896">What’s Next - Software - Regridding</a></li>
+<li><a href="https://discourse.pangeo.io/t/can-a-reprojection-change-of-crs-operation-be-done-lazily-using-rioxarray/4468">Lazy regridding discussion</a></li>
+</ul>
 <section id="acknowledgements" class="level3">
 <h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
-<p>This work was made possible through support from <a href="https://impact.earthdata.nasa.gov/">NASA IMPACT</a>. Numerous people have guided development, especially Aimee Barciauskas (<a href="https://github.com/abarciauskas-bgse"><span class="citation" data-cites="abarciauskas-bgse">@abarciauskas-bgse</span></a>), Justus Magin (<a href="https://github.com/keewis"><span class="citation" data-cites="keewis">@keewis</span></a>), and Michael Sumner (<a href="https://github.com/mdsumner"><span class="citation" data-cites="mdsumner">@mdsumner</span></a>). The resources page contains references for source information. All mistakes my own.</p>
+<p>This work was made possible through support from <a href="https://impact.earthdata.nasa.gov/">NASA IMPACT</a>. Numerous people have guided development, especially Aimee Barciauskas (<a href="https://github.com/abarciauskas-bgse"><span class="citation" data-cites="abarciauskas-bgse">@abarciauskas-bgse</span></a>), Justus Magin (<a href="https://github.com/keewis"><span class="citation" data-cites="keewis">@keewis</span></a>), and Michael Sumner (<a href="https://github.com/mdsumner"><span class="citation" data-cites="mdsumner">@mdsumner</span></a>). The resources page contains references for source information. Quarto configuration based on <a href="https://github.com/cloudnativegeo/cloud-optimized-geospatial-formats-guide">Cloud Native Geospatial Formats Guide</a> and the Tile Benchmarking(https://developmentseed.org/tile-benchmarking/). All mistakes my own.</p>
 
 
-</section>
 </section>
 </section>
 

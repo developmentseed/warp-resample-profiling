@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Geospatial reprojection in Python (2024)",
+    "title": "Warp resampling",
     "section": "",
-    "text": "This a work-in-progress guidebook on existing warp resampling / reprojection methods in Python, along with some memory and statistical wall-time profiling results.\n\n\nThe notebooks can be run on a JupyterHub environment using the docker image quay.io/developmentseed/warp-resample-profiling:latest, which is created using repo2docker using the Dockerfile contained within the binder directory.\n\n\n\nThis is a WIP guidebook. We are presenting early on in the development to guide discussions and future work. The output from different resampling methods has not yet been verified, important parameters (e.g., target no_data values) have not been set, and not all methods have been implemented. We encourage people to contribute by building on the notebooks in the examples directory or participating in discussions on this repo or on the Pangeo discourse.\n\n\n\nThis work was made possible through support from NASA IMPACT. Numerous people have guided development, especially Aimee Barciauskas (@abarciauskas-bgse), Justus Magin (@keewis), and Michael Sumner (@mdsumner). The resources page contains references for source information. All mistakes my own.",
+    "text": "This a work-in-progress guidebook on existing warp resampling / reprojection methods in Python, along with some memory and statistical wall-time profiling results.",
     "crumbs": [
       "Welcome"
     ]
@@ -12,9 +12,39 @@
   {
     "objectID": "index.html#overview",
     "href": "index.html#overview",
-    "title": "Geospatial reprojection in Python (2024)",
+    "title": "Warp resampling",
     "section": "",
-    "text": "This a work-in-progress guidebook on existing warp resampling / reprojection methods in Python, along with some memory and statistical wall-time profiling results.\n\n\nThe notebooks can be run on a JupyterHub environment using the docker image quay.io/developmentseed/warp-resample-profiling:latest, which is created using repo2docker using the Dockerfile contained within the binder directory.\n\n\n\nThis is a WIP guidebook. We are presenting early on in the development to guide discussions and future work. The output from different resampling methods has not yet been verified, important parameters (e.g., target no_data values) have not been set, and not all methods have been implemented. We encourage people to contribute by building on the notebooks in the examples directory or participating in discussions on this repo or on the Pangeo discourse.\n\n\n\nThis work was made possible through support from NASA IMPACT. Numerous people have guided development, especially Aimee Barciauskas (@abarciauskas-bgse), Justus Magin (@keewis), and Michael Sumner (@mdsumner). The resources page contains references for source information. All mistakes my own.",
+    "text": "This a work-in-progress guidebook on existing warp resampling / reprojection methods in Python, along with some memory and statistical wall-time profiling results.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#caveat",
+    "href": "index.html#caveat",
+    "title": "Warp resampling",
+    "section": "Caveat",
+    "text": "Caveat\nThis is a WIP guidebook. We are presenting early on in the development to guide discussions and future work. The output from different resampling methods has not yet been verified, important parameters (e.g., target no_data values) have not been set, and not all methods have been implemented. We encourage people to contribute by building on the notebooks in the examples directory or participating in discussions on this repo or on the Pangeo discourse.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#memory-and-time-profiling",
+    "href": "index.html#memory-and-time-profiling",
+    "title": "Warp resampling",
+    "section": "Memory and time profiling",
+    "text": "Memory and time profiling\nResampling and reprojection (i.e., warp resampling) are essential steps for generating raster tiles for browser based visualization. Further, warp resampling is often one of the most time consuming and memory intensive portions of the tile generation process. The importance and complexity of this step motivates an exploration of different warp resampling options.\n\nGoals\nCompare memory and time performance for generating a zoom level 0 256 x 256 raster from one timestep and variable of the MUR SST dataset using the following approaches:\n\nosgeo.warp\nrasterio.warp.reproject\nrioxarray.reproject\npyresample.resample_blocks\nxesmf.Regridder\ngeoutils.Raster.reproject\nraster_tools.warp.reproject\nodc.geo.xr.xr_reproject\nxcube.resampling\ngeowombat.config.update\n\nOut-of-scope:\n\nxarray-regrid - only regrids within the same rectilinear coordinate system\nweatherbench2/regridding - only seems to regrid within the same rectilinear coordinate system\ndinosaur - only seems to regrid within the same rectilinear coordinate system\npygmt.grdproject - web mercator not amongst supported projections\nverde - not used for raster -&gt; raster resampling (only points -&gt; raster)\n\nThese methods will be run on the full resolution dataset. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured.\n\n\nPlanned extensions\n\nCompare to results when using a 2x and 4x downsampled versions to better understand the time and memory complexity\nCompare to results when using a virtual dataset (e.g., VRT, Kerchunk reference file).\nCompare results when reading from a dataset stored locally versus in cloud object storage.\nCompare to results when using a cloud-optimized dataset (Zarr).\n\n\n\nPossible extensions\n\nCompare other resampling methods (e.g., bilinear, conservative).\nCompare with methods that don’t rely on existing packages (e.g., Conservative regridding with Xarray, GeoPandas, and Sparse and KDTree wrappers).\n\n\n\nEnvironment Setup\nThe notebooks can be run on a JupyterHub environment using the docker image quay.io/developmentseed/warp-resample-profiling:latest, which is created using repo2docker using the Dockerfile contained within the binder directory.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "Warp resampling",
+    "section": "References",
+    "text": "References\n\nWhat’s Next - Software - Regridding\nLazy regridding discussion\n\n\nAcknowledgements\nThis work was made possible through support from NASA IMPACT. Numerous people have guided development, especially Aimee Barciauskas (@abarciauskas-bgse), Justus Magin (@keewis), and Michael Sumner (@mdsumner). The resources page contains references for source information. Quarto configuration based on Cloud Native Geospatial Formats Guide and the Tile Benchmarking(https://developmentseed.org/tile-benchmarking/). All mistakes my own.",
     "crumbs": [
       "Welcome"
     ]
