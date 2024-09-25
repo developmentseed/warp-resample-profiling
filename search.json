@@ -94,7 +94,7 @@
     "href": "pages/slides.html#whats-next-for-the-guide",
     "title": "Geospatial reprojection in Python",
     "section": "What’s next for the guide",
-    "text": "What’s next for the guide\n\nSmall tile from a large dataset\nAdd information about grid structures supported\nAdd information about resampling methods supported\nTest with virtualized data\nTest with cloud optimized data\nTest with other resampling algorithms",
+    "text": "What’s next for the guide\n\nTry caching weights\nSmall tile from a large dataset\nAdd information about grid structures supported\nAdd information about resampling methods supported\nTest with virtualized data\nTest with cloud optimized data\nTest with other resampling algorithms",
     "crumbs": [
       "Overview Slides"
     ]
