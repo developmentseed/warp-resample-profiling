@@ -1,1 +1,1 @@
-Sitemap: https://developmentseed.org/warp-resample-profiling/sitemap.xml
+Sitemap: https://developmentseed.github.io/warp-resample-profiling/sitemap.xml
