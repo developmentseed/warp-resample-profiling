@@ -1,9 +1,6 @@
----
-title: "Geospatial reprojection in Python (2024)"
-subtitle: "WIP guidebook and profiling results for Python resampling methods"
----
+# Geospatial reprojection in Python (2024)
 
-## Welcome
+## Overview
 This a work-in-progress guidebook on existing warp resampling / reprojection methods in Python, along with some memory and statistical wall-time profiling results.
 
 ### Environment Setup

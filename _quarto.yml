@@ -1,7 +1,7 @@
 project:
   type: website
   render:
-    - "pages/*.qmd"
+    - "*.qmd"
     - "examples/*.ipynb"
     - "!examples/*.py"
 
@@ -15,6 +15,7 @@ website:
     right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
 
   sidebar:
+    pinned: true
     style: "docked"
     search: true
     collapse-level: 2
@@ -24,7 +25,7 @@ website:
         href: https://github.com/developmentseed/warp-resample-profiling
         text: "Warp resampling"
     contents:
-      - href: pages/index.qmd
+      - href: index.qmd
         text: Welcome
       - section: Dataset preparation
         contents:
