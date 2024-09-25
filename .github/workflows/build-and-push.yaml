@@ -7,12 +7,13 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - "README.md"
-      - "LICENSE"
+    paths:
+      - "binder/*"
   pull_request:
     branches:
       - main
+    paths:
+      - "binder/*"
 
 jobs:
   test-build:
