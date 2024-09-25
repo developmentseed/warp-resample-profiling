@@ -7,8 +7,7 @@ project:
 
 website:
   page-navigation: true
-  title: "Warp resampling"
-  site-url: "https://developmentseed.org/warp-resample-profiling"
+  title: "Geospatial reprojection in Python (2024)"
   repo-url: https://github.com/developmentseed/warp-resample-profiling
   repo-actions: [edit, issue]
 
@@ -19,6 +18,11 @@ website:
     style: "docked"
     search: true
     collapse-level: 2
+    title: "Warp resampling"
+    tools:
+      - icon: github
+        href: https://github.com/developmentseed/warp-resample-profiling
+        text: "Warp resampling"
     contents:
       - href: pages/index.qmd
         text: Welcome
