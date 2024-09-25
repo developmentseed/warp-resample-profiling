@@ -104,7 +104,7 @@ Visualization
 
 ## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/process-results.html"}
 
-## {background-iframe="https://link.excalidraw.com/readonly/BQFLzxzvMI6qbfebJZBT"}
+## {background-iframe="https://link.excalidraw.com/readonly/GgF1qYswczuP9WKpoCvU"}
 
 ## Observations and opinions
 
@@ -117,6 +117,7 @@ Visualization
 
 ## What's next for the guide
 
+- Try caching weights
 - Small tile from a large dataset
 - Add information about grid structures supported
 - Add information about resampling methods supported
