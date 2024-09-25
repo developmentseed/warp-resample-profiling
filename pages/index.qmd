@@ -1,7 +1,6 @@
 ---
-title: "Geospatial reprojection in Python (2024)"
-subtitle: "WIP guidebook and profiling results for Python resampling methods"
-
+title: "Warp resampling"
+subtitle: "Geospatial reprojection in Python (2024)"
 ---
 
 ## Welcome
