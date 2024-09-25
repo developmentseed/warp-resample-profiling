@@ -1,0 +1,29 @@
+# Publish Quarto Book
+# https://github.com/quarto-dev/quarto-actions/blob/v2.1.3/examples/example-01-basics.md
+name: Render and Publish
+
+# Only run for pushes to the main branch
+on:
+  push:
+    branches: main
+  # Runs for pull requests should be disabled other than for testing purposes
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Publish to GitHub Pages (and render)
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
