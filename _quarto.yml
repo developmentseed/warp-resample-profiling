@@ -76,7 +76,7 @@ website:
             contents:
               - href: examples/future-resample-xcube-h5netcdf-.ipynb
                 text: (Pending) h5netcdf Driver
-      - section: Load data
+      - section: Loading data
         contents:
           - section: GDAL Python API
             contents:
