@@ -359,22 +359,22 @@
     ]
   },
   {
-    "objectID": "examples/process-results.html#load-results",
-    "href": "examples/process-results.html#load-results",
+    "objectID": "examples/process-results.html#show-memory-and-time-for-warp-resampling-dataset",
+    "href": "examples/process-results.html#show-memory-and-time-for-warp-resampling-dataset",
     "title": "Process results",
-    "section": "Load results",
-    "text": "Load results\n\ndf_load = df[df[\"task\"] == \"load\"]\ndf_load.style.background_gradient(cmap=\"YlOrRd\")\n\n\n\n\n\n\n \ntask\nmethod\ndriver\nvirtual\npeak memory (GB)\nduration (s)\n\n\n\n\n3\nload\nrasterio\nnetcdf\nlocal\n6.719064\n23.614072\n\n\n4\nload\nrasterio\nnetcdf\nvsis3\n7.099549\n105.191932\n\n\n0\nload\ngdal\nnetcdf\nlocal\n8.003251\n22.454418\n\n\n2\nload\ngdal\nvrt\nlocal\n8.004309\n22.551875\n\n\n1\nload\ngdal\nnetcdf\nvsis3\n8.395412\n117.244876\n\n\n5\nload\nrioxarray\nnetcdf\nvsis3\n9.769724\n100.630630\n\n\n7\nload\nxarray\nzarr\nkerchunk\n10.512198\n78.309805\n\n\n6\nload\nxarray\nh5netcdf\n\n12.437484\n35.775167\n\n\n\n\n\n\ndf_load.sort_values([\"duration (s)\"]).style.background_gradient(cmap=\"YlOrRd\")\n\n\n\n\n\n\n \ntask\nmethod\ndriver\nvirtual\npeak memory (GB)\nduration (s)\n\n\n\n\n0\nload\ngdal\nnetcdf\nlocal\n8.003251\n22.454418\n\n\n2\nload\ngdal\nvrt\nlocal\n8.004309\n22.551875\n\n\n3\nload\nrasterio\nnetcdf\nlocal\n6.719064\n23.614072\n\n\n6\nload\nxarray\nh5netcdf\n\n12.437484\n35.775167\n\n\n7\nload\nxarray\nzarr\nkerchunk\n10.512198\n78.309805\n\n\n5\nload\nrioxarray\nnetcdf\nvsis3\n9.769724\n100.630630\n\n\n4\nload\nrasterio\nnetcdf\nvsis3\n7.099549\n105.191932\n\n\n1\nload\ngdal\nnetcdf\nvsis3\n8.395412\n117.244876",
+    "section": "Show memory and time for warp resampling dataset",
+    "text": "Show memory and time for warp resampling dataset\n\ndf_resample = df[df[\"task\"] == \"resample\"]\ndf_resample.style.background_gradient(cmap=\"YlOrRd\")\n\n\n\n\n\n\n \ntask\nmethod\ndriver\nvirtual\npeak memory (GB)\nduration (s)\n\n\n\n\n8\nresample\ngdal\nnetcdf\nlocal\n1.877886\n14.857080\n\n\n10\nresample\ngdal\nvrt\nlocal\n1.877896\n10.501181\n\n\n9\nresample\ngdal\nnetcdf\nvsis3\n2.267324\n87.021567\n\n\n13\nresample\nrasterio\nnetcdf\nvsis3\n3.295342\n95.873359\n\n\n14\nresample\nrioxarray\nnetcdf\nvsis3\n4.506330\n99.652136\n\n\n11\nresample\nodc\nh5netcdf\n\n12.441574\n41.386587\n\n\n12\nresample\npyresample\nh5netcdf\n\n39.164460\n46.934369",
     "crumbs": [
       "Profiling results",
       "Memory and time usage"
     ]
   },
   {
-    "objectID": "examples/process-results.html#warp-resampling-results",
-    "href": "examples/process-results.html#warp-resampling-results",
+    "objectID": "examples/process-results.html#show-memory-and-time-for-loading-dataset",
+    "href": "examples/process-results.html#show-memory-and-time-for-loading-dataset",
     "title": "Process results",
-    "section": "Warp resampling results",
-    "text": "Warp resampling results\n\ndf_resample = df[df[\"task\"] == \"resample\"]\ndf_resample.style.background_gradient(cmap=\"YlOrRd\")\n\n\n\n\n\n\n \ntask\nmethod\ndriver\nvirtual\npeak memory (GB)\nduration (s)\n\n\n\n\n8\nresample\ngdal\nnetcdf\nlocal\n1.877886\n14.857080\n\n\n10\nresample\ngdal\nvrt\nlocal\n1.877896\n10.501181\n\n\n9\nresample\ngdal\nnetcdf\nvsis3\n2.267324\n87.021567\n\n\n13\nresample\nrasterio\nnetcdf\nvsis3\n3.295342\n95.873359\n\n\n14\nresample\nrioxarray\nnetcdf\nvsis3\n4.506330\n99.652136\n\n\n11\nresample\nodc\nh5netcdf\n\n12.441574\n41.386587\n\n\n12\nresample\npyresample\nh5netcdf\n\n39.164460\n46.934369\n\n\n\n\n\n\ndf_resample.sort_values([\"duration (s)\"]).style.background_gradient(cmap=\"YlOrRd\")\n\n\n\n\n\n\n \ntask\nmethod\ndriver\nvirtual\npeak memory (GB)\nduration (s)\n\n\n\n\n10\nresample\ngdal\nvrt\nlocal\n1.877896\n10.501181\n\n\n8\nresample\ngdal\nnetcdf\nlocal\n1.877886\n14.857080\n\n\n11\nresample\nodc\nh5netcdf\n\n12.441574\n41.386587\n\n\n12\nresample\npyresample\nh5netcdf\n\n39.164460\n46.934369\n\n\n9\nresample\ngdal\nnetcdf\nvsis3\n2.267324\n87.021567\n\n\n13\nresample\nrasterio\nnetcdf\nvsis3\n3.295342\n95.873359\n\n\n14\nresample\nrioxarray\nnetcdf\nvsis3\n4.506330\n99.652136",
+    "section": "Show memory and time for loading dataset",
+    "text": "Show memory and time for loading dataset\n\ndf_load = df[df[\"task\"] == \"load\"]\ndf_load.style.background_gradient(cmap=\"YlOrRd\")\n\n\n\n\n\n\n \ntask\nmethod\ndriver\nvirtual\npeak memory (GB)\nduration (s)\n\n\n\n\n3\nload\nrasterio\nnetcdf\nlocal\n6.719064\n23.614072\n\n\n4\nload\nrasterio\nnetcdf\nvsis3\n7.099549\n105.191932\n\n\n0\nload\ngdal\nnetcdf\nlocal\n8.003251\n22.454418\n\n\n2\nload\ngdal\nvrt\nlocal\n8.004309\n22.551875\n\n\n1\nload\ngdal\nnetcdf\nvsis3\n8.395412\n117.244876\n\n\n5\nload\nrioxarray\nnetcdf\nvsis3\n9.769724\n100.630630\n\n\n7\nload\nxarray\nzarr\nkerchunk\n10.512198\n78.309805\n\n\n6\nload\nxarray\nh5netcdf\n\n12.437484\n35.775167",
     "crumbs": [
       "Profiling results",
       "Memory and time usage"
