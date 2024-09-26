@@ -370,17 +370,6 @@
     ]
   },
   {
-    "objectID": "examples/process-results.html#show-memory-and-time-for-loading-dataset",
-    "href": "examples/process-results.html#show-memory-and-time-for-loading-dataset",
-    "title": "Process results",
-    "section": "Show memory and time for loading dataset",
-    "text": "Show memory and time for loading dataset\n\ndf_load = df[df[\"task\"] == \"load\"]\ndf_load.style.background_gradient(cmap=\"YlOrRd\")\n\n\n\n\n\n\n \ntask\nmethod\ndriver\nvirtual\npeak memory (GB)\nduration (s)\n\n\n\n\n3\nload\nrasterio\nnetcdf\nlocal\n6.719064\n23.614072\n\n\n4\nload\nrasterio\nnetcdf\nvsis3\n7.099549\n105.191932\n\n\n0\nload\ngdal\nnetcdf\nlocal\n8.003251\n22.454418\n\n\n2\nload\ngdal\nvrt\nlocal\n8.004309\n22.551875\n\n\n1\nload\ngdal\nnetcdf\nvsis3\n8.395412\n117.244876\n\n\n5\nload\nrioxarray\nnetcdf\nvsis3\n9.769724\n100.630630\n\n\n7\nload\nxarray\nzarr\nkerchunk\n10.512198\n78.309805\n\n\n6\nload\nxarray\nh5netcdf\n\n12.437484\n35.775167",
-    "crumbs": [
-      "Profiling results",
-      "Memory and time usage"
-    ]
-  },
-  {
     "objectID": "examples/resample-gdal-netcdf-vsis3.html",
     "href": "examples/resample-gdal-netcdf-vsis3.html",
     "title": "GDAL with NetCDF, VSIS3, and earthaccess",
