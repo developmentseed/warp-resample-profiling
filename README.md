@@ -1,8 +1,16 @@
-# Overview
+## Overview
+
+This a work-in-progress guidebook on existing warp resampling / reprojection methods in Python, along with some memory and statistical wall-time profiling results.
+
+## Caveat
+
+This is a WIP guidebook. We are presenting early on in the development to guide discussions and future work. The output from different resampling methods has not yet been verified, important parameters (e.g., target no_data values) have not been set, and not all methods have been implemented. We encourage people to contribute by building on the notebooks in the `examples` directory or participating in discussions on this repo or on the Pangeo discourse.
+
+## Memory and time profiling
 
 Resampling and reprojection (i.e., warp resampling) are essential steps for generating raster tiles for browser based visualization. Further, warp resampling is often one of the most time consuming and memory intensive portions of the tile generation process. The importance and complexity of this step motivates an exploration of different warp resampling options.
 
-## Goals
+### Goals
 
 Compare memory and time performance for generating a zoom level 0 256 x 256 raster from one timestep and variable of the MUR SST dataset using the following approaches:
 
@@ -25,19 +33,29 @@ Out-of-scope:
 - [pygmt.grdproject](https://www.pygmt.org/latest/api/generated/pygmt.grdproject.html#pygmt.grdproject) - [web mercator not amongst supported projections](https://www.pygmt.org/latest/projections/index.html)
 - [verde](https://www.fatiando.org/verde/latest/) - not used for raster -> raster resampling (only points -> raster)
 
-These methods will be run on the full resolution dataset as well as a 2x and 4x downsampled versions to better understand the time and memory complexity. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured.
+These methods will be run on the full resolution dataset. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured.
 
-## Planned extensions
+### Planned extensions
 
+- Compare to results when using a 2x and 4x downsampled versions to better understand the time and memory complexity
 - Compare to results when using a virtual dataset (e.g., VRT, Kerchunk reference file).
 - Compare results when reading from a dataset stored locally versus in cloud object storage.
+- Compare to results when using a cloud-optimized dataset (Zarr).
 
-## Possible extensions
+### Possible extensions
 
 - Compare other resampling methods (e.g., bilinear, conservative).
 - Compare with methods that don't rely on existing packages (e.g., [Conservative regridding with Xarray, GeoPandas, and Sparse](https://discourse.pangeo.io/t/conservative-region-aggregation-with-xarray-geopandas-and-sparse/2715) and [KDTree wrappers](https://github.com/arctic-carbon/eddy-footprint/blob/46935785ced10f24263cd740f81b0aaf02d9bf33/eddy_footprint/spatial.py#L38-L45)).
+
+### Environment Setup
+
+The notebooks can be run on a JupyterHub environment using the docker image `quay.io/developmentseed/warp-resample-profiling:latest`, which is created using `repo2docker` using the Dockerfile contained within the `binder` directory.
 
 ## References
 
 - [What's Next - Software - Regridding](https://discourse.pangeo.io/t/whats-next-software-regridding/3896)
 - [Lazy regridding discussion](https://discourse.pangeo.io/t/can-a-reprojection-change-of-crs-operation-be-done-lazily-using-rioxarray/4468)
+
+### Acknowledgements
+
+This work was made possible through support from [NASA IMPACT](https://impact.earthdata.nasa.gov/). Numerous people have guided development, especially Aimee Barciauskas ([@abarciauskas-bgse](https://github.com/abarciauskas-bgse)), Justus Magin ([@keewis](https://github.com/keewis)), and Michael Sumner ([@mdsumner](https://github.com/mdsumner)). The resources page contains references for source information. Quarto configuration based on [Cloud Native Geospatial Formats Guide](https://github.com/cloudnativegeo/cloud-optimized-geospatial-formats-guide) and the Tile Benchmarking(https://developmentseed.org/tile-benchmarking/). All mistakes my own.
