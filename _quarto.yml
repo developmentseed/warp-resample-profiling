@@ -76,6 +76,33 @@ website:
             contents:
               - href: examples/future-resample-xcube-h5netcdf-.ipynb
                 text: (Pending) h5netcdf Driver
+      - section: Load data
+        contents:
+          - section: GDAL Python API
+            contents:
+              - href: examples/load-gdal-netcdf-vsis3.ipynb
+                text: NetCDF Driver + vsis3 (remote)
+              - href: examples/load-gdal-vrt-local.ipynb
+                text: NetCDF Driver + vrt (local)
+              - href: examples/load-gdal-netcdf-local.ipynb
+                text: NetCDF Driver (local)
+          - section: Rasterio
+            contents:
+              - href: examples/load-rasterio-netcdf-local.ipynb
+                text: NetCDF Driver
+              - href: examples/load-rasterio-netcdf-vsis3.ipynb
+                text: NetCDF Driver + vsis3
+          - section: Rioxarray
+            contents:
+              - href: examples/load-rioxarray-netcdf-vsis3.ipynb
+                text: NetCDF Driver + vsis3
+          - section: Xarray
+            contents:
+              - href: examples/load-xarray-h5netcdf-.ipynb
+                text: h5netcdf Driver
+              - href: examples/load-xarray-zarr-kerchunk.ipynb
+                text: Zarr via kerchunk
+
       - section: Profiling results
         contents:
           - href: examples/process-results.ipynb
