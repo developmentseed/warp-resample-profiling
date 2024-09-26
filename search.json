@@ -181,7 +181,7 @@
     "section": "",
     "text": "import earthaccess\nimport fsspec\nimport xarray as xr\n\n\ndef load_data():\n    src = \"earthaccess_data/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.json\"\n    variable = [\"analysed_sst\"]\n    earthaccess.login()\n    s3_fs = earthaccess.get_s3fs_session(daac=\"PODAAC\")\n    storage_options = s3_fs.storage_options.copy()\n    fsspec_caching = {\n        \"cache_type\": \"none\",\n    }\n    fs = fsspec.filesystem(\"reference\", fo=src, **fsspec_caching)\n    m = fs.get_mapper(\"\")\n    da = xr.open_dataset(\n        m,\n        engine=\"kerchunk\",\n        chunks={},\n        storage_options=storage_options,\n    )[variable]\n    return da.load()\n\n\nif __name__ == \"__main__\":\n    da = load_data()",
     "crumbs": [
-      "Load data",
+      "Loading data",
       "Xarray",
       "Zarr via kerchunk"
     ]
@@ -193,7 +193,7 @@
     "section": "",
     "text": "import rasterio as rio\nimport rioxarray as rx\nfrom rasterio.session import AWSSession\n\n\ndef configure_auth():\n    import boto3\n    import earthaccess\n\n    auth = earthaccess.login()\n    s3_credentials = auth.get_s3_credentials(\"PODAAC\")\n    session = boto3.Session(\n        aws_access_key_id=s3_credentials[\"accessKeyId\"],\n        aws_secret_access_key=s3_credentials[\"secretAccessKey\"],\n        aws_session_token=s3_credentials[\"sessionToken\"],\n        region_name=\"us-west-2\",\n    )\n    rio_env = rio.Env(\n        AWSSession(session),\n    )\n    rio_env.__enter__()\n    return rio_env\n\n\ndef load_data():\n    bucket = \"podaac-ops-cumulus-protected\"\n    input_uri = \"MUR-JPL-L4-GLOB-v4.1/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc\"\n    src = f\"NETCDF:/vsis3/{bucket}/{input_uri}:analysed_sst\"\n    return rx.open_rasterio(src, mask_and_scale=True).load()\n\n\nif __name__ == \"__main__\":\n    rio_env = configure_auth()\n    da = load_data()\n    rio_env.__exit__()",
     "crumbs": [
-      "Load data",
+      "Loading data",
       "Rioxarray",
       "NetCDF Driver + vsis3"
     ]
@@ -205,7 +205,7 @@
     "section": "",
     "text": "import numpy as np\nimport rasterio\n\n\ndef open_data():\n    src = \"NETCDF:earthaccess_data/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc:analysed_sst\"\n    with rasterio.open(src) as src_da:\n        ma = src_da.read(1, masked=True)\n        ma = ma.astype(\"float32\", casting=\"unsafe\")\n        np.multiply(ma, src_da.scales[0], out=ma, casting=\"unsafe\")\n        np.add(ma, src_da.offsets[0], out=ma, casting=\"unsafe\")\n    return ma.filled(fill_value=np.nan)\n\n\nif __name__ == \"__main__\":\n    da = open_data()",
     "crumbs": [
-      "Load data",
+      "Loading data",
       "Rasterio",
       "NetCDF Driver"
     ]
@@ -217,7 +217,7 @@
     "section": "",
     "text": "import numpy as np\nfrom osgeo import gdal\n\n\ngdal.UseExceptions()\n\n\ndef configure_auth():\n    import earthaccess\n\n    auth = earthaccess.login()\n    s3_credentials = auth.get_s3_credentials(\"PODAAC\")\n    gdal.SetConfigOption(\"AWS_REGION\", \"us-west-2\")\n    gdal.SetConfigOption(\"AWS_SECRET_ACCESS_KEY\", s3_credentials[\"secretAccessKey\"])\n    gdal.SetConfigOption(\"AWS_ACCESS_KEY_ID\", s3_credentials[\"accessKeyId\"])\n    gdal.SetConfigOption(\"AWS_SESSION_TOKEN\", s3_credentials[\"sessionToken\"])\n\n\ndef load_data():\n    bucket = \"podaac-ops-cumulus-protected\"\n    input_uri = \"MUR-JPL-L4-GLOB-v4.1/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc\"\n    src = f\"NETCDF:/vsis3/{bucket}/{input_uri}:analysed_sst\"\n    ds = gdal.Open(src)\n    band = ds.GetRasterBand(1)\n    arr = band.ReadAsArray().astype(\"float32\", casting=\"unsafe\")\n    mask = band.GetMaskBand().ReadAsArray()\n    ma = np.ma.masked_array(arr, np.logical_not(mask), fill_value=np.nan)\n    np.multiply(ma, band.GetScale(), out=ma, casting=\"unsafe\")\n    np.add(ma, band.GetOffset(), out=ma, casting=\"unsafe\")\n    return ma.filled(fill_value=np.nan)\n\n\nif __name__ == \"__main__\":\n    configure_auth()\n    da = load_data()",
     "crumbs": [
-      "Load data",
+      "Loading data",
       "GDAL Python API",
       "NetCDF Driver + vsis3 (remote)"
     ]
@@ -306,7 +306,7 @@
     "section": "",
     "text": "import numpy as np\nfrom osgeo import gdal\n\n\ngdal.UseExceptions()\n\n\ndef load_data():\n    src = \"NETCDF:earthaccess_data/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc:analysed_sst\"\n    ds = gdal.Open(src)\n    band = ds.GetRasterBand(1)\n    arr = band.ReadAsArray().astype(\"float32\", casting=\"unsafe\")\n    mask = band.GetMaskBand().ReadAsArray()\n    ma = np.ma.masked_array(arr, np.logical_not(mask), fill_value=np.nan)\n    np.multiply(ma, band.GetScale(), out=ma, casting=\"unsafe\")\n    np.add(ma, band.GetOffset(), out=ma, casting=\"unsafe\")\n    return ma.filled(fill_value=np.nan)\n\n\nif __name__ == \"__main__\":\n    da = load_data()",
     "crumbs": [
-      "Load data",
+      "Loading data",
       "GDAL Python API",
       "NetCDF Driver (local)"
     ]
@@ -318,7 +318,7 @@
     "section": "",
     "text": "import numpy as np\nfrom osgeo import gdal\n\n\ngdal.UseExceptions()\n\n\ndef load_data():\n    src = \"vrt://earthaccess_data/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc?a_ullr=-179.995,89.995,180.005,-89.995&sd_name=analysed_sst\"\n    ds = gdal.Open(src)\n    band = ds.GetRasterBand(1)\n    arr = band.ReadAsArray().astype(\"float32\", casting=\"unsafe\")\n    mask = band.GetMaskBand().ReadAsArray()\n    ma = np.ma.masked_array(arr, np.logical_not(mask), fill_value=np.nan)\n    np.multiply(ma, band.GetScale(), out=ma, casting=\"unsafe\")\n    np.add(ma, band.GetOffset(), out=ma, casting=\"unsafe\")\n    return ma.filled(fill_value=np.nan)\n\n\nif __name__ == \"__main__\":\n    da = load_data()",
     "crumbs": [
-      "Load data",
+      "Loading data",
       "GDAL Python API",
       "NetCDF Driver + vrt (local)"
     ]
@@ -330,7 +330,7 @@
     "section": "",
     "text": "import numpy as np\nimport rasterio\nimport rasterio as rio\nfrom rasterio.session import AWSSession\n\n\ndef configure_auth():\n    import boto3\n    import earthaccess\n\n    auth = earthaccess.login()\n    s3_credentials = auth.get_s3_credentials(\"PODAAC\")\n    session = boto3.Session(\n        aws_access_key_id=s3_credentials[\"accessKeyId\"],\n        aws_secret_access_key=s3_credentials[\"secretAccessKey\"],\n        aws_session_token=s3_credentials[\"sessionToken\"],\n        region_name=\"us-west-2\",\n    )\n    rio_env = rio.Env(\n        AWSSession(session),\n    )\n    rio_env.__enter__()\n    return rio_env\n\n\ndef load_data():\n    bucket = \"podaac-ops-cumulus-protected\"\n    input_uri = \"MUR-JPL-L4-GLOB-v4.1/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc\"\n    src = f\"NETCDF:/vsis3/{bucket}/{input_uri}:analysed_sst\"\n    with rasterio.open(src) as src_da:\n        ma = src_da.read(1, masked=True)\n        ma = ma.astype(\"float32\", casting=\"unsafe\")\n        np.multiply(ma, src_da.scales[0], out=ma, casting=\"unsafe\")\n        np.add(ma, src_da.offsets[0], out=ma, casting=\"unsafe\")\n    return ma.filled(fill_value=np.nan)\n\n\nif __name__ == \"__main__\":\n    rio_env = configure_auth()\n    da = load_data()\n    rio_env.__exit__()",
     "crumbs": [
-      "Load data",
+      "Loading data",
       "Rasterio",
       "NetCDF Driver + vsis3"
     ]
@@ -342,7 +342,7 @@
     "section": "",
     "text": "import earthaccess\nimport xarray as xr\n\n\ndef load_data():\n    bucket = \"podaac-ops-cumulus-protected\"\n    input_uri = \"MUR-JPL-L4-GLOB-v4.1/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc\"\n    variable = \"analysed_sst\"\n    src = f\"s3://{bucket}/{input_uri}\"\n    earthaccess.login()\n    fs = earthaccess.get_s3fs_session(daac=\"PODAAC\")\n    fsspec_caching = {\n        \"cache_type\": \"none\",\n    }\n    with fs.open(src, **fsspec_caching) as f:\n        da = xr.open_dataset(f, engine=\"h5netcdf\", mask_and_scale=True)[variable]\n        return da.load()\n\n\nif __name__ == \"__main__\":\n    da = load_data()",
     "crumbs": [
-      "Load data",
+      "Loading data",
       "Xarray",
       "h5netcdf Driver"
     ]
