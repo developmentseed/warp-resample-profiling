@@ -17,8 +17,8 @@ def get_files(folder):
 
 def get_test_info_from_filename(file):
     results_base = file.split(".")[0]
-    _, task, method, driver, virtualization = results_base.split("-")
-    return task, method, driver, virtualization
+    _, dataset, task, method, driver, virtualization = results_base.split("-")
+    return dataset, task, method, driver, virtualization
 
 
 def load_data(filepath):
@@ -33,15 +33,16 @@ def process_results(summary_dir):
         filename = Path(file).name
         print(filename)
         (
+            df.loc[ind, "dataset"],
             df.loc[ind, "task"],
             df.loc[ind, "method"],
             df.loc[ind, "driver"],
             df.loc[ind, "virtual"],
         ) = get_test_info_from_filename(filename)
-        memray_data = load_data(f"results/{filename}")
+        memray_data = load_data(f"{summary_dir}/{filename}")
         df.loc[ind, "peak memory (GB)"] = memray_data["metadata"]["peak_memory"] * 1e-9
         pyinstrument_data = load_data(
-            f"results/pyinstrument-{'-'.join(filename.split('-')[1:])}"
+            f"{summary_dir}/pyinstrument-{'-'.join(filename.split('-')[1:])}"
         )
         df.loc[ind, "duration (s)"] = pyinstrument_data["duration"]
     return df
