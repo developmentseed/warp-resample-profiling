@@ -55,5 +55,6 @@ dependencies:
   - jupytext
   - pip:
       - morecantile
+      - icechunk
       # For development on the Hub
       - gh-scoped-creds
