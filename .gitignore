@@ -124,3 +124,4 @@ examples/resample-*.py
 examples/run-*.py
 examples/earthdata-download.py
 examples/process-results.py
+examples/process-gpm-results.py
