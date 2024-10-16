@@ -123,60 +123,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div id="cell-0" class="cell" data-execution_count="1">
+<div id="cell-0" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Literal</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fsspec</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils <span class="im">import</span> sync_notebook</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Literal</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fsspec</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils <span class="im">import</span> sync_notebook</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-1" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_pyinstrument(<span class="bu">file</span>: <span class="bu">str</span>, output_format: Literal[<span class="st">"json"</span>, <span class="st">"html"</span>]):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    output_file <span class="op">=</span> <span class="st">"results/pyinstrument-"</span> <span class="op">+</span> Path(<span class="bu">file</span>).stem <span class="op">+</span> <span class="st">"."</span> <span class="op">+</span> output_format</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    command <span class="op">=</span> [<span class="st">"pyinstrument"</span>, <span class="st">"--outfile"</span>, output_file, <span class="st">"-r"</span>, output_format, <span class="bu">file</span>]</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    subprocess.run(command)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-1" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> fsspec.filesystem(<span class="st">"file"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>current_date <span class="op">=</span> datetime.today().strftime(<span class="st">"%Y-%m-</span><span class="sc">%d</span><span class="st">"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>output_folder <span class="op">=</span> <span class="ss">f"results/</span><span class="sc">{</span>current_date<span class="sc">}</span><span class="ss">/"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> fs.glob(<span class="ss">f"</span><span class="sc">{</span>output_folder<span class="sc">}</span><span class="ss">pyinstrument-*.json"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>fs.rm(files)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fs.mkdirs(output_folder, exist_ok<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-2" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> fsspec.filesystem(<span class="st">"file"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-2" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> <span class="st">"gpm_imerg"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-3" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> fs.glob(<span class="st">"resample-*.ipynb"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    sync_notebook(<span class="bu">file</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[jupytext] Reading /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-gdal-netcdf-local.ipynb in format ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-gdal-netcdf-local.ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-gdal-netcdf-local.py
-[jupytext] Reading /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-gdal-netcdf-vsis3.ipynb in format ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-gdal-netcdf-vsis3.ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-gdal-netcdf-vsis3.py
-[jupytext] Reading /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-gdal-vrt-local.ipynb in format ipynb
-[jupytext] Loading /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-gdal-vrt-local.py
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-gdal-vrt-local.ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-gdal-vrt-local.py
-[jupytext] Reading /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-odc-h5netcdf-.ipynb in format ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-odc-h5netcdf-.ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-odc-h5netcdf-.py
-[jupytext] Reading /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-pyresample-h5netcdf-.ipynb in format ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-pyresample-h5netcdf-.ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-pyresample-h5netcdf-.py
-[jupytext] Reading /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-rasterio-netcdf-vsis3.ipynb in format ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-rasterio-netcdf-vsis3.ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-rasterio-netcdf-vsis3.py
-[jupytext] Reading /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-rioxarray-netcdf-vsis3.ipynb in format ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-rioxarray-netcdf-vsis3.ipynb
-[jupytext] Unchanged /home/jovyan/Code/developmentseed/warp-resample-profiling/examples/resample-rioxarray-netcdf-vsis3.py</code></pre>
+<div id="cell-3" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_pyinstrument(<span class="bu">file</span>: <span class="bu">str</span>, output_format: Literal[<span class="st">"json"</span>, <span class="st">"html"</span>]):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    output_file <span class="op">=</span> (</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        output_folder</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">"pyinstrument-"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> dataset</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">"-"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> Path(<span class="bu">file</span>).stem</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">"."</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> output_format</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    command <span class="op">=</span> [</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pyinstrument"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"--outfile"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        output_file,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"-r"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        output_format,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"--dataset"</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        dataset,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    subprocess.run(command)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div id="cell-4" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>input_methods <span class="op">=</span> [<span class="st">"resample-rioxarray-h5netcdf"</span>, <span class="st">"resample-odc"</span>, <span class="st">"resample-xesmf"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-4" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> fs.glob(<span class="st">"resample-*.py"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    run_pyinstrument(<span class="bu">file</span>, <span class="st">"json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The input area chunks are large. This usually means that the input area is of much higher resolution than the output area. You can reduce the chunks passed, and ponder whether you are using the right resampler for the job.
-The input area chunks are large. This usually means that the input area is of much higher resolution than the output area. You can reduce the chunks passed, and ponder whether you are using the right resampler for the job.</code></pre>
+<div id="cell-5" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>notebooks <span class="op">=</span> []</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fp <span class="kw">in</span> input_methods:</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    notebooks.extend(fs.glob(<span class="ss">f"</span><span class="sc">{</span>fp<span class="sc">}</span><span class="ss">*.ipynb"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div id="cell-6" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> notebooks:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    sync_notebook(<span class="bu">file</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-7" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>modules <span class="op">=</span> []</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fp <span class="kw">in</span> input_methods:</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    modules.extend(fs.glob(<span class="ss">f"</span><span class="sc">{</span>fp<span class="sc">}</span><span class="ss">*.py"</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> modules:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    run_pyinstrument(<span class="bu">file</span>, <span class="st">"json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

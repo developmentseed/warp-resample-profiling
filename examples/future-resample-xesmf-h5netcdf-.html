@@ -478,7 +478,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../examples/process-results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Memory and time usage</span></a>
+ <span class="menu-text">Memory and time usage (MURSST)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/process-gpm-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Memory and time usage (GPM IMERG)</span></a>
   </div>
 </li>
       </ul>
@@ -488,8 +494,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#setup-dataset-arguments" id="toc-setup-dataset-arguments" class="nav-link active" data-scroll-target="#setup-dataset-arguments">Setup dataset arguments</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.dev/developmentseed/warp-resample-profiling/blob/main/examples/future-resample-xesmf-h5netcdf-.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -514,210 +526,120 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Requires the upcoming ESMF 8.7 release - https://github.com/pangeo-data/xESMF/issues/380</p>
-<div id="cell-2" class="cell" data-execution_count="1">
+<div id="cell-2" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyproj</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio.transform</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xesmf <span class="im">as</span> xe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xesmf <span class="im">as</span> xe</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> common <span class="im">import</span> earthaccess_args</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-3" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> configure_fs_auth():</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> earthaccess</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> s3fs</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    auth <span class="op">=</span> earthaccess.login()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    s3_credentials <span class="op">=</span> auth.get_s3_credentials(<span class="st">"PODAAC"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    fs <span class="op">=</span> s3fs.S3FileSystem(</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        anon<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        key<span class="op">=</span>s3_credentials[<span class="st">"accessKeyId"</span>],</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        secret<span class="op">=</span>s3_credentials[<span class="st">"secretAccessKey"</span>],</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        token<span class="op">=</span>s3_credentials[<span class="st">"sessionToken"</span>],</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="setup-dataset-arguments" class="level3">
+<h3 class="anchored" data-anchor-id="setup-dataset-arguments">Setup dataset arguments</h3>
+<div id="cell-4" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> <span class="st">"gpm_imerg"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataset_args <span class="op">=</span> earthaccess_args[dataset]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>src <span class="op">=</span> <span class="ss">f"s3://</span><span class="sc">{</span>dataset_args[<span class="st">'bucket'</span>]<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>dataset_args[<span class="st">'input_uri'</span>]<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>dataset_args[<span class="st">'filename'</span>]<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>variable <span class="op">=</span> dataset_args[<span class="st">"variable"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-4" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_grid_ds() <span class="op">-&gt;</span> xr.Dataset:</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Modified from ndpyramid - https://github.com/carbonplan/ndpyramid</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    dstSRS <span class="op">=</span> <span class="st">"EPSG:3857"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> height <span class="op">=</span> <span class="dv">256</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    te <span class="op">=</span> [</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">-</span><span class="fl">20037508.342789244</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">-</span><span class="fl">20037508.342789244</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="fl">20037508.342789244</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="fl">20037508.342789244</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    transform <span class="op">=</span> rasterio.transform.Affine.translation(</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        te[<span class="dv">0</span>], te[<span class="dv">3</span>]</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">*</span> rasterio.transform.Affine.scale((te[<span class="dv">2</span>] <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> width, (te[<span class="dv">1</span>] <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> height)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> pyproj.Proj(dstSRS)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    grid_shape <span class="op">=</span> (height, width)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    bounds_shape <span class="op">=</span> (height <span class="op">+</span> <span class="dv">1</span>, width <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    xs <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    ys <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    lat <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    lon <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    lat_b <span class="op">=</span> np.zeros(bounds_shape)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    lon_b <span class="op">=</span> np.zeros(bounds_shape)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calc grid cell center coordinates</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    ii, jj <span class="op">=</span> np.meshgrid(np.arange(height) <span class="op">+</span> <span class="fl">0.5</span>, np.arange(width) <span class="op">+</span> <span class="fl">0.5</span>)</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j <span class="kw">in</span> itertools.product(<span class="bu">range</span>(grid_shape[<span class="dv">0</span>]), <span class="bu">range</span>(grid_shape[<span class="dv">1</span>])):</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        locs <span class="op">=</span> [ii[i, j], jj[i, j]]</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        xs[i, j], ys[i, j] <span class="op">=</span> transform <span class="op">*</span> locs</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        lon[i, j], lat[i, j] <span class="op">=</span> p(xs[i, j], ys[i, j], inverse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calc grid cell bounds</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    iib, jjb <span class="op">=</span> np.meshgrid(np.arange(height <span class="op">+</span> <span class="dv">1</span>), np.arange(width <span class="op">+</span> <span class="dv">1</span>))</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j <span class="kw">in</span> itertools.product(<span class="bu">range</span>(bounds_shape[<span class="dv">0</span>]), <span class="bu">range</span>(bounds_shape[<span class="dv">1</span>])):</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        locs <span class="op">=</span> [iib[i, j], jjb[i, j]]</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        x, y <span class="op">=</span> transform <span class="op">*</span> locs</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        lon_b[i, j], lat_b[i, j] <span class="op">=</span> p(x, y, inverse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xr.Dataset(</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            <span class="st">"x"</span>: xr.DataArray(xs[<span class="dv">0</span>, :], dims<span class="op">=</span>[<span class="st">"x"</span>]),</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>            <span class="st">"y"</span>: xr.DataArray(ys[:, <span class="dv">0</span>], dims<span class="op">=</span>[<span class="st">"y"</span>]),</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lat"</span>: xr.DataArray(lat, dims<span class="op">=</span>[<span class="st">"y"</span>, <span class="st">"x"</span>]),</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lon"</span>: xr.DataArray(lon, dims<span class="op">=</span>[<span class="st">"y"</span>, <span class="st">"x"</span>]),</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lat_b"</span>: xr.DataArray(lat_b, dims<span class="op">=</span>[<span class="st">"y_b"</span>, <span class="st">"x_b"</span>]),</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lon_b"</span>: xr.DataArray(lon_b, dims<span class="op">=</span>[<span class="st">"y_b"</span>, <span class="st">"x_b"</span>]),</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        },</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-5" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> configure_fs_auth():</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> earthaccess</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> s3fs</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    auth <span class="op">=</span> earthaccess.login()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    s3_credentials <span class="op">=</span> auth.get_s3_credentials(<span class="st">"PODAAC"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    fs <span class="op">=</span> s3fs.S3FileSystem(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        anon<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        key<span class="op">=</span>s3_credentials[<span class="st">"accessKeyId"</span>],</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        secret<span class="op">=</span>s3_credentials[<span class="st">"secretAccessKey"</span>],</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        token<span class="op">=</span>s3_credentials[<span class="st">"sessionToken"</span>],</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-5" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> regrid():</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    bucket <span class="op">=</span> <span class="st">"podaac-ops-cumulus-protected"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    input_uri <span class="op">=</span> <span class="st">"MUR-JPL-L4-GLOB-v4.1/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    variable <span class="op">=</span> <span class="st">"analysed_sst"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    src <span class="op">=</span> <span class="ss">f"s3://</span><span class="sc">{</span>bucket<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>input_uri<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    fs <span class="op">=</span> configure_fs_auth</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    fsspec_caching <span class="op">=</span> {</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"cache_type"</span>: <span class="st">"none"</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    target_grid <span class="op">=</span> make_grid_ds()</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> fs.<span class="bu">open</span>(src, <span class="op">**</span>fsspec_caching) <span class="im">as</span> f:</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        da <span class="op">=</span> xr.open_dataset(f, engine<span class="op">=</span><span class="st">"h5netcdf"</span>)[variable]</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        regridder <span class="op">=</span> xe.Regridder(</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            da,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            target_grid,</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">"nearest_s2d"</span>,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            periodic<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            extrap_method<span class="op">=</span><span class="st">"nearest_s2d"</span>,</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            ignore_degenerate<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> regridder(da)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-6" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_grid_ds() <span class="op">-&gt;</span> xr.Dataset:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Modified from ndpyramid - https://github.com/carbonplan/ndpyramid</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    dstSRS <span class="op">=</span> <span class="st">"EPSG:3857"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    width <span class="op">=</span> height <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    te <span class="op">=</span> [</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">-</span><span class="fl">20037508.342789244</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">-</span><span class="fl">20037508.342789244</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="fl">20037508.342789244</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="fl">20037508.342789244</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    transform <span class="op">=</span> rasterio.transform.Affine.translation(</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        te[<span class="dv">0</span>], te[<span class="dv">3</span>]</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">*</span> rasterio.transform.Affine.scale((te[<span class="dv">2</span>] <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> width, (te[<span class="dv">1</span>] <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> height)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> pyproj.Proj(dstSRS)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    grid_shape <span class="op">=</span> (height, width)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    bounds_shape <span class="op">=</span> (height <span class="op">+</span> <span class="dv">1</span>, width <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    xs <span class="op">=</span> np.empty(grid_shape)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    ys <span class="op">=</span> np.empty(grid_shape)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    lat <span class="op">=</span> np.empty(grid_shape)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    lon <span class="op">=</span> np.empty(grid_shape)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    lat_b <span class="op">=</span> np.zeros(bounds_shape)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    lon_b <span class="op">=</span> np.zeros(bounds_shape)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calc grid cell center coordinates</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    ii, jj <span class="op">=</span> np.meshgrid(np.arange(height) <span class="op">+</span> <span class="fl">0.5</span>, np.arange(width) <span class="op">+</span> <span class="fl">0.5</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j <span class="kw">in</span> itertools.product(<span class="bu">range</span>(grid_shape[<span class="dv">0</span>]), <span class="bu">range</span>(grid_shape[<span class="dv">1</span>])):</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        locs <span class="op">=</span> [ii[i, j], jj[i, j]]</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        xs[i, j], ys[i, j] <span class="op">=</span> transform <span class="op">*</span> locs</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        lon[i, j], lat[i, j] <span class="op">=</span> p(xs[i, j], ys[i, j], inverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calc grid cell bounds</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    iib, jjb <span class="op">=</span> np.meshgrid(np.arange(height <span class="op">+</span> <span class="dv">1</span>), np.arange(width <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j <span class="kw">in</span> itertools.product(<span class="bu">range</span>(bounds_shape[<span class="dv">0</span>]), <span class="bu">range</span>(bounds_shape[<span class="dv">1</span>])):</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        locs <span class="op">=</span> [iib[i, j], jjb[i, j]]</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        x, y <span class="op">=</span> transform <span class="op">*</span> locs</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        lon_b[i, j], lat_b[i, j] <span class="op">=</span> p(x, y, inverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xr.Dataset(</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>            <span class="st">"x"</span>: xr.DataArray(xs[<span class="dv">0</span>, :], dims<span class="op">=</span>[<span class="st">"x"</span>]),</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>            <span class="st">"y"</span>: xr.DataArray(ys[:, <span class="dv">0</span>], dims<span class="op">=</span>[<span class="st">"y"</span>]),</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lat"</span>: xr.DataArray(lat, dims<span class="op">=</span>[<span class="st">"y"</span>, <span class="st">"x"</span>]),</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lon"</span>: xr.DataArray(lon, dims<span class="op">=</span>[<span class="st">"y"</span>, <span class="st">"x"</span>]),</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lat_b"</span>: xr.DataArray(lat_b, dims<span class="op">=</span>[<span class="st">"y_b"</span>, <span class="st">"x_b"</span>]),</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lon_b"</span>: xr.DataArray(lon_b, dims<span class="op">=</span>[<span class="st">"y_b"</span>, <span class="st">"x_b"</span>]),</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-6" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    ds <span class="op">=</span> regrid()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[4], line 2</span>
-<span class="ansi-green-fg ansi-bold">      1</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,0,135)">__name__</span> <span style="color:rgb(98,98,98)">==</span> <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">__main__</span><span style="color:rgb(175,0,0)">"</span>:
-<span class="ansi-green-fg">----&gt; 2</span>     ds <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">regrid</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-
-Cell <span class="ansi-green-fg">In[3], line 14</span>, in <span class="ansi-cyan-fg">regrid</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg ansi-bold">     12</span> <span style="font-weight:bold;color:rgb(0,135,0)">with</span> fs<span style="color:rgb(98,98,98)">.</span>open(src, <span style="color:rgb(98,98,98)">*</span><span style="color:rgb(98,98,98)">*</span>fsspec_caching) <span style="font-weight:bold;color:rgb(0,135,0)">as</span> f:
-<span class="ansi-green-fg ansi-bold">     13</span>     da <span style="color:rgb(98,98,98)">=</span> xr<span style="color:rgb(98,98,98)">.</span>open_dataset(f, engine<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">h5netcdf</span><span style="color:rgb(175,0,0)">"</span>)[variable]
-<span class="ansi-green-fg">---&gt; 14</span>     regridder <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">xe</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">Regridder</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">da</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">target_grid</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">nearest_s2d</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">periodic</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg"> </span><span style="font-weight:bold;color:rgb(0,135,0)" class="ansi-yellow-bg">True</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">extrap_method</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">nearest_s2d</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">ignore_degenerate</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="font-weight:bold;color:rgb(0,135,0)" class="ansi-yellow-bg">True</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">     15</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> regridder(da)
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/xesmf/frontend.py:919</span>, in <span class="ansi-cyan-fg">Regridder.__init__</span><span class="ansi-blue-fg">(self, ds_in, ds_out, method, locstream_in, locstream_out, periodic, parallel, **kwargs)</span>
-<span class="ansi-green-fg ansi-bold">    917</span>     grid_in, shape_in, input_dims <span style="color:rgb(98,98,98)">=</span> ds_to_ESMFlocstream(ds_in)
-<span class="ansi-green-fg ansi-bold">    918</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">--&gt; 919</span>     grid_in, shape_in, input_dims <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">ds_to_ESMFgrid</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-fg ansi-bold">    920</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">ds_in</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">need_bounds</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">need_bounds</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">periodic</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">periodic</span>
-<span class="ansi-green-fg ansi-bold">    921</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">    922</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> locstream_out:
-<span class="ansi-green-fg ansi-bold">    923</span>     grid_out, shape_out, output_dims <span style="color:rgb(98,98,98)">=</span> ds_to_ESMFlocstream(ds_out)
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/xesmf/frontend.py:164</span>, in <span class="ansi-cyan-fg">ds_to_ESMFgrid</span><span class="ansi-blue-fg">(ds, need_bounds, periodic, append)</span>
-<span class="ansi-green-fg ansi-bold">    162</span>     grid <span style="color:rgb(98,98,98)">=</span> Grid<span style="color:rgb(98,98,98)">.</span>from_xarray(lon<span style="color:rgb(98,98,98)">.</span>T, lat<span style="color:rgb(98,98,98)">.</span>T, periodic<span style="color:rgb(98,98,98)">=</span>periodic, mask<span style="color:rgb(98,98,98)">=</span>mask<span style="color:rgb(98,98,98)">.</span>T)
-<span class="ansi-green-fg ansi-bold">    163</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">--&gt; 164</span>     grid <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">Grid</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">from_xarray</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">lon</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">T</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">lat</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">T</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">periodic</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">periodic</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">mask</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="font-weight:bold;color:rgb(0,135,0)" class="ansi-yellow-bg">None</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">    166</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> need_bounds:
-<span class="ansi-green-fg ansi-bold">    167</span>     lon_b, lat_b <span style="color:rgb(98,98,98)">=</span> _get_lon_lat_bounds(ds)
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/xesmf/backend.py:114</span>, in <span class="ansi-cyan-fg">Grid.from_xarray</span><span class="ansi-blue-fg">(cls, lon, lat, periodic, mask)</span>
-<span class="ansi-green-fg ansi-bold">    108</span>     num_peri_dims <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>
-<span class="ansi-green-fg ansi-bold">    110</span> <span style="font-style:italic;color:rgb(95,135,135)"># ESMPy documentation claims that if staggerloc and coord_sys are None,</span>
-<span class="ansi-green-fg ansi-bold">    111</span> <span style="font-style:italic;color:rgb(95,135,135)"># they will be set to default values (CENTER and SPH_DEG).</span>
-<span class="ansi-green-fg ansi-bold">    112</span> <span style="font-style:italic;color:rgb(95,135,135)"># However, they actually need to be set explicitly,</span>
-<span class="ansi-green-fg ansi-bold">    113</span> <span style="font-style:italic;color:rgb(95,135,135)"># otherwise grid._coord_sys and grid._staggerloc will still be None.</span>
-<span class="ansi-green-fg">--&gt; 114</span> grid <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">cls</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-fg ansi-bold">    115</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">np</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">array</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">lon</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">shape</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    116</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">staggerloc</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">staggerloc</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    117</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">coord_sys</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">ESMF</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">CoordSys</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">SPH_DEG</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    118</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">num_peri_dims</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">num_peri_dims</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    119</span> <span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">    121</span> <span style="font-style:italic;color:rgb(95,135,135)"># The grid object points to the underlying Fortran arrays in ESMF.</span>
-<span class="ansi-green-fg ansi-bold">    122</span> <span style="font-style:italic;color:rgb(95,135,135)"># To modify lat/lon coordinates, need to get pointers to them</span>
-<span class="ansi-green-fg ansi-bold">    123</span> lon_pointer <span style="color:rgb(98,98,98)">=</span> grid<span style="color:rgb(98,98,98)">.</span>get_coords(coord_dim<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">0</span>, staggerloc<span style="color:rgb(98,98,98)">=</span>staggerloc)
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/esmpy/util/decorators.py:59</span>, in <span class="ansi-cyan-fg">initialize.&lt;locals&gt;.new_func</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
-<span class="ansi-green-fg ansi-bold">     56</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">esmpy</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">api</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> esmpymanager
-<span class="ansi-green-fg ansi-bold">     58</span> esmp <span style="color:rgb(98,98,98)">=</span> esmpymanager<span style="color:rgb(98,98,98)">.</span>Manager(debug <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">False</span>)
-<span class="ansi-green-fg">---&gt; 59</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">func</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/esmpy/api/grid.py:479</span>, in <span class="ansi-cyan-fg">Grid.__init__</span><span class="ansi-blue-fg">(self, max_index, num_peri_dims, periodic_dim, pole_dim, coord_sys, coord_typekind, staggerloc, pole_kind, filename, filetype, reg_decomp, decompflag, is_sphere, add_corner_stagger, add_user_area, add_mask, varname, coord_names, tilesize, regDecompPTile, name)</span>
-<span class="ansi-green-fg ansi-bold">    454</span> <span style="font-style:italic;color:rgb(95,135,135)"># if self.decount == 1:</span>
-<span class="ansi-green-fg ansi-bold">    455</span> <span style="font-style:italic;color:rgb(95,135,135)"># elif self.decount &gt; 1:</span>
-<span class="ansi-green-fg ansi-bold">    456</span> <span style="font-style:italic;color:rgb(95,135,135)">#     # lower_bounds[de][staggerLoc]</span>
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-fg ansi-bold">    476</span> 
-<span class="ansi-green-fg ansi-bold">    477</span> <span style="font-style:italic;color:rgb(95,135,135)"># Add coordinates if a staggerloc is specified</span>
-<span class="ansi-green-fg ansi-bold">    478</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="color:rgb(0,135,0)">isinstance</span>(staggerloc, <span style="color:rgb(0,135,0)">type</span>(<span style="font-weight:bold;color:rgb(0,135,0)">None</span>)):
-<span class="ansi-green-fg">--&gt; 479</span>     <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">add_coords</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">staggerloc</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">staggerloc</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">from_file</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">from_file</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">    481</span> <span style="font-style:italic;color:rgb(95,135,135)"># Add items if they are specified, this is done after the</span>
-<span class="ansi-green-fg ansi-bold">    482</span> <span style="font-style:italic;color:rgb(95,135,135)"># mask and area are initialized</span>
-<span class="ansi-green-fg ansi-bold">    483</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> add_user_area:
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/esmpy/api/grid.py:837</span>, in <span class="ansi-cyan-fg">Grid.add_coords</span><span class="ansi-blue-fg">(self, staggerloc, coord_dim, from_file)</span>
-<span class="ansi-green-fg ansi-bold">    834</span>     ESMP_GridAddCoord(<span style="color:rgb(0,135,0)">self</span>, staggerloc<span style="color:rgb(98,98,98)">=</span>stagger)
-<span class="ansi-green-fg ansi-bold">    836</span> <span style="font-style:italic;color:rgb(95,135,135)"># and now for Python</span>
-<span class="ansi-green-fg">--&gt; 837</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_allocate_coords_</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">stagger</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">from_file</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">from_file</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">    839</span> <span style="font-style:italic;color:rgb(95,135,135)"># set the staggerlocs to be done</span>
-<span class="ansi-green-fg ansi-bold">    840</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>staggerloc[stagger] <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">True</span>
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/esmpy/api/grid.py:1062</span>, in <span class="ansi-cyan-fg">Grid._allocate_coords_</span><span class="ansi-blue-fg">(self, stagger, localde, from_file)</span>
-<span class="ansi-green-fg ansi-bold">   1060</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> (<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>ndims <span style="color:rgb(98,98,98)">==</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>rank) <span style="font-weight:bold;color:rgb(175,0,255)">or</span> (<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>ndims <span style="color:rgb(98,98,98)">==</span> <span style="color:rgb(98,98,98)">0</span>):
-<span class="ansi-green-fg ansi-bold">   1061</span>     <span style="font-weight:bold;color:rgb(0,135,0)">for</span> xyz <span style="font-weight:bold;color:rgb(175,0,255)">in</span> <span style="color:rgb(0,135,0)">range</span>(<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>rank):
-<span class="ansi-green-fg">-&gt; 1062</span>         <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_link_coord_buffer_</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">xyz</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">stagger</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">localde</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">   1063</span> <span style="font-style:italic;color:rgb(95,135,135)"># and this way if we have 1d coordinates</span>
-<span class="ansi-green-fg ansi-bold">   1064</span> <span style="font-weight:bold;color:rgb(0,135,0)">elif</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>ndims <span style="color:rgb(98,98,98)">&lt;</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>rank:
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/esmpy/api/grid.py:1112</span>, in <span class="ansi-cyan-fg">Grid._link_coord_buffer_</span><span class="ansi-blue-fg">(self, coord_dim, stagger, localde)</span>
-<span class="ansi-green-fg ansi-bold">   1109</span> data <span style="color:rgb(98,98,98)">=</span> ESMP_GridGetCoordPtr(<span style="color:rgb(0,135,0)">self</span>, coord_dim, staggerloc<span style="color:rgb(98,98,98)">=</span>stagger, localde<span style="color:rgb(98,98,98)">=</span>localde)
-<span class="ansi-green-fg ansi-bold">   1110</span> lb, ub <span style="color:rgb(98,98,98)">=</span> ESMP_GridGetCoordBounds(<span style="color:rgb(0,135,0)">self</span>, staggerloc<span style="color:rgb(98,98,98)">=</span>stagger, localde<span style="color:rgb(98,98,98)">=</span>localde)
-<span class="ansi-green-fg">-&gt; 1112</span> gridCoordP <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">ndarray_from_esmf</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">data</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">type</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">ub</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">-</span><span class="ansi-yellow-bg">lb</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">   1114</span> <span style="font-style:italic;color:rgb(95,135,135)"># alias the coordinates to a grid property</span>
-<span class="ansi-green-fg ansi-bold">   1115</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_coords[stagger][coord_dim] <span style="color:rgb(98,98,98)">=</span> gridCoordP
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/esmpy/util/esmpyarray.py:38</span>, in <span class="ansi-cyan-fg">ndarray_from_esmf</span><span class="ansi-blue-fg">(data, dtype, shape)</span>
-<span class="ansi-green-fg ansi-bold">     33</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg ansi-bold">     34</span>     buffer <span style="color:rgb(98,98,98)">=</span> np<span style="color:rgb(98,98,98)">.</span>core<span style="color:rgb(98,98,98)">.</span>multiarray<span style="color:rgb(98,98,98)">.</span>int_asbuffer(
-<span class="ansi-green-fg ansi-bold">     35</span>         ct<span style="color:rgb(98,98,98)">.</span>addressof(data<span style="color:rgb(98,98,98)">.</span>contents), size)
-<span class="ansi-green-fg">---&gt; 38</span> esmfarray <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">np</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">ndarray</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">tuple</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">shape</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">:</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">constants</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_ESMF2PythonType</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">dtype</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">     39</span> <span class="ansi-yellow-bg">                       </span><span class="ansi-yellow-bg">buffer</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">order</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">F</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">     41</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> esmfarray
-
-<span class="ansi-red-fg">TypeError</span>: buffer is too small for requested array</pre>
+<div id="cell-7" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> regrid():</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    fs <span class="op">=</span> configure_fs_auth()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    fsspec_caching <span class="op">=</span> {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"cache_type"</span>: <span class="st">"none"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    target_grid <span class="op">=</span> make_grid_ds()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> fs.<span class="bu">open</span>(src, <span class="op">**</span>fsspec_caching) <span class="im">as</span> f:</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        da <span class="op">=</span> xr.open_dataset(f, engine<span class="op">=</span><span class="st">"h5netcdf"</span>)[variable]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        regridder <span class="op">=</span> xe.Regridder(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            da,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            target_grid,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"nearest_s2d"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            periodic<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            extrap_method<span class="op">=</span><span class="st">"nearest_s2d"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>            ignore_degenerate<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> regridder(da)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
+<div id="cell-8" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    ds <span class="op">=</span> regrid()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1304,7 +1226,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.dev/developmentseed/warp-resample-profiling/blob/main/examples/future-resample-xesmf-h5netcdf-.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.dev/developmentseed/warp-resample-profiling/blob/main/examples/future-resample-xesmf-h5netcdf-.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

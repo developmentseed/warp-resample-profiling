@@ -139,11 +139,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="cell-2" class="cell" data-execution_count="1">
+<div id="cell-2" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio <span class="im">as</span> rio</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> geoutils <span class="im">import</span> Raster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-3" class="cell" data-execution_count="2">
+<div id="cell-3" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> configure_auth():</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> boto3</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> earthaccess</span>
@@ -163,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    rio_env.<span class="fu">__enter__</span>()</span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rio_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-4" class="cell" data-execution_count="3">
+<div id="cell-4" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_data():</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    bucket <span class="op">=</span> <span class="st">"podaac-ops-cumulus-protected"</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    input_uri <span class="op">=</span> <span class="st">"MUR-JPL-L4-GLOB-v4.1/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.nc"</span></span>
@@ -172,62 +172,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> Raster(da)</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> da.load()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-5" class="cell" data-execution_count="4">
+<div id="cell-5" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    rio_env <span class="op">=</span> configure_auth()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> load_data()</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    rio_env.<span class="fu">__exit__</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/opt/conda/lib/python3.11/site-packages/rasterio/__init__.py:304: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
-  dataset = DatasetReader(path, driver=driver, sharing=sharing, **kwargs)</code></pre>
-</div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">IndexError</span>                                Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[4], line 3</span>
-<span class="ansi-green-fg ansi-bold">      1</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,0,135)">__name__</span> <span style="color:rgb(98,98,98)">==</span> <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">__main__</span><span style="color:rgb(175,0,0)">"</span>:
-<span class="ansi-green-fg ansi-bold">      2</span>     rio_env <span style="color:rgb(98,98,98)">=</span> configure_auth()
-<span class="ansi-green-fg">----&gt; 3</span>     da <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">load_data</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">      4</span>     rio_env<span style="color:rgb(98,98,98)">.</span><span style="color:rgb(0,0,255)">__exit__</span>()
-
-Cell <span class="ansi-green-fg">In[3], line 7</span>, in <span class="ansi-cyan-fg">load_data</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg ansi-bold">      5</span> da <span style="color:rgb(98,98,98)">=</span> rio<span style="color:rgb(98,98,98)">.</span>open(src)
-<span class="ansi-green-fg ansi-bold">      6</span> da <span style="color:rgb(98,98,98)">=</span> Raster(da)
-<span class="ansi-green-fg">----&gt; 7</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">da</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">load</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/geoutils/raster/raster.py:731</span>, in <span class="ansi-cyan-fg">Raster.load</span><span class="ansi-blue-fg">(self, bands, **kwargs)</span>
-<span class="ansi-green-fg ansi-bold">    729</span> <span style="font-style:italic;color:rgb(95,135,135)"># If a downsampled out_shape was defined during instantiation</span>
-<span class="ansi-green-fg ansi-bold">    730</span> <span style="font-weight:bold;color:rgb(0,135,0)">with</span> rio<span style="color:rgb(98,98,98)">.</span>open(<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>filename) <span style="font-weight:bold;color:rgb(0,135,0)">as</span> dataset:
-<span class="ansi-green-fg">--&gt; 731</span>     <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>data <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_load_rio</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-fg ansi-bold">    732</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">dataset</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    733</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">indexes</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">list</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">valid_bands</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    734</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">masked</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_masked</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    735</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">transform</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">transform</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    736</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">shape</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">shape</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    737</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">out_shape</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_out_shape</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    738</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">out_count</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_out_count</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    739</span> <span class="ansi-yellow-bg">        </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    740</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">    742</span> <span style="font-style:italic;color:rgb(95,135,135)"># Probably don't want to use set_nodata() that updates the array</span>
-<span class="ansi-green-fg ansi-bold">    743</span> <span style="font-style:italic;color:rgb(95,135,135)"># Set nodata value with the loaded array</span>
-<span class="ansi-green-fg ansi-bold">    744</span> <span style="font-style:italic;color:rgb(95,135,135)"># if self._nodata is not None:</span>
-<span class="ansi-green-fg ansi-bold">    745</span> <span style="font-style:italic;color:rgb(95,135,135)">#     self.set_nodata(nodata=self._nodata)</span>
-<span class="ansi-green-fg ansi-bold">    746</span> 
-<span class="ansi-green-fg ansi-bold">    747</span> <span style="font-style:italic;color:rgb(95,135,135)"># To have is_modified work correctly when data is loaded implicitly (not in init)</span>
-<span class="ansi-green-fg ansi-bold">    748</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_is_modified <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">False</span>
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/geoutils/raster/raster.py:247</span>, in <span class="ansi-cyan-fg">_load_rio</span><span class="ansi-blue-fg">(dataset, indexes, masked, transform, shape, out_count, **kwargs)</span>
-<span class="ansi-green-fg ansi-bold">    245</span>     data <span style="color:rgb(98,98,98)">=</span> dataset<span style="color:rgb(98,98,98)">.</span>read(masked<span style="color:rgb(98,98,98)">=</span>masked, window<span style="color:rgb(98,98,98)">=</span>window, <span style="color:rgb(98,98,98)">*</span><span style="color:rgb(98,98,98)">*</span>kwargs)
-<span class="ansi-green-fg ansi-bold">    246</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">--&gt; 247</span>     data <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">dataset</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">read</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">indexes</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">indexes</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">masked</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">masked</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">window</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">window</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">    248</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> data
-
-File <span class="ansi-green-fg">rasterio/_io.pyx:535</span>, in <span class="ansi-cyan-fg">rasterio._io.DatasetReaderBase.read</span><span class="ansi-blue-fg">()</span>
-
-<span class="ansi-red-fg">IndexError</span>: band index 1 out of range (not in ())</pre>
-</div>
-</div>
 </div>
 
 

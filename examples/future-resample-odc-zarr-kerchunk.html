@@ -478,7 +478,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../examples/process-results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Memory and time usage</span></a>
+ <span class="menu-text">Memory and time usage (MURSST)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/process-gpm-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Memory and time usage (GPM IMERG)</span></a>
   </div>
 </li>
       </ul>
@@ -513,14 +519,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="cell-2" class="cell" data-execution_count="1">
+<div id="cell-2" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> earthaccess</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fsspec</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> odc.geo.geobox <span class="im">import</span> GeoBox</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> odc.geo.xr <span class="im">import</span> xr_reproject</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-3" class="cell" data-execution_count="2">
+<div id="cell-3" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> warp_resample():</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    src <span class="op">=</span> <span class="st">"earthaccess_data/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.json"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    variable <span class="op">=</span> <span class="st">"analysed_sst"</span></span>
@@ -548,110 +554,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> da.odc.assign_crs(srcSRS)</span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xr_reproject(da, gbox)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-4" class="cell" data-execution_count="3">
+<div id="cell-4" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    da, gbox <span class="op">=</span> warp_resample()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">GEOSException</span>                             Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[3], line 2</span>
-<span class="ansi-green-fg ansi-bold">      1</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,0,135)">__name__</span> <span style="color:rgb(98,98,98)">==</span> <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">__main__</span><span style="color:rgb(175,0,0)">"</span>:
-<span class="ansi-green-fg">----&gt; 2</span>     da, gbox <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">warp_resample</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-
-Cell <span class="ansi-green-fg">In[2], line 24</span>, in <span class="ansi-cyan-fg">warp_resample</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg ansi-bold">     22</span> gbox <span style="color:rgb(98,98,98)">=</span> GeoBox<span style="color:rgb(98,98,98)">.</span>from_bbox(te, dstSRS, shape<span style="color:rgb(98,98,98)">=</span>(height, width))
-<span class="ansi-green-fg ansi-bold">     23</span> da <span style="color:rgb(98,98,98)">=</span> da<span style="color:rgb(98,98,98)">.</span>odc<span style="color:rgb(98,98,98)">.</span>assign_crs(srcSRS)
-<span class="ansi-green-fg">---&gt; 24</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">xr_reproject</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">da</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">gbox</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/odc/geo/_xr_interop.py:744</span>, in <span class="ansi-cyan-fg">xr_reproject</span><span class="ansi-blue-fg">(src, how, resampling, dst_nodata, dtype, resolution, shape, tight, anchor, tol, round_resolution, **kw)</span>
-<span class="ansi-green-fg ansi-bold">    734</span> kw <span style="color:rgb(98,98,98)">=</span> {
-<span class="ansi-green-fg ansi-bold">    735</span>     <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">shape</span><span style="color:rgb(175,0,0)">"</span>: shape,
-<span class="ansi-green-fg ansi-bold">    736</span>     <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">resolution</span><span style="color:rgb(175,0,0)">"</span>: resolution,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-fg ansi-bold">    741</span>     <span style="color:rgb(98,98,98)">*</span><span style="color:rgb(98,98,98)">*</span>kw,
-<span class="ansi-green-fg ansi-bold">    742</span> }
-<span class="ansi-green-fg ansi-bold">    743</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,135,0)">isinstance</span>(src, xarray<span style="color:rgb(98,98,98)">.</span>DataArray):
-<span class="ansi-green-fg">--&gt; 744</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">_xr_reproject_da</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-fg ansi-bold">    745</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">src</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">how</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">resampling</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">resampling</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">dst_nodata</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">dst_nodata</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">dtype</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">dtype</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kw</span>
-<span class="ansi-green-fg ansi-bold">    746</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">    747</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> _xr_reproject_ds(
-<span class="ansi-green-fg ansi-bold">    748</span>     src, how, resampling<span style="color:rgb(98,98,98)">=</span>resampling, dst_nodata<span style="color:rgb(98,98,98)">=</span>dst_nodata, dtype<span style="color:rgb(98,98,98)">=</span>dtype, <span style="color:rgb(98,98,98)">*</span><span style="color:rgb(98,98,98)">*</span>kw
-<span class="ansi-green-fg ansi-bold">    749</span> )
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/odc/geo/_xr_interop.py:849</span>, in <span class="ansi-cyan-fg">_xr_reproject_da</span><span class="ansi-blue-fg">(src, how, resampling, dst_nodata, dtype, **kw)</span>
-<span class="ansi-green-fg ansi-bold">    846</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> is_dask_collection(src):
-<span class="ansi-green-fg ansi-bold">    847</span>     <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">_dask</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> dask_rio_reproject
-<span class="ansi-green-fg">--&gt; 849</span>     dst: Any <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">dask_rio_reproject</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-fg ansi-bold">    850</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">src</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">data</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    851</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">src_gbox</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    852</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">dst_geobox</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    853</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">resampling</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">resampling</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    854</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">src_nodata</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">src_nodata</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    855</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">dst_nodata</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">fill_value</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    856</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">ydim</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">ydim</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    857</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">dtype</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">dtype</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    858</span> <span class="ansi-yellow-bg">        </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kw</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg ansi-bold">    859</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">    860</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg ansi-bold">    861</span>     dst <span style="color:rgb(98,98,98)">=</span> numpy<span style="color:rgb(98,98,98)">.</span>full(dst_shape, fill_value, dtype<span style="color:rgb(98,98,98)">=</span>dtype)
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/odc/geo/_dask.py:97</span>, in <span class="ansi-cyan-fg">dask_rio_reproject</span><span class="ansi-blue-fg">(src, s_gbox, d_gbox, resampling, src_nodata, dst_nodata, ydim, chunks, dtype, **kwargs)</span>
-<span class="ansi-green-fg ansi-bold">     95</span> gbt_src <span style="color:rgb(98,98,98)">=</span> GeoboxTiles(s_gbox, src<span style="color:rgb(98,98,98)">.</span>chunks[ydim : ydim <span style="color:rgb(98,98,98)">+</span> <span style="color:rgb(98,98,98)">2</span>])
-<span class="ansi-green-fg ansi-bold">     96</span> gbt_dst <span style="color:rgb(98,98,98)">=</span> GeoboxTiles(d_gbox, chunks)
-<span class="ansi-green-fg">---&gt; 97</span> d2s_idx <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">gbt_dst</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">grid_intersect</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">gbt_src</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">     99</span> dst_shape <span style="color:rgb(98,98,98)">=</span> with_yx(src<span style="color:rgb(98,98,98)">.</span>shape, d_gbox<span style="color:rgb(98,98,98)">.</span>shape<span style="color:rgb(98,98,98)">.</span>yx)
-<span class="ansi-green-fg ansi-bold">    100</span> dst_chunks: Tuple[Tuple[<span style="color:rgb(0,135,0)">int</span>, <span style="color:rgb(98,98,98)">.</span><span style="color:rgb(98,98,98)">.</span><span style="color:rgb(98,98,98)">.</span>], <span style="color:rgb(98,98,98)">.</span><span style="color:rgb(98,98,98)">.</span><span style="color:rgb(98,98,98)">.</span>] <span style="color:rgb(98,98,98)">=</span> with_yx(src<span style="color:rgb(98,98,98)">.</span>chunks, gbt_dst<span style="color:rgb(98,98,98)">.</span>chunks)
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/odc/geo/geobox.py:1530</span>, in <span class="ansi-cyan-fg">GeoboxTiles.grid_intersect</span><span class="ansi-blue-fg">(self, src)</span>
-<span class="ansi-green-fg ansi-bold">   1526</span>     src_footprint <span style="color:rgb(98,98,98)">=</span> src<span style="color:rgb(98,98,98)">.</span>base<span style="color:rgb(98,98,98)">.</span>extent
-<span class="ansi-green-fg ansi-bold">   1527</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg ansi-bold">   1528</span>     <span style="font-style:italic;color:rgb(95,135,135)"># compute "robust" source footprint in CRS of self via espg:4326</span>
-<span class="ansi-green-fg ansi-bold">   1529</span>     src_footprint <span style="color:rgb(98,98,98)">=</span> (
-<span class="ansi-green-fg">-&gt; 1530</span>         <span class="ansi-yellow-bg">src</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">base</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">footprint</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">4326</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">2</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">&amp;</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">base</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">footprint</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">4326</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">2</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">   1531</span>     )<span style="color:rgb(98,98,98)">.</span>to_crs(<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>base<span style="color:rgb(98,98,98)">.</span>crs)
-<span class="ansi-green-fg ansi-bold">   1533</span> xy_chunks_with_data <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">list</span>(<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>tiles(src_footprint))
-<span class="ansi-green-fg ansi-bold">   1534</span> deps: Dict[Tuple[<span style="color:rgb(0,135,0)">int</span>, <span style="color:rgb(0,135,0)">int</span>], List[Tuple[<span style="color:rgb(0,135,0)">int</span>, <span style="color:rgb(0,135,0)">int</span>]]] <span style="color:rgb(98,98,98)">=</span> {}
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/odc/geo/geom.py:387</span>, in <span class="ansi-cyan-fg">wrap_shapely.&lt;locals&gt;.wrapped</span><span class="ansi-blue-fg">(*args)</span>
-<span class="ansi-green-fg ansi-bold">    384</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> first<span style="color:rgb(98,98,98)">.</span>crs <span style="color:rgb(98,98,98)">!=</span> arg<span style="color:rgb(98,98,98)">.</span>crs:
-<span class="ansi-green-fg ansi-bold">    385</span>         <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> CRSMismatchError((first<span style="color:rgb(98,98,98)">.</span>crs, arg<span style="color:rgb(98,98,98)">.</span>crs))
-<span class="ansi-green-fg">--&gt; 387</span> result <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">method</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">arg</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">geom</span><span class="ansi-yellow-bg"> </span><span style="font-weight:bold;color:rgb(0,135,0)" class="ansi-yellow-bg">for</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">arg</span><span class="ansi-yellow-bg"> </span><span style="font-weight:bold;color:rgb(175,0,255)" class="ansi-yellow-bg">in</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">    388</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,135,0)">isinstance</span>(result, base<span style="color:rgb(98,98,98)">.</span>BaseGeometry):
-<span class="ansi-green-fg ansi-bold">    389</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> Geometry(result, first<span style="color:rgb(98,98,98)">.</span>crs)
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/odc/geo/geom.py:536</span>, in <span class="ansi-cyan-fg">Geometry.__and__</span><span class="ansi-blue-fg">(self, other)</span>
-<span class="ansi-green-fg ansi-bold">    535</span> <span style="color:rgb(175,0,255)">@wrap_shapely</span>
-<span class="ansi-green-fg">--&gt; 536</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span> <span style="color:rgb(0,0,255)">__and__</span>(<span style="color:rgb(0,135,0)">self</span>, other: <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Geometry</span><span style="color:rgb(175,0,0)">"</span>) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Geometry</span><span style="color:rgb(175,0,0)">"</span>: <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span style="color:rgb(0,0,255)" class="ansi-yellow-bg">__and__</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">other</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/shapely/geometry/base.py:189</span>, in <span class="ansi-cyan-fg">BaseGeometry.__and__</span><span class="ansi-blue-fg">(self, other)</span>
-<span class="ansi-green-fg ansi-bold">    188</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span> <span style="color:rgb(0,0,255)">__and__</span>(<span style="color:rgb(0,135,0)">self</span>, other):
-<span class="ansi-green-fg">--&gt; 189</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">intersection</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">other</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/shapely/geometry/base.py:599</span>, in <span class="ansi-cyan-fg">BaseGeometry.intersection</span><span class="ansi-blue-fg">(self, other, grid_size)</span>
-<span class="ansi-green-fg ansi-bold">    593</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span> <span style="color:rgb(0,0,255)">intersection</span>(<span style="color:rgb(0,135,0)">self</span>, other, grid_size<span style="color:rgb(98,98,98)">=</span><span style="font-weight:bold;color:rgb(0,135,0)">None</span>):
-<span class="ansi-green-fg ansi-bold">    594</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic;color:rgb(175,0,0)">"""</span>
-<span class="ansi-green-fg ansi-bold">    595</span> <span style="font-style:italic;color:rgb(175,0,0)">    Returns the intersection of the geometries.</span>
-<span class="ansi-green-fg ansi-bold">    596</span> 
-<span class="ansi-green-fg ansi-bold">    597</span> <span style="font-style:italic;color:rgb(175,0,0)">    Refer to `shapely.intersection` for full documentation.</span>
-<span class="ansi-green-fg ansi-bold">    598</span> <span style="font-style:italic;color:rgb(175,0,0)">    """</span>
-<span class="ansi-green-fg">--&gt; 599</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">shapely</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">intersection</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">other</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">grid_size</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">grid_size</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/shapely/decorators.py:77</span>, in <span class="ansi-cyan-fg">multithreading_enabled.&lt;locals&gt;.wrapped</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
-<span class="ansi-green-fg ansi-bold">     75</span>     <span style="font-weight:bold;color:rgb(0,135,0)">for</span> arr <span style="font-weight:bold;color:rgb(175,0,255)">in</span> array_args:
-<span class="ansi-green-fg ansi-bold">     76</span>         arr<span style="color:rgb(98,98,98)">.</span>flags<span style="color:rgb(98,98,98)">.</span>writeable <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">False</span>
-<span class="ansi-green-fg">---&gt; 77</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">func</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">     78</span> <span style="font-weight:bold;color:rgb(0,135,0)">finally</span>:
-<span class="ansi-green-fg ansi-bold">     79</span>     <span style="font-weight:bold;color:rgb(0,135,0)">for</span> arr, old_flag <span style="font-weight:bold;color:rgb(175,0,255)">in</span> <span style="color:rgb(0,135,0)">zip</span>(array_args, old_flags):
-
-File <span class="ansi-green-fg">/opt/conda/lib/python3.11/site-packages/shapely/set_operations.py:131</span>, in <span class="ansi-cyan-fg">intersection</span><span class="ansi-blue-fg">(a, b, grid_size, **kwargs)</span>
-<span class="ansi-green-fg ansi-bold">    127</span>         <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">ValueError</span>(<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">grid_size parameter only accepts scalar values</span><span style="color:rgb(175,0,0)">"</span>)
-<span class="ansi-green-fg ansi-bold">    129</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> lib<span style="color:rgb(98,98,98)">.</span>intersection_prec(a, b, grid_size, <span style="color:rgb(98,98,98)">*</span><span style="color:rgb(98,98,98)">*</span>kwargs)
-<span class="ansi-green-fg">--&gt; 131</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">lib</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">intersection</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">a</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">b</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
-
-<span class="ansi-red-fg">GEOSException</span>: TopologyException: side location conflict at 0 -85.287757732815791. This can occur if the input geometry is invalid.</pre>
-</div>
-</div>
 </div>
 
 

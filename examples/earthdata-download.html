@@ -478,7 +478,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../examples/process-results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Memory and time usage</span></a>
+ <span class="menu-text">Memory and time usage (MURSST)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/process-gpm-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Memory and time usage (GPM IMERG)</span></a>
   </div>
 </li>
       </ul>
@@ -493,9 +499,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#authenticate-via-earthaccess" id="toc-authenticate-via-earthaccess" class="nav-link active" data-scroll-target="#authenticate-via-earthaccess">Authenticate via earthaccess</a></li>
-  <li><a href="#download-mur-sst-dataset" id="toc-download-mur-sst-dataset" class="nav-link" data-scroll-target="#download-mur-sst-dataset">Download MUR-SST dataset</a></li>
-  <li><a href="#virtualize-mur-sst-dataset" id="toc-virtualize-mur-sst-dataset" class="nav-link" data-scroll-target="#virtualize-mur-sst-dataset">Virtualize MUR-SST dataset</a></li>
+  <li><a href="#setup-earthaccess-query-parameters" id="toc-setup-earthaccess-query-parameters" class="nav-link active" data-scroll-target="#setup-earthaccess-query-parameters">Setup earthaccess query parameters</a></li>
+  <li><a href="#authenticate-via-earthaccess" id="toc-authenticate-via-earthaccess" class="nav-link" data-scroll-target="#authenticate-via-earthaccess">Authenticate via earthaccess</a></li>
+  <li><a href="#download-dataset" id="toc-download-dataset" class="nav-link" data-scroll-target="#download-dataset">Download dataset</a></li>
+  <li><a href="#virtualize-dataset" id="toc-virtualize-dataset" class="nav-link" data-scroll-target="#virtualize-dataset">Virtualize dataset</a></li>
   <li><a href="#load-results" id="toc-load-results" class="nav-link" data-scroll-target="#load-results">Load results</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.dev/developmentseed/warp-resample-profiling/blob/main/examples/earthdata-download.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -522,70 +529,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="74f11323" class="cell">
+<div id="1" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> earthaccess</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fsspec</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> virtualizarr <span class="im">import</span> open_virtual_dataset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> common <span class="im">import</span> earthaccess_args</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="setup-earthaccess-query-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="setup-earthaccess-query-parameters">Setup earthaccess query parameters</h3>
+<div id="3" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> <span class="st">"gpm_imerg"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataset_args <span class="op">=</span> earthaccess_args[dataset]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>concept_id <span class="op">=</span> dataset_args[<span class="st">"concept_id"</span>]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> dataset_args[<span class="st">"filename"</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>variable <span class="op">=</span> dataset_args[<span class="st">"variable"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section id="authenticate-via-earthaccess" class="level3">
 <h3 class="anchored" data-anchor-id="authenticate-via-earthaccess">Authenticate via earthaccess</h3>
-<div id="81c3509c" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>earthaccess.login()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="5" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>earthaccess.login()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="download-mur-sst-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="download-mur-sst-dataset">Download MUR-SST dataset</h3>
-<div id="cb5cfc7c" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> earthaccess.search_data(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    concept_id<span class="op">=</span><span class="st">"C1996881146-POCLOUD"</span>, count<span class="op">=</span><span class="dv">1</span>, temporal<span class="op">=</span>(<span class="st">"2002-06-01"</span>, <span class="st">"2002-06-01"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> earthaccess.download(results, <span class="st">"earthaccess_data"</span>)[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="download-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="download-dataset">Download dataset</h3>
+<div id="7" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> earthaccess.search_data(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    concept_id<span class="op">=</span>concept_id, count<span class="op">=</span><span class="dv">1</span>, temporal<span class="op">=</span>(<span class="st">"2002-06-01"</span>, <span class="st">"2002-06-01"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> earthaccess.download(results, <span class="st">"earthaccess_data"</span>)[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="virtualize-mur-sst-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="virtualize-mur-sst-dataset">Virtualize MUR-SST dataset</h3>
-<div id="6f983707" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> virtualize_dataset(local_fp):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create a virtual reference file for a dataset"""</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> local_to_s3_url(old_local_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Replace local path to s3 uri for all chucks"""</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        new_s3_bucket_url <span class="op">=</span> Path(<span class="st">"/"</span>.join(s3_uri.split(<span class="st">"/"</span>)[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]))</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        filename <span class="op">=</span> Path(old_local_path).name</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        new_path <span class="op">=</span> <span class="ss">f"s3:/</span><span class="sc">{</span><span class="bu">str</span>(new_s3_bucket_url <span class="op">/</span> filename)<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> new_path</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    s3_uri <span class="op">=</span> results[<span class="dv">0</span>].data_links(access<span class="op">=</span><span class="st">"direct"</span>)[<span class="dv">0</span>]</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    output_fp <span class="op">=</span> <span class="ss">f"earthaccess_data/</span><span class="sc">{</span>s3_uri<span class="sc">.</span>split(<span class="st">'/'</span>)[<span class="op">-</span><span class="dv">1</span>]<span class="sc">.</span>strip(<span class="st">'.nc'</span>)<span class="sc">}</span><span class="ss">.json"</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(output_fp)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    virtual_ds <span class="op">=</span> open_virtual_dataset(<span class="bu">str</span>(local_fp), indexes<span class="op">=</span>{})</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    virtual_ds <span class="op">=</span> virtual_ds.virtualize.rename_paths(local_to_s3_url)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    virtual_ds.virtualize.to_kerchunk(output_fp, <span class="bu">format</span><span class="op">=</span><span class="st">"json"</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output_fp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="virtualize-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="virtualize-dataset">Virtualize dataset</h3>
+<div id="9" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> virtualizarr <span class="im">import</span> open_virtual_dataset  <span class="co"># noqa</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="6e2b7f77" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>output_fp <span class="op">=</span> virtualize_dataset(fp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="10" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> virtualize_dataset(local_fp):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create a virtual reference file for a dataset"""</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> local_to_s3_url(old_local_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Replace local path to s3 uri for all chucks"""</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        new_s3_bucket_url <span class="op">=</span> Path(<span class="st">"/"</span>.join(s3_uri.split(<span class="st">"/"</span>)[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        filename <span class="op">=</span> Path(old_local_path).name</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        new_path <span class="op">=</span> <span class="ss">f"s3:/</span><span class="sc">{</span><span class="bu">str</span>(new_s3_bucket_url <span class="op">/</span> filename)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> new_path</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    s3_uri <span class="op">=</span> results[<span class="dv">0</span>].data_links(access<span class="op">=</span><span class="st">"direct"</span>)[<span class="dv">0</span>]</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">".nc4"</span> <span class="kw">in</span> s3_uri:</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        output_fp <span class="op">=</span> <span class="ss">f"earthaccess_data/</span><span class="sc">{</span>s3_uri<span class="sc">.</span>split(<span class="st">'/'</span>)[<span class="op">-</span><span class="dv">1</span>][:<span class="op">-</span><span class="dv">4</span>]<span class="sc">}</span><span class="ss">.json"</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        output_fp <span class="op">=</span> <span class="ss">f"earthaccess_data/</span><span class="sc">{</span>s3_uri<span class="sc">.</span>split(<span class="st">'/'</span>)[<span class="op">-</span><span class="dv">1</span>][:<span class="op">-</span><span class="dv">3</span>]<span class="sc">}</span><span class="ss">.json"</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(output_fp)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    virtual_ds <span class="op">=</span> open_virtual_dataset(<span class="bu">str</span>(local_fp), indexes<span class="op">=</span>{})</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    virtual_ds <span class="op">=</span> virtual_ds.virtualize.rename_paths(local_to_s3_url)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    virtual_ds <span class="op">=</span> virtual_ds[[variable]]</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    virtual_ds.virtualize.to_kerchunk(output_fp, <span class="bu">format</span><span class="op">=</span><span class="st">"json"</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output_fp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="11" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>output_fp <span class="op">=</span> virtualize_dataset(fp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-results" class="level2">
 <h2 class="anchored" data-anchor-id="load-results">Load results</h2>
-<div id="172deb41-1051-4361-bb14-9caff964e602" class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>output_fp <span class="op">=</span> (</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"earthaccess_data/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.json"</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>earthaccess.login()</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>s3_fs <span class="op">=</span> earthaccess.get_s3fs_session(daac<span class="op">=</span><span class="st">"PODAAC"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>storage_options <span class="op">=</span> s3_fs.storage_options.copy()</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> fsspec.filesystem(<span class="st">"reference"</span>, fo<span class="op">=</span>output_fp)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> fs.get_mapper(<span class="st">""</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> xr.open_dataset(</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    m, engine<span class="op">=</span><span class="st">"kerchunk"</span>, chunks<span class="op">=</span>{}, storage_options<span class="op">=</span>storage_options</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>)  <span class="co"># normal xarray.Dataset object, wrapping dask/numpy arrays etc.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="13" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># output_fp = (</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     "earthaccess_data/20020601090000-JPL-L4_GHRSST-SSTfnd-MUR-GLOB-v02.0-fv04.1.json"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>output_fp <span class="op">=</span> <span class="st">"earthaccess_data/3B-DAY-E.MS.MRG.3IMERG.20020601-S000000-E235959.V07B.json"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>earthaccess.login()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>s3_fs <span class="op">=</span> earthaccess.get_s3fs_session(daac<span class="op">=</span><span class="st">"PODAAC"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>storage_options <span class="op">=</span> s3_fs.storage_options.copy()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> fsspec.filesystem(<span class="st">"reference"</span>, fo<span class="op">=</span>output_fp)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> fs.get_mapper(<span class="st">""</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> xr.open_dataset(</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    m, engine<span class="op">=</span><span class="st">"kerchunk"</span>, chunks<span class="op">=</span>{}, storage_options<span class="op">=</span>storage_options</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>)  <span class="co"># normal xarray.Dataset object, wrapping dask/numpy arrays etc.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
