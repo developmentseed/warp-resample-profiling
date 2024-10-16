@@ -106,7 +106,9 @@ website:
       - section: Profiling results
         contents:
           - href: examples/process-results.ipynb
-            text: Memory and time usage
+            text: Memory and time usage (MURSST)
+          - href: examples/process-gpm-results.ipynb
+            text: Memory and time usage (GPM IMERG)
 
 format:
   html:

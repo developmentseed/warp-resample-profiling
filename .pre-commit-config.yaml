@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -11,14 +11,14 @@ repos:
       - id: mixed-line-ending
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.17.0
+    rev: v3.18.0
     hooks:
       - id: pyupgrade
         args:
           - "--py38-plus"
 
   - repo: https://github.com/psf/black
-    rev: 24.8.0
+    rev: 24.10.0
     hooks:
       - id: black
 
@@ -28,7 +28,7 @@ repos:
       - id: blackdoc
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: "v0.5.7"
+    rev: "v0.6.9"
     hooks:
       - id: ruff
         args: ["--fix"]
@@ -54,3 +54,24 @@ repos:
     rev: v0.10.0.1
     hooks:
       - id: shellcheck
+
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+        args:
+          [
+            "--extra-keys",
+            "metadata.celltoolbar metadata.kernelspec",
+            "metadata.language_info.codemirror_mode.version",
+            "metadata.language_info.pygments_lexer",
+            "metadata.language_info.version",
+            "metadata.toc",
+            "metadata.notify_time",
+            "metadata.varInspector",
+            "cell.metadata.heading_collapsed",
+            "cell.metadata.hidden",
+            "cell.metadata.code_folding",
+            "cell.metadata.tags",
+            "cell.metadata.init_cell",
+          ]
