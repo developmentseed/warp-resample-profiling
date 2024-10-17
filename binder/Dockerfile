@@ -1,16 +1,6 @@
 # Inherit from a JupyterHub compatible Docker image
 FROM quay.io/jupyter/base-notebook:2024-10-14
 
-# Add conda packages
-COPY binder/environment.yml /tmp/environment.yml
-RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml
-
-# Install icechunk development packages (three steps required from https://github.com/earth-mover/icechunk/issues/197)
-
-RUN python -m pip install icechunk git+https://github.com/earth-mover/Virtualizarr@icechunk
-RUN python -m pip install git+https://github.com/pydata/xarray@zarr-v3 git+https://github.com/mpiannucci/kerchunk@v3
-RUN python -m pip install git+https://github.com/zarr-developers/numcodecs@zarr3-codecs
-
 # Insall quarto
 
 USER root
@@ -37,3 +27,13 @@ USER ${NB_USER}
 COPY binder/install-vscode-ext.sh ${HOME}/.kernels/install-vscode-ext.sh
 
 RUN bash ${HOME}/.kernels/install-vscode-ext.sh
+
+# Add conda packages
+COPY binder/environment.yml /tmp/environment.yml
+RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml
+
+# Install icechunk development packages (three steps required from https://github.com/earth-mover/icechunk/issues/197)
+
+RUN python -m pip install icechunk git+https://github.com/earth-mover/Virtualizarr@icechunk
+RUN python -m pip install git+https://github.com/pydata/xarray@zarr-v3 git+https://github.com/mpiannucci/kerchunk@v3
+RUN python -m pip install git+https://github.com/zarr-developers/numcodecs@zarr3-codecs
