@@ -8,9 +8,6 @@ dependencies:
   - flox
   - numpy
   - xarray
-  - sparse
-  # Preparing virtual datasets
-  # - virtualizarr # Only use during preparation because dependency for numpy>=2.0.0 conflicts with sparse, xemsf
   # IO / auth libraries
   - boto3
   - earthaccess
@@ -37,6 +34,7 @@ dependencies:
   - pyinstrument
   - memray
   # For development
+  - gcc
   - jupyter
   - pip
   - pre-commit
@@ -55,6 +53,7 @@ dependencies:
   - jupytext
   - pip:
       - morecantile
-      - icechunk
       # For development on the Hub
       - gh-scoped-creds
+      # Development versions for icechunk
+      - git+https://github.com/pydata/sparse@main # latest stable release doesn't ensure NumPy 2.0 compatibility

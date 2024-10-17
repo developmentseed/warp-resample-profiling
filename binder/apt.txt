@@ -1,0 +1,8 @@
+wget
+curl
+htop
+tree
+zip
+unzip
+less
+make
