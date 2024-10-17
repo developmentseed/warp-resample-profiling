@@ -19,7 +19,7 @@ RUN dpkg -i quarto-1.5.57-linux-amd64.deb
 
 # Install apt packages
 
-COPY apt.txt /tmp/apt.txt
+COPY binder/apt.txt /tmp/apt.txt
 
 RUN apt-get update && \
     xargs -a /tmp/apt.txt apt install -y && \
