@@ -55,9 +55,4 @@ dependencies:
       # For development on the Hub
       - gh-scoped-creds
       # Development versions for icechunk
-      - icechunk
       - git+https://github.com/pydata/sparse@main # latest stable release doesn't ensure NumPy 2.0 compatibility
-      - git+https://github.com/earth-mover/Virtualizarr@icechunk
-      - git+https://github.com/pydata/xarray@zarr-v3
-      - git+https://github.com/mpiannucci/kerchunk@v3
-      - git+https://github.com/zarr-developers/numcodecs@zarr3-codecs
