@@ -306,7 +306,7 @@
   {
     "objectID": "examples/earthdata-download.html",
     "href": "examples/earthdata-download.html",
-    "title": "Download and virtualize MUR-SST data",
+    "title": "Download and virtualize dataset",
     "section": "",
     "text": "from pathlib import Path\n\nimport earthaccess\nimport xarray as xr\nfrom common import earthaccess_args",
     "crumbs": [
@@ -317,7 +317,7 @@
   {
     "objectID": "examples/earthdata-download.html#load-results",
     "href": "examples/earthdata-download.html#load-results",
-    "title": "Download and virtualize MUR-SST data",
+    "title": "Download and virtualize dataset",
     "section": "Load results",
     "text": "Load results\n\nds = xr.open_zarr(store, zarr_version=3, consolidated=False)\n\n\nds",
     "crumbs": [
