@@ -20,13 +20,18 @@ dependencies:
   - netcdf4
   - zarr
   - libgdal # core C++ library and all plugins
+  # xesmf dependencies
+  - shapely
+  - cf_xarray
+  - numba
+  # esmf build dependencies
+  - openmpi
   # Resampling libraries
   - geoutils
   - pyresample
   - rasterio
   - rioxarray
   - scipy
-  - xesmf>=0.8.0
   - odc-geo
   - xcube
   - pygmt
@@ -45,8 +50,8 @@ dependencies:
   - pytest-timeout
   # For development on the Hub
   - git
-  - code-server
-  - jupyter-vscode-proxy
+  # - code-server
+  # - jupyter-vscode-proxy
   # For visualizing results
   - hvplot
   # For building the quarto book

@@ -6,3 +6,4 @@ zip
 unzip
 less
 make
+gfortran
