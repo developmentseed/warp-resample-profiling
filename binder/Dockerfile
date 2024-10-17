@@ -10,6 +10,7 @@ RUN mamba env update --prefix ${CONDA_DIR} --file /tmp/environment.yml
 ENV ESMF_DIR="esmf"
 
 # Download and compile ESMF
+COPY binder/apt.txt /tmp/apt.txt
 
 RUN apt-get update && \
     xargs -a /tmp/apt.txt apt install -y && \
@@ -37,9 +38,6 @@ RUN python -m pip install git+https://github.com/zarr-developers/numcodecs@zarr3
 USER root
 RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.57/quarto-1.5.57-linux-amd64.deb
 RUN dpkg -i quarto-1.5.57-linux-amd64.deb
-
-# Install apt packages
-COPY binder/apt.txt /tmp/apt.txt
 
 USER ${NB_USER}
 
