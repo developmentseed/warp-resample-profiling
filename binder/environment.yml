@@ -3,15 +3,15 @@ channels:
   - conda-forge
   - nodefaults
 dependencies:
-  # - dask-core
-  # - distributed
-  # - flox
+  - dask-core
+  - distributed
+  - flox
   - numpy
   - xarray
   # IO / auth libraries
   - boto3
-  # - earthaccess
-  # - fiona
+  - earthaccess
+  - fiona
   - fsspec
   - h5netcdf
   - h5py
@@ -37,38 +37,38 @@ dependencies:
   - make
   - pkg-config
   # Resampling libraries
-  # - geoutils
-  # - pyresample
-  # - rasterio
-  # - rioxarray
-  # - scipy
-  # - odc-geo
-  # - xcube
-  # - pygmt
-  # # For profiling
-  # - pyinstrument
-  # - memray
+  - geoutils
+  - pyresample
+  - rasterio
+  - rioxarray
+  - scipy
+  - odc-geo
+  - xcube
+  - pygmt
+  # For profiling
+  - pyinstrument
+  - memray
   # For development
   - gcc
   - jupyter
   - pip
-  # - pre-commit
-  # - pytest
-  # - pytest-cov
-  # - pytest-env
-  # - pytest-xdist
-  # - pytest-timeout
-  # # For development on the Hub
+  - pre-commit
+  - pytest
+  - pytest-cov
+  - pytest-env
+  - pytest-xdist
+  - pytest-timeout
+  # For development on the Hub
   - git
-  # - code-server
-  # - jupyter-vscode-proxy
-  # # For visualizing results
-  # - hvplot
-  # # For building the quarto book
-  # - jupytext
+  - code-server
+  - jupyter-vscode-proxy
+  # For visualizing results
+  - hvplot
+  # For building the quarto book
+  - jupytext
   - pip:
-      # - morecantile
-      # # For development on the Hub
-      # - gh-scoped-creds
+      - morecantile
+      # For development on the Hub
+      - gh-scoped-creds
       # Development versions for icechunk
       - git+https://github.com/pydata/sparse@main # latest stable release doesn't ensure NumPy 2.0 compatibility
