@@ -1,8 +1,9 @@
-wget
-curl
 htop
 tree
+tar
 zip
 unzip
 less
-make
+build-essential
+binutils-dev
+gdb
