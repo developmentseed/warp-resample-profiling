@@ -25,7 +25,17 @@ dependencies:
   - cf_xarray
   - numba
   # esmf build dependencies
+  - wget
+  - curl
   - openmpi
+  - perl
+  - cmake
+  - gnuconfig
+  - gcc
+  - gxx
+  - gfortran
+  - make
+  - pkg-config
   # Resampling libraries
   # - geoutils
   # - pyresample
