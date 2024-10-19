@@ -17,11 +17,13 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     rm /tmp/apt.txt
 
-USER ${NB_USER}
 
 COPY binder/build-esmf.sh ${HOME}/build-esmf.sh
 
 RUN bash ${HOME}/build-esmf.sh
+
+ENV ESMFMKFILE="/usr/src/esmf/esmf-8.7.0/lib/libO/Linux.gfortran.32.mpiuni.default/esmf.mk"
+USER ${NB_USER}
 
 # Install xesmf
 RUN python -m pip install git+https://github.com/pangeo-data/xesmf.git

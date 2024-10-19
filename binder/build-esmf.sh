@@ -3,7 +3,7 @@
 set -xe
 
 SOURCE_DIR="${SOURCE_DIR:-${HOME}/source}"
-STACK_DIR="${STACK_DIR:-${HOME}/stack}"
+STACK_DIR=/usr/src/esmf
 ESMF_VERSION="8.7.0"
 ESMF_URL="https://github.com/esmf-org/esmf/archive/refs/tags/v${ESMF_VERSION}.tar.gz"
 export ESMF_DIR="${SOURCE_DIR}/esmf-${ESMF_VERSION}"
