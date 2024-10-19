@@ -65,7 +65,7 @@ dependencies:
   # For visualizing results
   - hvplot
   # For building the quarto book
-  # - jupytext
+  - jupytext
   - pip:
       - morecantile
       # For development on the Hub
