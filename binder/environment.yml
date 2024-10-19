@@ -20,13 +20,28 @@ dependencies:
   - netcdf4
   - zarr
   - libgdal # core C++ library and all plugins
+  # xesmf dependencies
+  - shapely
+  - cf_xarray
+  - numba
+  # esmf build dependencies
+  - wget
+  - curl
+  - openmpi
+  - perl
+  - cmake
+  - gnuconfig
+  - gcc
+  - gxx
+  - gfortran
+  - make
+  - pkg-config
   # Resampling libraries
   - geoutils
   - pyresample
   - rasterio
   - rioxarray
   - scipy
-  - xesmf>=0.8.0
   - odc-geo
   - xcube
   - pygmt
