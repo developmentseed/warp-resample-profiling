@@ -36,45 +36,45 @@ website:
         contents:
           - section: Rasterio
             contents:
-              - href: examples/rasterio/resample-rasterio-netcdf-local.ipynb
+              - href: examples/resample-rasterio-netcdf-local.ipynb
                 text: NetCDF Driver (Local storage)
-              - href: examples/rasterio/resample-rasterio-netcdf-vsis3.ipynb
+              - href: examples/resample-rasterio-netcdf-vsis3.ipynb
                 text: NetCDF Driver (S3 storage)
           - section: Rioxarray
             contents:
-              - href: examples/rioxarray/resample-rioxarray-h5netcdf-local.ipynb
+              - href: examples/resample-rioxarray-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
-              - href: examples/rioxarray/resample-rioxarray-h5netcdf-.ipynb
+              - href: examples/resample-rioxarray-h5netcdf-.ipynb
                 text: H5NetCDF Driver (S3 storage)
           - section: Open Data Cube
             contents:
-              - href: examples/odc/resample-odc-h5netcdf-local.ipynb
+              - href: examples/resample-odc-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
-              - href: examples/odc/resample-odc-h5netcdf-.ipynb
+              - href: examples/resample-odc-h5netcdf-.ipynb
                 text: H5NetCDF Driver (S3 storage)
           - section: Pyresample
             contents:
-              - href: examples/pyresample/resample-pyresample-h5netcdf-local.ipynb
+              - href: examples/resample-pyresample-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
               - href: examples/pyresample/resample-pyresample-h5netcdf-.ipynb
                 text: H5NetCDF Driver (S3 storage)
           - section: XESMF
             contents:
-              - href: examples/xesmf/resample-xesmf-h5netcdf-local.ipynb
+              - href: examples/resample-xesmf-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
-              - href: examples/xesmf/resample-xesmf-h5netcdf-.ipynb
+              - href: examples/resample-xesmf-h5netcdf-.ipynb
                 text: H5NetCDF Driver (S3 storage)
-              - href: examples/xesmf/resample-xesmf-zarr-icechunk.ipynb
+              - href: examples/resample-xesmf-zarr-icechunk.ipynb
                 text: Zarr Reader + Icechunk virtualization (S3 storage)
           - section: XESMF (with pre-generated weights)
             contents:
-              - href: examples/xesmf/resample-xesmfcached-h5netcdf-local.ipynb
+              - href: examples/resample-xesmfcached-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
-              - href: examples/xesmf/resample-xesmfcached-h5netcdf-.ipynb
+              - href: examples/resample-xesmfcached-h5netcdf-.ipynb
                 text: H5NetCDF Driver (S3 storage)
-              - href: examples/xesmf/resample-xesmfcached-zarr-icechunk.ipynb
+              - href: examples/resample-xesmfcached-zarr-icechunk.ipynb
                 text: Zarr Reader + Icechunk virtualization(S3 storage)
-              - href: examples/xesmf/resample-xesmfcached-zarr-kerchunk.ipynb
+              - href: examples/resample-xesmfcached-zarr-kerchunk.ipynb
                 text: Zarr Reader + Kerchunk virtualization (S3 storage)
 
       - section: Profiling results
