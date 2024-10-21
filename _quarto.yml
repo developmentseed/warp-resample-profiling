@@ -34,74 +34,48 @@ website:
             text: Download and virtualize dataset
       - section: Resampling libraries
         contents:
-          - section: GDAL Python API
-            contents:
-              - href: examples/resample-gdal-netcdf-vsis3.ipynb
-                text: NetCDF Driver + vsis3 (remote)
-              - href: examples/resample-gdal-vrt-local.ipynb
-                text: NetCDF Driver + vrt (local)
-              - href: examples/resample-gdal-netcdf-local.ipynb
-                text: NetCDF Driver (local)
           - section: Rasterio
             contents:
-              - href: examples/resample-rasterio-netcdf-vsis3.ipynb
-                text: NetCDF Driver + vsis3
+              - href: examples/rasterio/resample-rasterio-netcdf-local.ipynb
+                text: NetCDF Driver (Local storage)
+              - href: examples/rasterio/resample-rasterio-netcdf-vsis3.ipynb
+                text: NetCDF Driver (S3 storage)
           - section: Rioxarray
             contents:
-              - href: examples/resample-rioxarray-netcdf-vsis3.ipynb
-                text: NetCDF Driver + vsis3
+              - href: examples/rioxarray/resample-rioxarray-h5netcdf-local.ipynb
+                text: H5NetCDF Driver (Local storage)
+              - href: examples/rioxarray/resample-rioxarray-h5netcdf-.ipynb
+                text: H5NetCDF Driver (S3 storage)
           - section: Open Data Cube
             contents:
-              - href: examples/resample-odc-h5netcdf-.ipynb
-                text: NetCDF Driver + vsis3
+              - href: examples/odc/resample-odc-h5netcdf-local.ipynb
+                text: H5NetCDF Driver (Local storage)
+              - href: examples/odc/resample-odc-h5netcdf-.ipynb
+                text: H5NetCDF Driver (S3 storage)
           - section: Pyresample
             contents:
-              - href: examples/resample-pyresample-h5netcdf-.ipynb
-                text: h5netcdf Driver
-      - section: WIP Resampling methods
-        contents:
+              - href: examples/pyresample/resample-pyresample-h5netcdf-local.ipynb
+                text: H5NetCDF Driver (Local storage)
+              - href: examples/pyresample/resample-pyresample-h5netcdf-.ipynb
+                text: H5NetCDF Driver (S3 storage)
           - section: XESMF
             contents:
-              - href: examples/future-resample-xesmf-h5netcdf-.ipynb
-                text: (Pending) h5netcdf Driver
-          - section: ODC
+              - href: examples/xesmf/resample-xesmf-h5netcdf-local.ipynb
+                text: H5NetCDF Driver (Local storage)
+              - href: examples/xesmf/resample-xesmf-h5netcdf-.ipynb
+                text: H5NetCDF Driver (S3 storage)
+              - href: examples/xesmf/resample-xesmf-zarr-icechunk.ipynb
+                text: Zarr Reader + Icechunk virtualization (S3 storage)
+          - section: XESMF (with pre-generated weights)
             contents:
-              - href: examples/future-resample-odc-zarr-kerchunk.ipynb
-                text: (Pending) Zarr via kerchunk
-          - section: PyGMT
-            contents:
-              - href: examples/future-resample-pygmt-netcdf-local.ipynb
-                text: (Pending) NetCDF Driver
-          - section: XCube
-            contents:
-              - href: examples/future-resample-xcube-h5netcdf-.ipynb
-                text: (Pending) h5netcdf Driver
-      - section: Loading data
-        contents:
-          - section: GDAL Python API
-            contents:
-              - href: examples/load-gdal-netcdf-vsis3.ipynb
-                text: NetCDF Driver + vsis3 (remote)
-              - href: examples/load-gdal-vrt-local.ipynb
-                text: NetCDF Driver + vrt (local)
-              - href: examples/load-gdal-netcdf-local.ipynb
-                text: NetCDF Driver (local)
-          - section: Rasterio
-            contents:
-              - href: examples/load-rasterio-netcdf-local.ipynb
-                text: NetCDF Driver
-              - href: examples/load-rasterio-netcdf-vsis3.ipynb
-                text: NetCDF Driver + vsis3
-          - section: Rioxarray
-            contents:
-              - href: examples/load-rioxarray-netcdf-vsis3.ipynb
-                text: NetCDF Driver + vsis3
-          - section: Xarray
-            contents:
-              - href: examples/load-xarray-h5netcdf-.ipynb
-                text: h5netcdf Driver
-              - href: examples/load-xarray-zarr-kerchunk.ipynb
-                text: Zarr via kerchunk
+              - href: examples/xesmf/resample-xesmfcached-h5netcdf-local.ipynb
+                text: H5NetCDF Driver (Local storage)
+              - href: examples/xesmf/resample-xesmfcached-h5netcdf-.ipynb
+                text: H5NetCDF Driver (S3 storage)
+              - href: examples/xesmf/resample-xesmfcached-zarr-icechunk.ipynb
+                text: Zarr Reader + Icechunk virtualization(S3 storage)
+              - href: examples/xesmf/resample-xesmfcached-zarr-kerchunk.ipynb
+                text: Zarr Reader + Kerchunk virtualization (S3 storage)
 
       - section: Profiling results
         contents:
