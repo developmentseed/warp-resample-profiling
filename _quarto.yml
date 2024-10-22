@@ -56,7 +56,7 @@ website:
             contents:
               - href: examples/resample-pyresample-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
-              - href: examples/pyresample/resample-pyresample-h5netcdf-.ipynb
+              - href: examples/resample-pyresample-h5netcdf-.ipynb
                 text: H5NetCDF Driver (S3 storage)
           - section: XESMF
             contents:
@@ -68,6 +68,8 @@ website:
                 text: Zarr Reader + Icechunk virtualization (S3 storage)
           - section: XESMF (with pre-generated weights)
             contents:
+              - href: examples/generate-weights.ipynb
+                text: Pre-generate weights
               - href: examples/resample-xesmfcached-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
               - href: examples/resample-xesmfcached-h5netcdf-.ipynb
