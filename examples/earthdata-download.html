@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../examples/resample-gdal-netcdf-vsis3.html" rel="next">
+<link href="../examples/resample-rasterio-netcdf-local.html" rel="next">
 <link href="../pages/slides.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -188,7 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
- <span class="menu-text">GDAL Python API</span></a>
+ <span class="menu-text">Rasterio</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -196,20 +196,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-gdal-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver + vsis3 (remote)</span></a>
+  <a href="../examples/resample-rasterio-netcdf-local.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-gdal-vrt-local.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver + vrt (local)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/resample-gdal-netcdf-local.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver (local)</span></a>
+  <a href="../examples/resample-rasterio-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -217,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
- <span class="menu-text">Rasterio</span></a>
+ <span class="menu-text">Rioxarray</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -225,8 +219,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-rasterio-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver + vsis3</span></a>
+  <a href="../examples/resample-rioxarray-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-rioxarray-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -234,7 +234,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
- <span class="menu-text">Rioxarray</span></a>
+ <span class="menu-text">Open Data Cube</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -242,8 +242,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-rioxarray-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver + vsis3</span></a>
+  <a href="../examples/resample-odc-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-odc-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -251,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
- <span class="menu-text">Open Data Cube</span></a>
+ <span class="menu-text">Pyresample</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -259,8 +265,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-odc-h5netcdf-.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver + vsis3</span></a>
+  <a href="../examples/resample-pyresample-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/pyresample/resample-pyresample-h5netcdf-.ipynb" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -268,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
- <span class="menu-text">Pyresample</span></a>
+ <span class="menu-text">XESMF</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -276,8 +288,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-pyresample-h5netcdf-.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">h5netcdf Driver</span></a>
+  <a href="../examples/resample-xesmf-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-xesmf-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-xesmf-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">XESMF (with pre-generated weights)</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-xesmfcached-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-xesmfcached-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader + Icechunk virtualization(S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-xesmfcached-zarr-kerchunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader + Kerchunk virtualization (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -286,195 +345,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text">WIP Resampling methods</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
- <span class="menu-text">XESMF</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/future-resample-xesmf-h5netcdf-.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(Pending) h5netcdf Driver</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
- <span class="menu-text">ODC</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/future-resample-odc-zarr-kerchunk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(Pending) Zarr via kerchunk</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
- <span class="menu-text">PyGMT</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/future-resample-pygmt-netcdf-local.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(Pending) NetCDF Driver</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
- <span class="menu-text">XCube</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/future-resample-xcube-h5netcdf-.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(Pending) h5netcdf Driver</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
- <span class="menu-text">Loading data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
- <span class="menu-text">GDAL Python API</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/load-gdal-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver + vsis3 (remote)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/load-gdal-vrt-local.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver + vrt (local)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/load-gdal-netcdf-local.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver (local)</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
- <span class="menu-text">Rasterio</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/load-rasterio-netcdf-local.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/load-rasterio-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver + vsis3</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
- <span class="menu-text">Rioxarray</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/load-rioxarray-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">NetCDF Driver + vsis3</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false">
- <span class="menu-text">Xarray</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/load-xarray-h5netcdf-.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">h5netcdf Driver</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../examples/load-xarray-zarr-kerchunk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Zarr via kerchunk</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
  <span class="menu-text">Profiling results</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../examples/process-results.html" class="sidebar-item-text sidebar-link">
@@ -504,7 +381,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#download-dataset" id="toc-download-dataset" class="nav-link" data-scroll-target="#download-dataset">Download dataset</a></li>
   <li><a href="#virtualize-dataset" id="toc-virtualize-dataset" class="nav-link" data-scroll-target="#virtualize-dataset">Virtualize dataset</a></li>
   <li><a href="#store-virtual-dataset-as-kerchunk-reference" id="toc-store-virtual-dataset-as-kerchunk-reference" class="nav-link" data-scroll-target="#store-virtual-dataset-as-kerchunk-reference">Store virtual dataset as kerchunk reference</a></li>
-  <li><a href="#store-dataset-using-icechunk" id="toc-store-dataset-using-icechunk" class="nav-link" data-scroll-target="#store-dataset-using-icechunk">Store dataset using icechunk</a></li>
+  <li><a href="#store-virtual-dataset-using-icechunk" id="toc-store-virtual-dataset-using-icechunk" class="nav-link" data-scroll-target="#store-virtual-dataset-using-icechunk">Store virtual dataset using icechunk</a></li>
+  <li><a href="#store-dataset-using-zarr-v3-and-icechunk" id="toc-store-dataset-using-zarr-v3-and-icechunk" class="nav-link" data-scroll-target="#store-dataset-using-zarr-v3-and-icechunk">Store dataset using Zarr V3 and icechunk</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.dev/developmentseed/warp-resample-profiling/blob/main/examples/earthdata-download.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -564,15 +442,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="virtualize-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="virtualize-dataset">Virtualize dataset</h3>
 <div id="9" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> icechunk <span class="im">import</span> (  <span class="co"># noqa</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    IcechunkStore,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    S3Credentials,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    StorageConfig,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    StoreConfig,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    VirtualRefConfig,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> virtualizarr <span class="im">import</span> open_virtual_dataset  <span class="co"># noqa</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> virtualizarr.writers.icechunk <span class="im">import</span> dataset_to_icechunk  <span class="co"># noqa</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr  <span class="co"># noqa</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> zarr  <span class="co"># noqa</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> icechunk <span class="im">import</span> (  <span class="co"># noqa</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    IcechunkStore,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    S3Credentials,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    StorageConfig,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    StoreConfig,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    VirtualRefConfig,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> virtualizarr <span class="im">import</span> open_virtual_dataset  <span class="co"># noqa</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> virtualizarr.writers.icechunk <span class="im">import</span> dataset_to_icechunk  <span class="co"># noqa</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="10" class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> virtualize_dataset(local_fp):</span>
@@ -607,8 +487,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>virtual_ds.virtualize.to_kerchunk(output_fp, <span class="bu">format</span><span class="op">=</span><span class="st">"json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="store-dataset-using-icechunk" class="level3">
-<h3 class="anchored" data-anchor-id="store-dataset-using-icechunk">Store dataset using icechunk</h3>
+<section id="store-virtual-dataset-using-icechunk" class="level3">
+<h3 class="anchored" data-anchor-id="store-virtual-dataset-using-icechunk">Store virtual dataset using icechunk</h3>
 <div id="15" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>s3_creds <span class="op">=</span> earthaccess.get_s3_credentials(daac<span class="op">=</span>dataset_args[<span class="st">"daac"</span>])</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>credentials <span class="op">=</span> S3Credentials(</span>
@@ -618,15 +498,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    prefix<span class="op">=</span><span class="st">"icechunk/test-weight-caching/reference"</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    prefix<span class="op">=</span><span class="ss">f"resampling/icechunk/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-reference"</span>,</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> StoreConfig(</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    virtual_ref_config<span class="op">=</span>VirtualRefConfig.s3_from_config(credentials<span class="op">=</span>credentials),</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>store <span class="op">=</span> IcechunkStore.open_or_create(storage<span class="op">=</span>storage, config<span class="op">=</span>config, mode<span class="op">=</span><span class="st">"w"</span>)</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>dataset_to_icechunk(virtual_ds, store)</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>store.commit(<span class="st">"Create  IMERG refenence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>virtual_store <span class="op">=</span> IcechunkStore.open_or_create(storage<span class="op">=</span>storage, config<span class="op">=</span>config, mode<span class="op">=</span><span class="st">"w"</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>dataset_to_icechunk(virtual_ds, virtual_store)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>virtual_store.commit(<span class="st">"Create refenence dataset"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="store-dataset-using-zarr-v3-and-icechunk" class="level3">
+<h3 class="anchored" data-anchor-id="store-dataset-using-zarr-v3-and-icechunk">Store dataset using Zarr V3 and icechunk</h3>
+<div id="17" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>chunk_size <span class="op">=</span> <span class="dv">4096</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>virtual_storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    prefix<span class="op">=</span><span class="ss">f"resampling/icechunk/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-reference"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>virtual_store <span class="op">=</span> IcechunkStore.open_existing(storage<span class="op">=</span>virtual_storage, mode<span class="op">=</span><span class="st">"r"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> xr.open_zarr(virtual_store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>).load()</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> ds.drop_encoding()</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> ds.squeeze()</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> ds.chunk({<span class="st">"lat"</span>: chunk_size, <span class="st">"lon"</span>: chunk_size})</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> dataset <span class="op">==</span> <span class="st">"gpm_imerg"</span>:</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    ds <span class="op">=</span> ds.transpose(<span class="st">"lat"</span>, <span class="st">"lon"</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>encoding <span class="op">=</span> {</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    variable: {</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"codecs"</span>: [zarr.codecs.BytesCodec(), zarr.codecs.ZstdCodec()],</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"chunks"</span>: (chunk_size, chunk_size),</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    prefix<span class="op">=</span><span class="ss">f"resampling/icechunk/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>store <span class="op">=</span> IcechunkStore.open_or_create(storage<span class="op">=</span>storage, mode<span class="op">=</span><span class="st">"w"</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>ds.to_zarr(store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>, encoding<span class="op">=</span>encoding)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>store.commit(<span class="st">"Add dataset"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -1204,8 +1116,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../examples/resample-gdal-netcdf-vsis3.html" class="pagination-link" aria-label="NetCDF Driver + vsis3 (remote)">
-        <span class="nav-page-text">NetCDF Driver + vsis3 (remote)</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../examples/resample-rasterio-netcdf-local.html" class="pagination-link" aria-label="NetCDF Driver (Local storage)">
+        <span class="nav-page-text">NetCDF Driver (Local storage)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
