@@ -118,8 +118,7 @@ _site/
 examples/earthaccess_data/
 examples/output/
 examples/results/
-examples/future-*.py
-examples/load-*.py
+examples/wip/future-*.py
 examples/resample-*.py
 examples/run-*.py
 examples/earthdata-download.py
