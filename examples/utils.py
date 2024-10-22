@@ -31,7 +31,6 @@ def process_results(summary_dir):
     files = get_files(summary_dir)
     for ind, file in enumerate(files):
         filename = Path(file).name
-        print(filename)
         (
             df.loc[ind, "dataset"],
             df.loc[ind, "task"],
