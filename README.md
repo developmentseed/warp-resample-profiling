@@ -1,10 +1,6 @@
 ## Overview
 
-This a work-in-progress guidebook on existing warp resampling / reprojection methods in Python, along with some memory and statistical wall-time profiling results.
-
-## Caveat
-
-This is a WIP guidebook. We are presenting early on in the development to guide discussions and future work. The output from different resampling methods has not yet been verified, important parameters (e.g., target no_data values) have not been set, and not all methods have been implemented. We encourage people to contribute by building on the notebooks in the `examples` directory or participating in discussions on this repo or on the Pangeo discourse.
+This repository and the accompanying Quarto book contains examples of using warp resampling / reprojection methods in Python, along with memory and statistical wall-time profiling results.
 
 ## Memory and time profiling
 
@@ -12,7 +8,7 @@ Resampling and reprojection (i.e., warp resampling) are essential steps for gene
 
 ### Goals
 
-Compare memory and time performance for generating a zoom level 0 256 x 256 raster from one timestep and variable of the MUR SST dataset using the following approaches:
+Compare memory and time performance for generating Web Mercator Quad Tree raster tiles from one timestep and variable of the MUR SST and GPM IMERG dataset using the following approaches:
 
 - [osgeo.warp](https://gdal.org/en/latest/api/python/utilities.html#osgeo.gdal.Warp)
 - [rasterio.warp.reproject](https://rasterio.readthedocs.io/en/stable/api/rasterio.warp.html#rasterio.warp.reproject)
@@ -33,14 +29,7 @@ Out-of-scope:
 - [pygmt.grdproject](https://www.pygmt.org/latest/api/generated/pygmt.grdproject.html#pygmt.grdproject) - [web mercator not amongst supported projections](https://www.pygmt.org/latest/projections/index.html)
 - [verde](https://www.fatiando.org/verde/latest/) - not used for raster -> raster resampling (only points -> raster)
 
-These methods will be run on the full resolution dataset. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured.
-
-### Planned extensions
-
-- Compare to results when using a 2x and 4x downsampled versions to better understand the time and memory complexity
-- Compare to results when using a virtual dataset (e.g., VRT, Kerchunk reference file).
-- Compare results when reading from a dataset stored locally versus in cloud object storage.
-- Compare to results when using a cloud-optimized dataset (Zarr).
+These methods will be run on the full resolution dataset. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured. We also compare results when using a virtual dataset (e.g., VRT, Kerchunk reference file), when reading from a dataset stored locally versus in cloud object storage, and when using a cloud-optimized dataset (Zarr.)
 
 ### Possible extensions
 
