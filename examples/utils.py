@@ -17,8 +17,10 @@ def get_files(folder):
 
 def get_test_info_from_filename(file):
     results_base = file.split(".")[0]
-    _, dataset, task, method, driver, virtualization, zoom = results_base.split("-")
-    return dataset, task, method, driver, virtualization, zoom
+    _, dataset, task, data_format, method, driver, virtualization, zoom = (
+        results_base.split("-")
+    )
+    return dataset, task, data_format, method, driver, virtualization, zoom
 
 
 def load_data(filepath):
@@ -34,6 +36,7 @@ def process_results(summary_dir):
         (
             df.loc[ind, "dataset"],
             df.loc[ind, "task"],
+            df.loc[ind, "format"],
             df.loc[ind, "method"],
             df.loc[ind, "driver"],
             df.loc[ind, "virtual"],
