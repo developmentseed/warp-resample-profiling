@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Warp resampling – Geospatial reprojection in Python (2024)</title>
+<title>Resampling with rasterio (S3 storage, NetCDF File, NetCDF4 driver, VSIS3 virtualization, earthaccess auth) – Geospatial reprojection in Python (2024)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,28 +20,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./pages/slides.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../examples/resample-netcdf-rioxarray-h5netcdf-local.html" rel="next">
+<link href="../examples/resample-netcdf-rasterio-netcdf-local.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -71,7 +106,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked">
@@ -83,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Welcome</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Resampling libraries</li><li class="breadcrumb-item"><a href="../examples/resample-netcdf-rasterio-netcdf-local.html">Rasterio</a></li><li class="breadcrumb-item"><a href="../examples/resample-netcdf-rasterio-netcdf-vsis3.html">NetCDF Driver (S3 storage)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -98,7 +133,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Warp resampling</a> 
+      <a href="../">Warp resampling</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/developmentseed/warp-resample-profiling" title="Warp resampling" class="quarto-navigation-tool px-1" aria-label="Warp resampling"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
@@ -114,13 +149,13 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pages/slides.html" class="sidebar-item-text sidebar-link">
+  <a href="../pages/slides.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview Slides</span></a>
   </div>
 </li>
@@ -135,7 +170,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/earthdata-download.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/earthdata-download.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Download and virtualize dataset</span></a>
   </div>
 </li>
@@ -152,22 +187,22 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Rasterio</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-rasterio-netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rasterio-netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-rasterio-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rasterio-netcdf-vsis3.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
@@ -184,25 +219,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-rioxarray-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rioxarray-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-rioxarray-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rioxarray-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-rioxarray-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rioxarray-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-zarr-rioxarray-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-zarr-rioxarray-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
@@ -219,25 +254,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-odc-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-odc-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-odc-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-odc-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-odc-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-odc-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-zarr-odc-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-zarr-odc-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
@@ -254,25 +289,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-pyresample-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-pyresample-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-pyresample-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-pyresample-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-pyresample-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-pyresample-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-zarr-pyresample-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-zarr-pyresample-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
@@ -289,25 +324,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-xesmf-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmf-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-xesmf-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmf-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-xesmf-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmf-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-zarr-xesmf-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-zarr-xesmf-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
@@ -324,37 +359,37 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/generate-weights.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/generate-weights.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pre-generate weights</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-xesmfcached-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmfcached-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-xesmfcached-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmfcached-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-netcdf-xesmfcached-zarr-kerchunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmfcached-zarr-kerchunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader + Kerchunk virtualization (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-zarr-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-zarr-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
@@ -371,7 +406,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/resample-zarr-sparse-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-zarr-sparse-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
@@ -390,13 +425,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/process-results.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/process-results.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Memory and time usage (MURSST)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./examples/process-gpm-results.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/process-gpm-results.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Memory and time usage (GPM IMERG)</span></a>
   </div>
 </li>
@@ -407,34 +442,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#caveat" id="toc-caveat" class="nav-link" data-scroll-target="#caveat">Caveat</a></li>
-  <li><a href="#memory-and-time-profiling" id="toc-memory-and-time-profiling" class="nav-link" data-scroll-target="#memory-and-time-profiling">Memory and time profiling</a>
-  <ul class="collapse">
-  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
-  <li><a href="#planned-extensions" id="toc-planned-extensions" class="nav-link" data-scroll-target="#planned-extensions">Planned extensions</a></li>
-  <li><a href="#possible-extensions" id="toc-possible-extensions" class="nav-link" data-scroll-target="#possible-extensions">Possible extensions</a></li>
-  <li><a href="#environment-setup" id="toc-environment-setup" class="nav-link" data-scroll-target="#environment-setup">Environment Setup</a></li>
-  </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a>
-  <ul class="collapse">
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
-  </ul></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/developmentseed/warp-resample-profiling/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Resampling libraries</li><li class="breadcrumb-item"><a href="../examples/resample-netcdf-rasterio-netcdf-local.html">Rasterio</a></li><li class="breadcrumb-item"><a href="../examples/resample-netcdf-rasterio-netcdf-vsis3.html">NetCDF Driver (S3 storage)</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Warp resampling</h1>
-<p class="subtitle lead">Geospatial reprojection in Python (2024)</p>
+<h1 class="title">Resampling with rasterio (S3 storage, NetCDF File, NetCDF4 driver, VSIS3 virtualization, earthaccess auth)</h1>
 </div>
 
 
@@ -451,76 +467,105 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This a work-in-progress guidebook on existing warp resampling / reprojection methods in Python, along with some memory and statistical wall-time profiling results.</p>
-</section>
-<section id="caveat" class="level2">
-<h2 class="anchored" data-anchor-id="caveat">Caveat</h2>
-<p>This is a WIP guidebook. We are presenting early on in the development to guide discussions and future work. The output from different resampling methods has not yet been verified, important parameters (e.g., target no_data values) have not been set, and not all methods have been implemented. We encourage people to contribute by building on the notebooks in the <code>examples</code> directory or participating in discussions on this repo or on the Pangeo discourse.</p>
-</section>
-<section id="memory-and-time-profiling" class="level2">
-<h2 class="anchored" data-anchor-id="memory-and-time-profiling">Memory and time profiling</h2>
-<p>Resampling and reprojection (i.e., warp resampling) are essential steps for generating raster tiles for browser based visualization. Further, warp resampling is often one of the most time consuming and memory intensive portions of the tile generation process. The importance and complexity of this step motivates an exploration of different warp resampling options.</p>
-<section id="goals" class="level3">
-<h3 class="anchored" data-anchor-id="goals">Goals</h3>
-<p>Compare memory and time performance for generating a zoom level 0 256 x 256 raster from one timestep and variable of the MUR SST dataset using the following approaches:</p>
-<ul>
-<li><a href="https://gdal.org/en/latest/api/python/utilities.html#osgeo.gdal.Warp">osgeo.warp</a></li>
-<li><a href="https://rasterio.readthedocs.io/en/stable/api/rasterio.warp.html#rasterio.warp.reproject">rasterio.warp.reproject</a></li>
-<li><a href="https://corteva.github.io/rioxarray/html/rioxarray.html#rioxarray.raster_array.RasterArray.reproject">rioxarray.reproject</a></li>
-<li><a href="https://pyresample.readthedocs.io/en/stable/api/pyresample.html#pyresample.resampler.resample_blocks">pyresample.resample_blocks</a></li>
-<li><a href="https://xesmf.readthedocs.io/en/stable/user_api.html#xesmf.frontend.Regridder">xesmf.Regridder</a></li>
-<li><a href="https://geoutils.readthedocs.io/en/stable/gen_modules/geoutils.Raster.reproject.html#geoutils.Raster.reproject">geoutils.Raster.reproject</a></li>
-<li><a href="https://um-rmrs.github.io/raster_tools/reference/generated/raster_tools.warp.reproject.html">raster_tools.warp.reproject</a></li>
-<li><a href="https://odc-geo.readthedocs.io/en/latest/_api/odc.geo.xr.xr_reproject.html">odc.geo.xr.xr_reproject</a></li>
-<li><a href="https://xcube.readthedocs.io/en/latest/api.html#cube-resampling">xcube.resampling</a></li>
-<li><a href="https://geowombat.readthedocs.io/en/latest/tutorial-crs.html#transforming-a-crs-on-the-fly">geowombat.config.update</a></li>
-</ul>
-<p>Out-of-scope:</p>
-<ul>
-<li><a href="https://github.com/EXCITED-CO2/xarray-regrid/">xarray-regrid</a> - only regrids within the same rectilinear coordinate system</li>
-<li><a href="https://github.com/google-research/weatherbench2/blob/main/weatherbench2/regridding.py">weatherbench2/regridding</a> - only seems to regrid within the same rectilinear coordinate system</li>
-<li><a href="https://github.com/google-research/dinosaur/blob/67c686945a8e4dd24ab23bcee806ce69c8d4f853/dinosaur/horizontal_interpolation.py#L241">dinosaur</a> - only seems to regrid within the same rectilinear coordinate system</li>
-<li><a href="https://www.pygmt.org/latest/api/generated/pygmt.grdproject.html#pygmt.grdproject">pygmt.grdproject</a> - <a href="https://www.pygmt.org/latest/projections/index.html">web mercator not amongst supported projections</a></li>
-<li><a href="https://www.fatiando.org/verde/latest/">verde</a> - not used for raster -&gt; raster resampling (only points -&gt; raster)</li>
-</ul>
-<p>These methods will be run on the full resolution dataset. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured.</p>
-</section>
-<section id="planned-extensions" class="level3">
-<h3 class="anchored" data-anchor-id="planned-extensions">Planned extensions</h3>
-<ul>
-<li>Compare to results when using a 2x and 4x downsampled versions to better understand the time and memory complexity</li>
-<li>Compare to results when using a virtual dataset (e.g., VRT, Kerchunk reference file).</li>
-<li>Compare results when reading from a dataset stored locally versus in cloud object storage.</li>
-<li>Compare to results when using a cloud-optimized dataset (Zarr).</li>
-</ul>
-</section>
-<section id="possible-extensions" class="level3">
-<h3 class="anchored" data-anchor-id="possible-extensions">Possible extensions</h3>
-<ul>
-<li>Compare other resampling methods (e.g., bilinear, conservative).</li>
-<li>Compare with methods that don’t rely on existing packages (e.g., <a href="https://discourse.pangeo.io/t/conservative-region-aggregation-with-xarray-geopandas-and-sparse/2715">Conservative regridding with Xarray, GeoPandas, and Sparse</a> and <a href="https://github.com/arctic-carbon/eddy-footprint/blob/46935785ced10f24263cd740f81b0aaf02d9bf33/eddy_footprint/spatial.py#L38-L45">KDTree wrappers</a>).</li>
-</ul>
-</section>
-<section id="environment-setup" class="level3">
-<h3 class="anchored" data-anchor-id="environment-setup">Environment Setup</h3>
-<p>The notebooks can be run on a JupyterHub environment using the docker image <code>quay.io/developmentseed/warp-resample-profiling:latest</code>, which is created using <code>repo2docker</code> using the Dockerfile contained within the <code>binder</code> directory.</p>
-</section>
-</section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
-<ul>
-<li><a href="https://discourse.pangeo.io/t/whats-next-software-regridding/3896">What’s Next - Software - Regridding</a></li>
-<li><a href="https://discourse.pangeo.io/t/can-a-reprojection-change-of-crs-operation-be-done-lazily-using-rioxarray/4468">Lazy regridding discussion</a></li>
-</ul>
-<section id="acknowledgements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
-<p>This work was made possible through support from <a href="https://impact.earthdata.nasa.gov/">NASA IMPACT</a>. Numerous people have guided development, especially Aimee Barciauskas (<a href="https://github.com/abarciauskas-bgse"><span class="citation" data-cites="abarciauskas-bgse">@abarciauskas-bgse</span></a>), Justus Magin (<a href="https://github.com/keewis"><span class="citation" data-cites="keewis">@keewis</span></a>), and Michael Sumner (<a href="https://github.com/mdsumner"><span class="citation" data-cites="mdsumner">@mdsumner</span></a>). The resources page contains references for source information. Quarto configuration based on <a href="https://github.com/cloudnativegeo/cloud-optimized-geospatial-formats-guide">Cloud Native Geospatial Formats Guide</a> and the Tile Benchmarking(https://developmentseed.org/tile-benchmarking/). All mistakes my own.</p>
+<div id="cell-2" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> argparse</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.mask <span class="im">import</span> mask</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.session <span class="im">import</span> AWSSession</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.warp <span class="im">import</span> reproject</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> box</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-3" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> configure_auth(daac):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Authenticate using earthaccess"""</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> boto3</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> earthaccess</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    auth <span class="op">=</span> earthaccess.login()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    s3_credentials <span class="op">=</span> auth.get_s3_credentials(daac)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    session <span class="op">=</span> boto3.Session(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        aws_access_key_id<span class="op">=</span>s3_credentials[<span class="st">"accessKeyId"</span>],</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        aws_secret_access_key<span class="op">=</span>s3_credentials[<span class="st">"secretAccessKey"</span>],</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        aws_session_token<span class="op">=</span>s3_credentials[<span class="st">"sessionToken"</span>],</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        region_name<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    rio_env <span class="op">=</span> rasterio.Env(</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        AWSSession(session),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    rio_env.<span class="fu">__enter__</span>()</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rio_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-4" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> warp_resample(dataset, zoom<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> common <span class="im">import</span> earthaccess_args, target_extent</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    te <span class="op">=</span> target_extent[zoom]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define filepath, driver, and variable information</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> earthaccess_args[dataset]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    src <span class="op">=</span> <span class="ss">f'NETCDF:/vsis3/</span><span class="sc">{</span>args[<span class="st">"bucket"</span>]<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>args[<span class="st">"folder"</span>]<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>args[<span class="st">"filename"</span>]<span class="sc">}</span><span class="ss">:</span><span class="sc">{</span>args[<span class="st">"variable"</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Authenticate with earthaccess</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> configure_auth(args[<span class="st">"daac"</span>]):</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Define source and target projection</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        dstSRS <span class="op">=</span> <span class="st">"EPSG:3857"</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        srcSRS <span class="op">=</span> <span class="st">"EPSG:4326"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        width <span class="op">=</span> height <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> rasterio.<span class="bu">open</span>(src) <span class="im">as</span> da:</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Clip dataset to bounds of Web Mercator tile</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            bbox <span class="op">=</span> box(<span class="op">*</span>te)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>            geo <span class="op">=</span> gpd.GeoDataFrame(</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                {<span class="st">"geometry"</span>: bbox}, index<span class="op">=</span>[<span class="dv">0</span>], crs<span class="op">=</span><span class="bu">int</span>(dstSRS.split(<span class="st">":"</span>)[<span class="dv">1</span>])</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>            geo <span class="op">=</span> geo.to_crs(crs<span class="op">=</span>srcSRS)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>            coords <span class="op">=</span> [json.loads(geo.to_json())[<span class="st">"features"</span>][<span class="dv">0</span>][<span class="st">"geometry"</span>]]</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>            arr, src_transform <span class="op">=</span> mask(da, shapes<span class="op">=</span>coords, crop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Mask and fill array</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>            ma <span class="op">=</span> arr.astype(<span class="st">"float32"</span>, casting<span class="op">=</span><span class="st">"unsafe"</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            np.multiply(ma, da.scales[<span class="dv">0</span>], out<span class="op">=</span>ma, casting<span class="op">=</span><span class="st">"unsafe"</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            np.add(ma, da.offsets[<span class="dv">0</span>], out<span class="op">=</span>ma, casting<span class="op">=</span><span class="st">"unsafe"</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Define affine transformation from input to output dataset</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>            dst_transform <span class="op">=</span> rasterio.transform.from_bounds(<span class="op">*</span>te, width, height)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Create array to host results</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            destination <span class="op">=</span> np.zeros((height, width), np.float32)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Reproject dataset</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            _, transform <span class="op">=</span> reproject(</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                ma.squeeze(),</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                destination,</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                src_crs<span class="op">=</span>srcSRS,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                src_transform<span class="op">=</span>src_transform,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                dst_crs<span class="op">=</span>dstSRS,</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                dst_transform<span class="op">=</span>dst_transform,</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> destination</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-5" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"get_ipython"</span> <span class="kw">in</span> <span class="bu">dir</span>():</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Just call warp_resample if running as a Jupyter Notebook</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        da <span class="op">=</span> warp_resample(<span class="st">"mursst"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Configure dataset via argpase if running via CLI</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        parser <span class="op">=</span> argparse.ArgumentParser(description<span class="op">=</span><span class="st">"Set environment for the script."</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        parser.add_argument(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"--dataset"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            default<span class="op">=</span><span class="st">"mursst"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">help</span><span class="op">=</span><span class="st">"Dataset to resample."</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            choices<span class="op">=</span>[<span class="st">"mursst"</span>],</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        parser.add_argument(</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"--zoom"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            default<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            <span class="bu">help</span><span class="op">=</span><span class="st">"Zoom level for tile extent."</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        user_args <span class="op">=</span> parser.parse_args()</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        da <span class="op">=</span> warp_resample(user_args.dataset, <span class="bu">int</span>(user_args.zoom))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1089,10 +1134,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../examples/resample-netcdf-rasterio-netcdf-local.html" class="pagination-link" aria-label="NetCDF Driver (Local storage)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">NetCDF Driver (Local storage)</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./pages/slides.html" class="pagination-link" aria-label="Overview Slides">
-        <span class="nav-page-text">Overview Slides</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../examples/resample-netcdf-rioxarray-h5netcdf-local.html" class="pagination-link" aria-label="H5NetCDF Driver (Local storage)">
+        <span class="nav-page-text">H5NetCDF Driver (Local storage)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1104,7 +1152,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/developmentseed/warp-resample-profiling/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.dev/developmentseed/warp-resample-profiling/blob/main/examples/resample-netcdf-rasterio-netcdf-vsis3.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

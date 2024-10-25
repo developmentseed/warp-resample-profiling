@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../examples/resample-xesmfcached-h5netcdf-local.html" rel="next">
-<link href="../examples/resample-xesmf-zarr-icechunk.html" rel="prev">
+<link href="../examples/resample-netcdf-xesmfcached-h5netcdf-local.html" rel="next">
+<link href="../examples/resample-zarr-xesmf-zarr-icechunk.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -196,13 +196,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-rasterio-netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rasterio-netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-rasterio-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rasterio-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
@@ -219,14 +219,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-rioxarray-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rioxarray-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-rioxarray-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rioxarray-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-netcdf-rioxarray-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-rioxarray-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -242,14 +254,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-odc-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-odc-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-odc-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-odc-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-netcdf-odc-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-odc-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -265,14 +289,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-pyresample-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-pyresample-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-pyresample-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-pyresample-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-netcdf-pyresample-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-pyresample-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -288,20 +324,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmf-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmf-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmf-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmf-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmf-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmf-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-xesmf-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -323,26 +365,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmfcached-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmfcached-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmfcached-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmfcached-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Zarr Reader + Icechunk virtualization(S3 storage)</span></a>
+  <a href="../examples/resample-netcdf-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmfcached-zarr-kerchunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmfcached-zarr-kerchunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader + Kerchunk virtualization (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Sparse (with pre-generated weights)</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-sparse-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -351,13 +416,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
  <span class="menu-text">Profiling results</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../examples/process-results.html" class="sidebar-item-text sidebar-link">
@@ -388,232 +453,213 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="cell-0" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyproj</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio.transform</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sparse</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xesmf <span class="im">as</span> xe</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyproj</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio.transform</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sparse</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xesmf <span class="im">as</span> xe</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> common <span class="im">import</span> earthaccess_args, target_extent</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> icechunk <span class="im">import</span> IcechunkStore, StorageConfig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-1" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">".."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_grid_ds(<span class="op">*</span>, te, tilesize, dstSRS) <span class="op">-&gt;</span> xr.Dataset:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Make a dataset representing a target grid</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    xr.Dataset</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Target grid dataset with the following variables:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">        - "x": X coordinate in Web Mercator projection (grid cell center)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">        - "y": Y coordinate in Web Mercator projection (grid cell center)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lat": latitude coordinate (grid cell center)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lon": longitude coordinate (grid cell center)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lat_b": latitude bounds for grid cell</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lon_b": longitude bounds for grid cell</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Notes</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">    -----</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">    Modified from ndpyramid - https://github.com/carbonplan/ndpyramid</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    transform <span class="op">=</span> rasterio.transform.Affine.translation(</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        te[<span class="dv">0</span>], te[<span class="dv">3</span>]</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">*</span> rasterio.transform.Affine.scale((te[<span class="dv">2</span>] <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> tilesize, (te[<span class="dv">1</span>] <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> tilesize)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> pyproj.Proj(dstSRS)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    grid_shape <span class="op">=</span> (tilesize, tilesize)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    bounds_shape <span class="op">=</span> (tilesize <span class="op">+</span> <span class="dv">1</span>, tilesize <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    xs <span class="op">=</span> np.empty(grid_shape)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    ys <span class="op">=</span> np.empty(grid_shape)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    lat <span class="op">=</span> np.empty(grid_shape)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    lon <span class="op">=</span> np.empty(grid_shape)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    lat_b <span class="op">=</span> np.zeros(bounds_shape)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    lon_b <span class="op">=</span> np.zeros(bounds_shape)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calc grid cell center coordinates</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    ii, jj <span class="op">=</span> np.meshgrid(np.arange(tilesize) <span class="op">+</span> <span class="fl">0.5</span>, np.arange(tilesize) <span class="op">+</span> <span class="fl">0.5</span>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j <span class="kw">in</span> itertools.product(<span class="bu">range</span>(grid_shape[<span class="dv">0</span>]), <span class="bu">range</span>(grid_shape[<span class="dv">1</span>])):</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        locs <span class="op">=</span> [ii[i, j], jj[i, j]]</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        xs[i, j], ys[i, j] <span class="op">=</span> transform <span class="op">*</span> locs</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        lon[i, j], lat[i, j] <span class="op">=</span> p(xs[i, j], ys[i, j], inverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calc grid cell bounds</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    iib, jjb <span class="op">=</span> np.meshgrid(np.arange(tilesize <span class="op">+</span> <span class="dv">1</span>), np.arange(tilesize <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j <span class="kw">in</span> itertools.product(<span class="bu">range</span>(bounds_shape[<span class="dv">0</span>]), <span class="bu">range</span>(bounds_shape[<span class="dv">1</span>])):</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        locs <span class="op">=</span> [iib[i, j], jjb[i, j]]</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        x, y <span class="op">=</span> transform <span class="op">*</span> locs</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        lon_b[i, j], lat_b[i, j] <span class="op">=</span> p(x, y, inverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    latitude <span class="op">=</span> xr.DataArray(</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        lat[:, <span class="dv">0</span>],</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        dims<span class="op">=</span><span class="st">"y"</span>,</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        attrs<span class="op">=</span><span class="bu">dict</span>(</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>            standard_name<span class="op">=</span><span class="st">"latitude"</span>,</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>            long_name<span class="op">=</span><span class="st">"Latitude"</span>,</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>            units<span class="op">=</span><span class="st">"degrees_north"</span>,</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>            axis<span class="op">=</span><span class="st">"X"</span>,</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    longitude <span class="op">=</span> xr.DataArray(</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>        lon[<span class="dv">0</span>, :],</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>        dims<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>        attrs<span class="op">=</span><span class="bu">dict</span>(</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>            standard_name<span class="op">=</span><span class="st">"longitude"</span>,</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>            long_name<span class="op">=</span><span class="st">"Longitude"</span>,</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>            units<span class="op">=</span><span class="st">"degrees_east"</span>,</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>            axis<span class="op">=</span><span class="st">"Y"</span>,</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xr.Dataset(</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lat_b"</span>: xr.DataArray(lat_b, dims<span class="op">=</span>[<span class="st">"y_b"</span>, <span class="st">"x_b"</span>]),</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lon_b"</span>: xr.DataArray(lon_b, dims<span class="op">=</span>[<span class="st">"y_b"</span>, <span class="st">"x_b"</span>]),</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>            <span class="st">"latitude"</span>: latitude,</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>            <span class="st">"longitude"</span>: longitude,</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> xesmf_weights_to_xarray(regridder) <span class="op">-&gt;</span> xr.Dataset:</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a><span class="co">    Construct an xarray dataset from XESMF weights</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a><span class="co">    Notes</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="co">    -----</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="co">    From ndpyramid - https://github.com/carbonplan/ndpyramid</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> regridder.weights.data</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    dim <span class="op">=</span> <span class="st">"n_s"</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    ds <span class="op">=</span> xr.Dataset(</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>            <span class="st">"S"</span>: (dim, w.data),</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>            <span class="st">"col"</span>: (dim, w.coords[<span class="dv">1</span>, :] <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>            <span class="st">"row"</span>: (dim, w.coords[<span class="dv">0</span>, :] <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>    ds.attrs <span class="op">=</span> {<span class="st">"n_in"</span>: regridder.n_in, <span class="st">"n_out"</span>: regridder.n_out}</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ds</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _reconstruct_xesmf_weights(ds_w):</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="co">    Reconstruct weights into format that xESMF understands</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="co">    Notes</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="co">    -----</span></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="co">    From ndpyramid - https://github.com/carbonplan/ndpyramid</span></span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>    col <span class="op">=</span> ds_w[<span class="st">"col"</span>].values <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>    row <span class="op">=</span> ds_w[<span class="st">"row"</span>].values <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> ds_w[<span class="st">"S"</span>].values</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>    n_out, n_in <span class="op">=</span> ds_w.attrs[<span class="st">"n_out"</span>], ds_w.attrs[<span class="st">"n_in"</span>]</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>    crds <span class="op">=</span> np.stack([row, col])</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xr.DataArray(</span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>        sparse.COO(crds, s, (n_out, n_in)), dims<span class="op">=</span>(<span class="st">"out_dim"</span>, <span class="st">"in_dim"</span>), name<span class="op">=</span><span class="st">"weights"</span></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-2" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> <span class="st">"gpm_imerg"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_weights(dataset, zoom):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    te <span class="op">=</span> target_extent[zoom]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define filepath, driver, and variable information</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> earthaccess_args[dataset]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create icechunk repos for caching weights and target grid</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    weights_storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        prefix<span class="op">=</span><span class="ss">f"resampling/test-weight-caching/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-weights-</span><span class="sc">{</span>zoom<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    target_storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        prefix<span class="op">=</span><span class="ss">f"resampling/test-weight-caching/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-target-</span><span class="sc">{</span>zoom<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    weights_store <span class="op">=</span> IcechunkStore.open_or_create(storage<span class="op">=</span>weights_storage, mode<span class="op">=</span><span class="st">"w"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    target_store <span class="op">=</span> IcechunkStore.open_or_create(storage<span class="op">=</span>target_storage, mode<span class="op">=</span><span class="st">"w"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create target grid</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    target_grid <span class="op">=</span> make_grid_ds(te<span class="op">=</span>te, tilesize<span class="op">=</span><span class="dv">256</span>, dstSRS<span class="op">=</span><span class="st">"EPSG:3857"</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open dataset</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        prefix<span class="op">=</span><span class="ss">f"resampling/icechunk/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    store <span class="op">=</span> IcechunkStore.open_existing(storage<span class="op">=</span>storage, mode<span class="op">=</span><span class="st">"r"</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> xr.open_zarr(store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)[args[<span class="st">"variable"</span>]]</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Chunk target grid for parallel weights generations</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    output_chunk_size <span class="op">=</span> <span class="dv">128</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    target_grid <span class="op">=</span> target_grid.chunk(</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            <span class="st">"x"</span>: output_chunk_size,</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>            <span class="st">"y"</span>: output_chunk_size,</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>            <span class="st">"y_b"</span>: output_chunk_size,</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">"x_b"</span>: output_chunk_size,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create XESMF regridder</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    regridder <span class="op">=</span> xe.Regridder(</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        da,</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        target_grid,</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">"nearest_s2d"</span>,</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>        periodic<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        extrap_method<span class="op">=</span><span class="st">"nearest_s2d"</span>,</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>        ignore_degenerate<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        parallel<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert weigts to a dataset</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    weights <span class="op">=</span> xesmf_weights_to_xarray(regridder)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store weights using icechunk</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    weights.to_zarr(weights_store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Commit data to icechunk stores</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    weights_store.commit(<span class="st">"Store weights"</span>)</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store target grid using icechunk</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    target_grid.load().to_zarr(target_store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    target_store.commit(<span class="st">"Generate target grid"</span>)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store weights using Zarr</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> <span class="ss">f"s3://nasa-veda-scratch/resampling/test-weight-caching/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-weights-</span><span class="sc">{</span>zoom<span class="sc">}</span><span class="ss">.zarr"</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>    weights.to_zarr(output, mode<span class="op">=</span><span class="st">"w"</span>, storage_options<span class="op">=</span>{<span class="st">"use_listings_cache"</span>: <span class="va">False</span>})</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store target grid using Zarr</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> <span class="ss">f"s3://nasa-veda-scratch/resampling/test-weight-caching/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-target-</span><span class="sc">{</span>zoom<span class="sc">}</span><span class="ss">.zarr"</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    target_grid.to_zarr(output, mode<span class="op">=</span><span class="st">"w"</span>, storage_options<span class="op">=</span>{<span class="st">"use_listings_cache"</span>: <span class="va">False</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-3" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_grid_ds(<span class="op">*</span>, te, tilesize, dstSRS) <span class="op">-&gt;</span> xr.Dataset:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Make a dataset representing a target grid</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    xr.Dataset</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Target grid dataset with the following variables:</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">        - "x": X coordinate in Web Mercator projection (grid cell center)</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">        - "y": Y coordinate in Web Mercator projection (grid cell center)</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lat": latitude coordinate (grid cell center)</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lon": longitude coordinate (grid cell center)</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lat_b": latitude bounds for grid cell</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lon_b": longitude bounds for grid cell</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Notes</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">    -----</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">    Modified from ndpyramid - https://github.com/carbonplan/ndpyramid</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    transform <span class="op">=</span> rasterio.transform.Affine.translation(</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        te[<span class="dv">0</span>], te[<span class="dv">3</span>]</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">*</span> rasterio.transform.Affine.scale((te[<span class="dv">2</span>] <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> tilesize, (te[<span class="dv">1</span>] <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> tilesize)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> pyproj.Proj(dstSRS)</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    grid_shape <span class="op">=</span> (tilesize, tilesize)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    bounds_shape <span class="op">=</span> (tilesize <span class="op">+</span> <span class="dv">1</span>, tilesize <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    xs <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    ys <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    lat <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    lon <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    lat_b <span class="op">=</span> np.zeros(bounds_shape)</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    lon_b <span class="op">=</span> np.zeros(bounds_shape)</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calc grid cell center coordinates</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    ii, jj <span class="op">=</span> np.meshgrid(np.arange(tilesize) <span class="op">+</span> <span class="fl">0.5</span>, np.arange(tilesize) <span class="op">+</span> <span class="fl">0.5</span>)</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j <span class="kw">in</span> itertools.product(<span class="bu">range</span>(grid_shape[<span class="dv">0</span>]), <span class="bu">range</span>(grid_shape[<span class="dv">1</span>])):</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        locs <span class="op">=</span> [ii[i, j], jj[i, j]]</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        xs[i, j], ys[i, j] <span class="op">=</span> transform <span class="op">*</span> locs</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        lon[i, j], lat[i, j] <span class="op">=</span> p(xs[i, j], ys[i, j], inverse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calc grid cell bounds</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    iib, jjb <span class="op">=</span> np.meshgrid(np.arange(tilesize <span class="op">+</span> <span class="dv">1</span>), np.arange(tilesize <span class="op">+</span> <span class="dv">1</span>))</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j <span class="kw">in</span> itertools.product(<span class="bu">range</span>(bounds_shape[<span class="dv">0</span>]), <span class="bu">range</span>(bounds_shape[<span class="dv">1</span>])):</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>        locs <span class="op">=</span> [iib[i, j], jjb[i, j]]</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        x, y <span class="op">=</span> transform <span class="op">*</span> locs</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>        lon_b[i, j], lat_b[i, j] <span class="op">=</span> p(x, y, inverse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    latitude <span class="op">=</span> xr.DataArray(</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>        lat[:, <span class="dv">0</span>],</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        dims<span class="op">=</span><span class="st">"y"</span>,</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        attrs<span class="op">=</span><span class="bu">dict</span>(</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>            standard_name<span class="op">=</span><span class="st">"latitude"</span>,</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>            long_name<span class="op">=</span><span class="st">"Latitude"</span>,</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>            units<span class="op">=</span><span class="st">"degrees_north"</span>,</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>            axis<span class="op">=</span><span class="st">"X"</span>,</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    longitude <span class="op">=</span> xr.DataArray(</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>        lon[<span class="dv">0</span>, :],</span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>        dims<span class="op">=</span><span class="st">"x"</span>,</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>        attrs<span class="op">=</span><span class="bu">dict</span>(</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>            standard_name<span class="op">=</span><span class="st">"longitude"</span>,</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>            long_name<span class="op">=</span><span class="st">"Longitude"</span>,</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>            units<span class="op">=</span><span class="st">"degrees_east"</span>,</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>            axis<span class="op">=</span><span class="st">"Y"</span>,</span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>        ),</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xr.Dataset(</span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lat_b"</span>: xr.DataArray(lat_b, dims<span class="op">=</span>[<span class="st">"y_b"</span>, <span class="st">"x_b"</span>]),</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lon_b"</span>: xr.DataArray(lon_b, dims<span class="op">=</span>[<span class="st">"y_b"</span>, <span class="st">"x_b"</span>]),</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>        },</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>            <span class="st">"latitude"</span>: latitude,</span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>            <span class="st">"longitude"</span>: longitude,</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>        },</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> xesmf_weights_to_xarray(regridder) <span class="op">-&gt;</span> xr.Dataset:</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="co">    Construct an xarray dataset from XESMF weights</span></span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="co">    Notes</span></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="co">    -----</span></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="co">    From ndpyramid - https://github.com/carbonplan/ndpyramid</span></span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> regridder.weights.data</span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>    dim <span class="op">=</span> <span class="st">"n_s"</span></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>    ds <span class="op">=</span> xr.Dataset(</span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>            <span class="st">"S"</span>: (dim, w.data),</span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>            <span class="st">"col"</span>: (dim, w.coords[<span class="dv">1</span>, :] <span class="op">+</span> <span class="dv">1</span>),</span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>            <span class="st">"row"</span>: (dim, w.coords[<span class="dv">0</span>, :] <span class="op">+</span> <span class="dv">1</span>),</span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>    ds.attrs <span class="op">=</span> {<span class="st">"n_in"</span>: regridder.n_in, <span class="st">"n_out"</span>: regridder.n_out}</span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ds</span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _reconstruct_xesmf_weights(ds_w):</span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="co">    Reconstruct weights into format that xESMF understands</span></span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a><span class="co">    Notes</span></span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="co">    -----</span></span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a><span class="co">    From ndpyramid - https://github.com/carbonplan/ndpyramid</span></span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>    col <span class="op">=</span> ds_w[<span class="st">"col"</span>].values <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>    row <span class="op">=</span> ds_w[<span class="st">"row"</span>].values <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> ds_w[<span class="st">"S"</span>].values</span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a>    n_out, n_in <span class="op">=</span> ds_w.attrs[<span class="st">"n_out"</span>], ds_w.attrs[<span class="st">"n_in"</span>]</span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>    crds <span class="op">=</span> np.stack([row, col])</span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xr.DataArray(</span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>        sparse.COO(crds, s, (n_out, n_in)), dims<span class="op">=</span>(<span class="st">"out_dim"</span>, <span class="st">"in_dim"</span>), name<span class="op">=</span><span class="st">"weights"</span></span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> <span class="st">"gpm_imerg"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>generate_weights(dataset, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-4" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> common <span class="im">import</span> earthaccess_args  <span class="co"># noqa: E402</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> common <span class="im">import</span> target_extent <span class="im">as</span> te  <span class="co"># noqa: E402</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define filepath, driver, and variable information</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>args <span class="op">=</span> earthaccess_args[dataset]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create icechunk repos for caching weights and target grid</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>weights_storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    prefix<span class="op">=</span><span class="ss">f"resampling/test-weight-caching/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-weights"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>target_storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    prefix<span class="op">=</span><span class="ss">f"resampling/test-weight-caching/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-target"</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>weights_store <span class="op">=</span> IcechunkStore.open_or_create(storage<span class="op">=</span>weights_storage, mode<span class="op">=</span><span class="st">"w"</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>target_store <span class="op">=</span> IcechunkStore.open_or_create(storage<span class="op">=</span>target_storage, mode<span class="op">=</span><span class="st">"w"</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create target grid</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>target_grid <span class="op">=</span> make_grid_ds(te<span class="op">=</span>te, tilesize<span class="op">=</span><span class="dv">256</span>, dstSRS<span class="op">=</span><span class="st">"EPSG:3857"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>generate_weights(dataset, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-5" class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open dataset</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    prefix<span class="op">=</span><span class="ss">f"resampling/icechunk/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">"</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>store <span class="op">=</span> IcechunkStore.open_existing(storage<span class="op">=</span>storage, mode<span class="op">=</span><span class="st">"r"</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>da <span class="op">=</span> xr.open_zarr(store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)[args[<span class="st">"variable"</span>]]</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>da</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-6" class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chunk target grid for parallel weights generations</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>output_chunk_size <span class="op">=</span> <span class="dv">128</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>target_grid <span class="op">=</span> target_grid.chunk(</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"x"</span>: output_chunk_size,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"y"</span>: output_chunk_size,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"y_b"</span>: output_chunk_size,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"x_b"</span>: output_chunk_size,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>target_grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-7" class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create XESMF regridder</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>regridder <span class="op">=</span> xe.Regridder(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    da,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    target_grid,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"nearest_s2d"</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    periodic<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    extrap_method<span class="op">=</span><span class="st">"nearest_s2d"</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    ignore_degenerate<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    parallel<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-8" class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert weigts to a dataset</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> xesmf_weights_to_xarray(regridder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-9" class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store weights using icechunk</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>weights.to_zarr(weights_store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Commit data to icechunk stores</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>weights_store.commit(<span class="st">"Store weights"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-10" class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store target grid using icechunk</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>target_grid.load().to_zarr(target_store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>target_store.commit(<span class="st">"Generate target grid"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-11" class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store weights using Zarr</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> (</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"s3://nasa-veda-scratch/resampling/test-weight-caching/"</span> <span class="op">+</span> dataset <span class="op">+</span> <span class="st">"-weights.zarr"</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>weights.to_zarr(output, mode<span class="op">=</span><span class="st">"w"</span>, storage_options<span class="op">=</span>{<span class="st">"use_listings_cache"</span>: <span class="va">False</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-12" class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store target grid using Zarr</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> (</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"s3://nasa-veda-scratch/resampling/test-weight-caching/"</span> <span class="op">+</span> dataset <span class="op">+</span> <span class="st">"-target.zarr"</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>target_grid.to_zarr(output, mode<span class="op">=</span><span class="st">"w"</span>, storage_options<span class="op">=</span>{<span class="st">"use_listings_cache"</span>: <span class="va">False</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>generate_weights(dataset, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -1185,12 +1231,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../examples/resample-xesmf-zarr-icechunk.html" class="pagination-link" aria-label="Zarr Reader + Icechunk virtualization (S3 storage)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Zarr Reader + Icechunk virtualization (S3 storage)</span>
+      <a href="../examples/resample-zarr-xesmf-zarr-icechunk.html" class="pagination-link" aria-label="Zarr Reader (S3 storage)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Zarr Reader (S3 storage)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../examples/resample-xesmfcached-h5netcdf-local.html" class="pagination-link" aria-label="H5NetCDF Driver (Local storage)">
+      <a href="../examples/resample-netcdf-xesmfcached-h5netcdf-local.html" class="pagination-link" aria-label="H5NetCDF Driver (Local storage)">
         <span class="nav-page-text">H5NetCDF Driver (Local storage)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

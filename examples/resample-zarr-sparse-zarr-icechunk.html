@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Resampling with XESMF (S3 storage, NetCDF file, Zarr reader, icechunk virtualization) – Geospatial reprojection in Python (2024)</title>
+<title>Resampling with sparse (S3 storage, Zarr V3 store, Zarr reader with icechunk)¶ – Geospatial reprojection in Python (2024)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../examples/generate-weights.html" rel="next">
-<link href="../examples/resample-xesmf-h5netcdf-.html" rel="prev">
+<link href="../examples/process-results.html" rel="next">
+<link href="../examples/resample-zarr-xesmfcached-zarr-icechunk.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -118,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Resampling libraries</li><li class="breadcrumb-item"><a href="../examples/resample-xesmf-h5netcdf-local.html">XESMF</a></li><li class="breadcrumb-item"><a href="../examples/resample-xesmf-zarr-icechunk.html">Zarr Reader + Icechunk virtualization (S3 storage)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Resampling libraries</li><li class="breadcrumb-item"><a href="../examples/resample-zarr-sparse-zarr-icechunk.html">Sparse (with pre-generated weights)</a></li><li class="breadcrumb-item"><a href="../examples/resample-zarr-sparse-zarr-icechunk.html">Zarr Reader (S3 storage)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -196,13 +196,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-rasterio-netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rasterio-netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-rasterio-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rasterio-netcdf-vsis3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
@@ -219,14 +219,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-rioxarray-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rioxarray-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-rioxarray-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-rioxarray-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-netcdf-rioxarray-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-rioxarray-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -242,14 +254,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-odc-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-odc-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-odc-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-odc-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-netcdf-odc-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-odc-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -265,43 +289,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-pyresample-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-pyresample-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-pyresample-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-pyresample-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-netcdf-pyresample-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-pyresample-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
  <span class="menu-text">XESMF</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmf-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmf-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmf-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmf-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmf-zarr-icechunk.html" class="sidebar-item-text sidebar-link active">
+  <a href="../examples/resample-netcdf-xesmf-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-xesmf-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -323,26 +365,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmfcached-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmfcached-h5netcdf-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (Local storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmfcached-h5netcdf-.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmfcached-h5netcdf-.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H5NetCDF Driver (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Zarr Reader + Icechunk virtualization(S3 storage)</span></a>
+  <a href="../examples/resample-netcdf-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-xesmfcached-zarr-kerchunk.html" class="sidebar-item-text sidebar-link">
+  <a href="../examples/resample-netcdf-xesmfcached-zarr-kerchunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader + Kerchunk virtualization (S3 storage)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sparse (with pre-generated weights)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../examples/resample-zarr-sparse-zarr-icechunk.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Zarr Reader (S3 storage)</span></a>
   </div>
 </li>
       </ul>
@@ -351,13 +416,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
  <span class="menu-text">Profiling results</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../examples/process-results.html" class="sidebar-item-text sidebar-link">
@@ -383,9 +448,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Resampling libraries</li><li class="breadcrumb-item"><a href="../examples/resample-xesmf-h5netcdf-local.html">XESMF</a></li><li class="breadcrumb-item"><a href="../examples/resample-xesmf-zarr-icechunk.html">Zarr Reader + Icechunk virtualization (S3 storage)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Resampling libraries</li><li class="breadcrumb-item"><a href="../examples/resample-zarr-sparse-zarr-icechunk.html">Sparse (with pre-generated weights)</a></li><li class="breadcrumb-item"><a href="../examples/resample-zarr-sparse-zarr-icechunk.html">Zarr Reader (S3 storage)</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Resampling with XESMF (S3 storage, NetCDF file, Zarr reader, icechunk virtualization)</h1>
+<h1 class="title">Resampling with sparse (S3 storage, Zarr V3 store, Zarr reader with icechunk)¶</h1>
 </div>
 
 
@@ -404,122 +469,181 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="cell-2" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> argparse</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyproj</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio.transform</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xesmf <span class="im">as</span> xe</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> icechunk <span class="im">import</span> IcechunkStore, StorageConfig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> common <span class="im">import</span> earthaccess_args</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> icechunk <span class="im">import</span> IcechunkStore, StorageConfig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-3" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_grid_ds(<span class="op">*</span>, te, tilesize, dstSRS) <span class="op">-&gt;</span> xr.Dataset:</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _reconstruct_xesmf_weights(ds_w):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Make a dataset representing a target grid</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Reconstruct weights into format that xESMF understands</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    xr.Dataset</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Target grid dataset with the following variables:</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">        - "x": X coordinate in Web Mercator projection (grid cell center)</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">        - "y": Y coordinate in Web Mercator projection (grid cell center)</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lat": latitude coordinate (grid cell center)</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lon": longitude coordinate (grid cell center)</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lat_b": latitude bounds for grid cell</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">        - "lon_b": longitude bounds for grid cell</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Notes</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">    -----</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">    Modified from ndpyramid - https://github.com/carbonplan/ndpyramid</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    transform <span class="op">=</span> rasterio.transform.Affine.translation(</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        te[<span class="dv">0</span>], te[<span class="dv">3</span>]</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">*</span> rasterio.transform.Affine.scale((te[<span class="dv">2</span>] <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> tilesize, (te[<span class="dv">1</span>] <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> tilesize)</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> pyproj.Proj(dstSRS)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    grid_shape <span class="op">=</span> (tilesize, tilesize)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    bounds_shape <span class="op">=</span> (tilesize <span class="op">+</span> <span class="dv">1</span>, tilesize <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    xs <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    ys <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    lat <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    lon <span class="op">=</span> np.empty(grid_shape)</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    lat_b <span class="op">=</span> np.zeros(bounds_shape)</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    lon_b <span class="op">=</span> np.zeros(bounds_shape)</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calc grid cell center coordinates</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    ii, jj <span class="op">=</span> np.meshgrid(np.arange(tilesize) <span class="op">+</span> <span class="fl">0.5</span>, np.arange(tilesize) <span class="op">+</span> <span class="fl">0.5</span>)</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j <span class="kw">in</span> itertools.product(<span class="bu">range</span>(grid_shape[<span class="dv">0</span>]), <span class="bu">range</span>(grid_shape[<span class="dv">1</span>])):</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        locs <span class="op">=</span> [ii[i, j], jj[i, j]]</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        xs[i, j], ys[i, j] <span class="op">=</span> transform <span class="op">*</span> locs</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        lon[i, j], lat[i, j] <span class="op">=</span> p(xs[i, j], ys[i, j], inverse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calc grid cell bounds</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    iib, jjb <span class="op">=</span> np.meshgrid(np.arange(tilesize <span class="op">+</span> <span class="dv">1</span>), np.arange(tilesize <span class="op">+</span> <span class="dv">1</span>))</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, j <span class="kw">in</span> itertools.product(<span class="bu">range</span>(bounds_shape[<span class="dv">0</span>]), <span class="bu">range</span>(bounds_shape[<span class="dv">1</span>])):</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        locs <span class="op">=</span> [iib[i, j], jjb[i, j]]</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        x, y <span class="op">=</span> transform <span class="op">*</span> locs</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        lon_b[i, j], lat_b[i, j] <span class="op">=</span> p(x, y, inverse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xr.Dataset(</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>            <span class="st">"x"</span>: xr.DataArray(xs[<span class="dv">0</span>, :], dims<span class="op">=</span>[<span class="st">"x"</span>]),</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>            <span class="st">"y"</span>: xr.DataArray(ys[:, <span class="dv">0</span>], dims<span class="op">=</span>[<span class="st">"y"</span>]),</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lat"</span>: xr.DataArray(lat, dims<span class="op">=</span>[<span class="st">"y"</span>, <span class="st">"x"</span>]),</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lon"</span>: xr.DataArray(lon, dims<span class="op">=</span>[<span class="st">"y"</span>, <span class="st">"x"</span>]),</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lat_b"</span>: xr.DataArray(lat_b, dims<span class="op">=</span>[<span class="st">"y_b"</span>, <span class="st">"x_b"</span>]),</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>            <span class="st">"lon_b"</span>: xr.DataArray(lon_b, dims<span class="op">=</span>[<span class="st">"y_b"</span>, <span class="st">"x_b"</span>]),</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>        },</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Notes</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">    -----</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    From ndpyramid - https://github.com/carbonplan/ndpyramid</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> sparse</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> xarray <span class="im">as</span> xr</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    col <span class="op">=</span> ds_w[<span class="st">"col"</span>].values <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    row <span class="op">=</span> ds_w[<span class="st">"row"</span>].values <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> ds_w[<span class="st">"S"</span>].values</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    n_out, n_in <span class="op">=</span> ds_w.attrs[<span class="st">"n_out"</span>], ds_w.attrs[<span class="st">"n_in"</span>]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    crds <span class="op">=</span> np.stack([row, col])</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xr.DataArray(</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        sparse.COO(crds, s, (n_out, n_in)), dims<span class="op">=</span>(<span class="st">"out_dim"</span>, <span class="st">"in_dim"</span>), name<span class="op">=</span><span class="st">"weights"</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-4" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> regrid(dataset):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> common <span class="im">import</span> earthaccess_args</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> common <span class="im">import</span> target_extent <span class="im">as</span> te</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define filepath, driver, and variable information</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> earthaccess_args[dataset]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create grid to hold result</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    target_grid <span class="op">=</span> make_grid_ds(te<span class="op">=</span>te, tilesize<span class="op">=</span><span class="dv">256</span>, dstSRS<span class="op">=</span><span class="st">"EPSG:3857"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open dataset</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        prefix<span class="op">=</span><span class="ss">f"resampling/icechunk/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-reference"</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    store <span class="op">=</span> IcechunkStore.open_existing(storage<span class="op">=</span>storage, mode<span class="op">=</span><span class="st">"r"</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> xr.open_zarr(store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)[args[<span class="st">"variable"</span>]]</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create XESMF regridder</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    regridder <span class="op">=</span> xe.Regridder(</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        da,</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        target_grid,</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"nearest_s2d"</span>,</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        periodic<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        extrap_method<span class="op">=</span><span class="st">"nearest_s2d"</span>,</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        ignore_degenerate<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Regrid dataset</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> regridder(da).load()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> xr_regridder(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    ds: xr.Dataset,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    grid: xr.Dataset,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    weights: xr.DataArray,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> xr.Dataset:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Xarray-aware regridding function that uses weights from xESMF but performs the regridding using sparse matrix multiplication.</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">    ds</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">    weights</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">    out_grid_shape</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">    regridded_ds</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">    Notes</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">    -----</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">    Modified from https://github.com/carbonplan/ndpyramid/pull/130</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    latlon_dims <span class="op">=</span> [<span class="st">"lat"</span>, <span class="st">"lon"</span>]</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    shape_in <span class="op">=</span> (ds.sizes[<span class="st">"lat"</span>], ds.sizes[<span class="st">"lon"</span>])</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    shape_out <span class="op">=</span> (grid.sizes[<span class="st">"y"</span>], grid.sizes[<span class="st">"x"</span>])</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    regridded_ds <span class="op">=</span> xr.apply_ufunc(</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        esmf_apply_weights,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        weights,</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        ds,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        input_core_dims<span class="op">=</span>[[<span class="st">"out_dim"</span>, <span class="st">"in_dim"</span>], latlon_dims],</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        output_core_dims<span class="op">=</span>[latlon_dims],</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        exclude_dims<span class="op">=</span><span class="bu">set</span>(latlon_dims),</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        kwargs<span class="op">=</span>{<span class="st">"shape_in"</span>: shape_in, <span class="st">"shape_out"</span>: shape_out},</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        keep_attrs<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> regridded_ds</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> esmf_apply_weights(weights, indata, shape_in, shape_out):</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="co">    Apply regridding weights to data.</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="co">    A : scipy sparse COO matrix</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="co">    indata : numpy array of shape ``(..., n_lat, n_lon)`` or ``(..., n_y, n_x)``.</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="co">        Should be C-ordered. Will be then tranposed to F-ordered.</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="co">    shape_in, shape_out : tuple of two integers</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="co">        Input/output data shape for unflatten operation.</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="co">        For rectilinear grid, it is just ``(n_lat, n_lon)``.</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="co">    outdata : numpy array of shape ``(..., shape_out[0], shape_out[1])``.</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="co">        Extra dimensions are the same as `indata`.</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="co">        If input data is C-ordered, output will also be C-ordered.</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="co">    Notes</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="co">    -----</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="co">    From https://github.com/carbonplan/ndpyramid/pull/130</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># COO matrix is fast with F-ordered array but slow with C-array, so we</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    <span class="co"># take in a C-ordered and then transpose)</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (CSR or CRS matrix is fast with C-ordered array but slow with F-array)</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> indata.flags[<span class="st">"C_CONTIGUOUS"</span>]:</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        warnings.warn(<span class="st">"Input array is not C_CONTIGUOUS. "</span> <span class="st">"Will affect performance."</span>)</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get input shape information</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    shape_horiz <span class="op">=</span> indata.shape[<span class="op">-</span><span class="dv">2</span>:]</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    extra_shape <span class="op">=</span> indata.shape[<span class="dv">0</span>:<span class="op">-</span><span class="dv">2</span>]</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> shape_horiz <span class="op">==</span> shape_in, (</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>        <span class="st">"The horizontal shape of input data is </span><span class="sc">{}</span><span class="st">, different from that of"</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>        <span class="st">"the regridder </span><span class="sc">{}</span><span class="st">!"</span>.<span class="bu">format</span>(shape_horiz, shape_in)</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> (</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>        shape_in[<span class="dv">0</span>] <span class="op">*</span> shape_in[<span class="dv">1</span>] <span class="op">==</span> weights.shape[<span class="dv">1</span>]</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>    ), <span class="st">"ny_in * nx_in should equal to weights.shape[1]"</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> (</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>        shape_out[<span class="dv">0</span>] <span class="op">*</span> shape_out[<span class="dv">1</span>] <span class="op">==</span> weights.shape[<span class="dv">0</span>]</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>    ), <span class="st">"ny_out * nx_out should equal to weights.shape[0]"</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="co"># use flattened array for dot operation</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    indata_flat <span class="op">=</span> indata.reshape(<span class="op">-</span><span class="dv">1</span>, shape_in[<span class="dv">0</span>] <span class="op">*</span> shape_in[<span class="dv">1</span>])</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>    outdata_flat <span class="op">=</span> weights.dot(indata_flat.T).T</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    <span class="co"># unflattened output array</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>    outdata <span class="op">=</span> outdata_flat.reshape([<span class="op">*</span>extra_shape, shape_out[<span class="dv">0</span>], shape_out[<span class="dv">1</span>]])</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> outdata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-5" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"get_ipython"</span> <span class="kw">in</span> <span class="bu">dir</span>():</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Just call warp_resample if running as a Jupyter Notebook</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        da <span class="op">=</span> regrid(<span class="st">"gpm_imerg"</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Configure dataset via argpase if running via CLI</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        parser <span class="op">=</span> argparse.ArgumentParser(description<span class="op">=</span><span class="st">"Set environment for the script."</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        parser.add_argument(</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"--dataset"</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            default<span class="op">=</span><span class="st">"mursst"</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">help</span><span class="op">=</span><span class="st">"Dataset to resample."</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            choices<span class="op">=</span>[<span class="st">"gpm_imerg"</span>, <span class="st">"mursst"</span>],</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        user_args <span class="op">=</span> parser.parse_args()</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        da <span class="op">=</span> regrid(user_args.dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> regrid(dataset, zoom<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> earthaccess_args[dataset]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load pre-generated weights and target dataset</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    weights_storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        prefix<span class="op">=</span><span class="ss">f"resampling/test-weight-caching/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-weights-</span><span class="sc">{</span>zoom<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    target_storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        prefix<span class="op">=</span><span class="ss">f"resampling/test-weight-caching/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-target-</span><span class="sc">{</span>zoom<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    weights_store <span class="op">=</span> IcechunkStore.open_existing(storage<span class="op">=</span>weights_storage, mode<span class="op">=</span><span class="st">"r"</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    target_store <span class="op">=</span> IcechunkStore.open_existing(storage<span class="op">=</span>target_storage, mode<span class="op">=</span><span class="st">"r"</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    weights <span class="op">=</span> _reconstruct_xesmf_weights(</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        xr.open_zarr(weights_store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> xr.open_zarr(target_store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>).load()</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open dataset</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        prefix<span class="op">=</span><span class="ss">f"resampling/icechunk/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    store <span class="op">=</span> IcechunkStore.open_existing(storage<span class="op">=</span>storage, mode<span class="op">=</span><span class="st">"r"</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> xr.open_zarr(store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)[args[<span class="st">"variable"</span>]].load()</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xr_regridder(da, grid, weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-6" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"get_ipython"</span> <span class="kw">in</span> <span class="bu">dir</span>():</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Just call warp_resample if running as a Jupyter Notebook</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        da <span class="op">=</span> regrid(<span class="st">"gpm_imerg"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Configure dataset via argpase if running via CLI</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        parser <span class="op">=</span> argparse.ArgumentParser(description<span class="op">=</span><span class="st">"Set environment for the script."</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        parser.add_argument(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"--dataset"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            default<span class="op">=</span><span class="st">"gpm_imerg"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">help</span><span class="op">=</span><span class="st">"Dataset to resample."</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            choices<span class="op">=</span>[<span class="st">"gpm_imerg"</span>, <span class="st">"mursst"</span>],</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        parser.add_argument(</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"--zoom"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            default<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>            <span class="bu">help</span><span class="op">=</span><span class="st">"Zoom level for tile extent."</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        user_args <span class="op">=</span> parser.parse_args()</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        da <span class="op">=</span> regrid(user_args.dataset, <span class="bu">int</span>(user_args.zoom))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -1091,13 +1215,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../examples/resample-xesmf-h5netcdf-.html" class="pagination-link" aria-label="H5NetCDF Driver (S3 storage)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">H5NetCDF Driver (S3 storage)</span>
+      <a href="../examples/resample-zarr-xesmfcached-zarr-icechunk.html" class="pagination-link" aria-label="Zarr Reader (S3 storage)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Zarr Reader (S3 storage)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../examples/generate-weights.html" class="pagination-link" aria-label="Pre-generate weights">
-        <span class="nav-page-text">Pre-generate weights</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../examples/process-results.html" class="pagination-link" aria-label="Memory and time usage (MURSST)">
+        <span class="nav-page-text">Memory and time usage (MURSST)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1109,7 +1233,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.dev/developmentseed/warp-resample-profiling/blob/main/examples/resample-xesmf-zarr-icechunk.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.dev/developmentseed/warp-resample-profiling/blob/main/examples/resample-zarr-sparse-zarr-icechunk.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
