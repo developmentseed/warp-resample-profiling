@@ -96,13 +96,13 @@ Visualization
 
 ## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/earthdata-download.html"}
 
-## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/resample-gdal-netcdf-vsis3.html"}
+## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/resample-netcdf-rasterio-netcdf-local.html"}
 
-## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/resample-odc-h5netcdf-.html"}
-
-## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/future-resample-xesmf-h5netcdf-.html"}
+## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/generate-weights.html"}
 
 ## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/process-results.html"}
+
+## {background-iframe="https://developmentseed.org/warp-resample-profiling/examples/process-gpm-results.html"}
 
 ## {background-iframe="https://link.excalidraw.com/readonly/GgF1qYswczuP9WKpoCvU"}
 
