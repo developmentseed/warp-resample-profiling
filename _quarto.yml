@@ -36,48 +36,69 @@ website:
         contents:
           - section: Rasterio
             contents:
-              - href: examples/resample-rasterio-netcdf-local.ipynb
+              - href: examples/resample-netcdf-rasterio-netcdf-local.ipynb
                 text: NetCDF Driver (Local storage)
-              - href: examples/resample-rasterio-netcdf-vsis3.ipynb
+              - href: examples/resample-netcdf-rasterio-netcdf-vsis3.ipynb
                 text: NetCDF Driver (S3 storage)
           - section: Rioxarray
             contents:
-              - href: examples/resample-rioxarray-h5netcdf-local.ipynb
+              - href: examples/resample-netcdf-rioxarray-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
-              - href: examples/resample-rioxarray-h5netcdf-.ipynb
+              - href: examples/resample-netcdf-rioxarray-h5netcdf-.ipynb
                 text: H5NetCDF Driver (S3 storage)
+              - href: examples/resample-netcdf-rioxarray-zarr-icechunk.ipynb
+                text: Zarr Reader + Icechunk virtualization (S3 storage)
+              - href: examples/resample-zarr-rioxarray-zarr-icechunk.ipynb
+                text: Zarr Reader (S3 storage)
           - section: Open Data Cube
             contents:
-              - href: examples/resample-odc-h5netcdf-local.ipynb
+              - href: examples/resample-netcdf-odc-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
-              - href: examples/resample-odc-h5netcdf-.ipynb
+              - href: examples/resample-netcdf-odc-h5netcdf-.ipynb
                 text: H5NetCDF Driver (S3 storage)
+              - href: examples/resample-netcdf-odc-zarr-icechunk.ipynb
+                text: Zarr Reader + Icechunk virtualization (S3 storage)
+              - href: examples/resample-zarr-odc-zarr-icechunk.ipynb
+                text: Zarr Reader (S3 storage)
           - section: Pyresample
             contents:
-              - href: examples/resample-pyresample-h5netcdf-local.ipynb
+              - href: examples/resample-netcdf-pyresample-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
-              - href: examples/resample-pyresample-h5netcdf-.ipynb
+              - href: examples/resample-netcdf-pyresample-h5netcdf-.ipynb
                 text: H5NetCDF Driver (S3 storage)
+              - href: examples/resample-netcdf-pyresample-zarr-icechunk.ipynb
+                text: Zarr Reader + Icechunk virtualization (S3 storage)
+              - href: examples/resample-zarr-pyresample-zarr-icechunk.ipynb
+                text: Zarr Reader (S3 storage)
           - section: XESMF
             contents:
-              - href: examples/resample-xesmf-h5netcdf-local.ipynb
+              - href: examples/resample-netcdf-xesmf-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
-              - href: examples/resample-xesmf-h5netcdf-.ipynb
+              - href: examples/resample-netcdf-xesmf-h5netcdf-.ipynb
                 text: H5NetCDF Driver (S3 storage)
-              - href: examples/resample-xesmf-zarr-icechunk.ipynb
+              - href: examples/resample-netcdf-xesmf-zarr-icechunk.ipynb
                 text: Zarr Reader + Icechunk virtualization (S3 storage)
+              - href: examples/resample-zarr-xesmf-zarr-icechunk.ipynb
+                text: Zarr Reader (S3 storage)
           - section: XESMF (with pre-generated weights)
             contents:
               - href: examples/generate-weights.ipynb
                 text: Pre-generate weights
-              - href: examples/resample-xesmfcached-h5netcdf-local.ipynb
+              - href: examples/resample-netcdf-xesmfcached-h5netcdf-local.ipynb
                 text: H5NetCDF Driver (Local storage)
-              - href: examples/resample-xesmfcached-h5netcdf-.ipynb
+              - href: examples/resample-netcdf-xesmfcached-h5netcdf-.ipynb
                 text: H5NetCDF Driver (S3 storage)
-              - href: examples/resample-xesmfcached-zarr-icechunk.ipynb
-                text: Zarr Reader + Icechunk virtualization(S3 storage)
-              - href: examples/resample-xesmfcached-zarr-kerchunk.ipynb
+              - href: examples/resample-netcdf-xesmfcached-zarr-icechunk.ipynb
+                text: Zarr Reader + Icechunk virtualization (S3 storage)
+              - href: examples/resample-netcdf-xesmfcached-zarr-kerchunk.ipynb
                 text: Zarr Reader + Kerchunk virtualization (S3 storage)
+              - href: examples/resample-zarr-xesmfcached-zarr-icechunk.ipynb
+                text: Zarr Reader (S3 storage)
+
+          - section: Sparse (with pre-generated weights)
+            contents:
+              - href: examples/resample-zarr-sparse-zarr-icechunk.ipynb
+                text: Zarr Reader (S3 storage)
 
       - section: Profiling results
         contents:
