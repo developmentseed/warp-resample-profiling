@@ -28,6 +28,8 @@ website:
         text: Welcome
       - href: pages/slides.qmd
         text: Overview Slides
+      - href: resources.qmd
+        text: Resources
       - section: Dataset preparation
         contents:
           - href: examples/earthdata-download.ipynb
