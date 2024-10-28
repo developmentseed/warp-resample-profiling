@@ -49,7 +49,6 @@ dependencies:
   - pyinstrument
   - memray
   # For development
-  - gcc
   - jupyter
   - pip
   - pre-commit
