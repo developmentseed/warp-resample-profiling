@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Warp resampling – Geospatial reprojection in Python (2024)</title>
+<title>Geospatial reprojection in Python (2024)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -122,6 +122,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./pages/slides.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview Slides</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Resources</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -413,11 +419,9 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#caveat" id="toc-caveat" class="nav-link" data-scroll-target="#caveat">Caveat</a></li>
   <li><a href="#memory-and-time-profiling" id="toc-memory-and-time-profiling" class="nav-link" data-scroll-target="#memory-and-time-profiling">Memory and time profiling</a>
   <ul class="collapse">
   <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
-  <li><a href="#planned-extensions" id="toc-planned-extensions" class="nav-link" data-scroll-target="#planned-extensions">Planned extensions</a></li>
   <li><a href="#possible-extensions" id="toc-possible-extensions" class="nav-link" data-scroll-target="#possible-extensions">Possible extensions</a></li>
   <li><a href="#environment-setup" id="toc-environment-setup" class="nav-link" data-scroll-target="#environment-setup">Environment Setup</a></li>
   </ul></li>
@@ -431,40 +435,19 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Warp resampling</h1>
-<p class="subtitle lead">Geospatial reprojection in Python (2024)</p>
-</div>
 
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
 
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This a work-in-progress guidebook on existing warp resampling / reprojection methods in Python, along with some memory and statistical wall-time profiling results.</p>
-</section>
-<section id="caveat" class="level2">
-<h2 class="anchored" data-anchor-id="caveat">Caveat</h2>
-<p>This is a WIP guidebook. We are presenting early on in the development to guide discussions and future work. The output from different resampling methods has not yet been verified, important parameters (e.g., target no_data values) have not been set, and not all methods have been implemented. We encourage people to contribute by building on the notebooks in the <code>examples</code> directory or participating in discussions on this repo or on the Pangeo discourse.</p>
+<p>This repository and the accompanying Quarto book contains examples of using warp resampling / reprojection methods in Python, along with memory and statistical wall-time profiling results.</p>
 </section>
 <section id="memory-and-time-profiling" class="level2">
 <h2 class="anchored" data-anchor-id="memory-and-time-profiling">Memory and time profiling</h2>
 <p>Resampling and reprojection (i.e., warp resampling) are essential steps for generating raster tiles for browser based visualization. Further, warp resampling is often one of the most time consuming and memory intensive portions of the tile generation process. The importance and complexity of this step motivates an exploration of different warp resampling options.</p>
 <section id="goals" class="level3">
 <h3 class="anchored" data-anchor-id="goals">Goals</h3>
-<p>Compare memory and time performance for generating a zoom level 0 256 x 256 raster from one timestep and variable of the MUR SST dataset using the following approaches:</p>
+<p>Compare memory and time performance for generating Web Mercator Quad Tree raster tiles from one timestep and variable of the MUR SST and GPM IMERG dataset using the following approaches:</p>
 <ul>
 <li><a href="https://gdal.org/en/latest/api/python/utilities.html#osgeo.gdal.Warp">osgeo.warp</a></li>
 <li><a href="https://rasterio.readthedocs.io/en/stable/api/rasterio.warp.html#rasterio.warp.reproject">rasterio.warp.reproject</a></li>
@@ -485,16 +468,7 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="https://www.pygmt.org/latest/api/generated/pygmt.grdproject.html#pygmt.grdproject">pygmt.grdproject</a> - <a href="https://www.pygmt.org/latest/projections/index.html">web mercator not amongst supported projections</a></li>
 <li><a href="https://www.fatiando.org/verde/latest/">verde</a> - not used for raster -&gt; raster resampling (only points -&gt; raster)</li>
 </ul>
-<p>These methods will be run on the full resolution dataset. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured.</p>
-</section>
-<section id="planned-extensions" class="level3">
-<h3 class="anchored" data-anchor-id="planned-extensions">Planned extensions</h3>
-<ul>
-<li>Compare to results when using a 2x and 4x downsampled versions to better understand the time and memory complexity</li>
-<li>Compare to results when using a virtual dataset (e.g., VRT, Kerchunk reference file).</li>
-<li>Compare results when reading from a dataset stored locally versus in cloud object storage.</li>
-<li>Compare to results when using a cloud-optimized dataset (Zarr).</li>
-</ul>
+<p>These methods will be run on the full resolution dataset. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured. We also compare results when using a virtual dataset (e.g., VRT, Kerchunk reference file), when reading from a dataset stored locally versus in cloud object storage, and when using a cloud-optimized dataset (Zarr.)</p>
 </section>
 <section id="possible-extensions" class="level3">
 <h3 class="anchored" data-anchor-id="possible-extensions">Possible extensions</h3>
