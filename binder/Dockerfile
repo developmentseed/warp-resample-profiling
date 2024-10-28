@@ -32,6 +32,7 @@ RUN python -m pip install git+https://github.com/pangeo-data/xesmf.git
 RUN python -m pip install icechunk git+https://github.com/earth-mover/Virtualizarr@icechunk
 RUN python -m pip install git+https://github.com/pydata/xarray@zarr-v3 git+https://github.com/mpiannucci/kerchunk@v3
 RUN python -m pip install git+https://github.com/zarr-developers/numcodecs@zarr3-codecs
+RUN python -m pip install git+https://github.com/zarr-developers/zarr-python@main
 
 # Insall quarto
 USER root
