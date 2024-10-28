@@ -1,0 +1,35 @@
+## Resources
+
+### Resampling options in Python 2024 (diagram)
+
+This excalidraw diagram shouws the components involved in a resampling workflow, along with the available Python implementations in 2024.
+
+```{=html}
+<iframe width="780" height="500" src="https://link.excalidraw.com/readonly/GgF1qYswczuP9WKpoCvU" title="Resampling overview diagrame"></iframe>
+```
+
+### Academic papers
+
+- Valcke S, Piacentini A, Jonville G. Benchmarking Regridding Libraries Used in Earth System Modelling. Mathematical and Computational Applications. 2022; 27(2):31. [https://doi.org/10.3390/mca27020031](https://doi.org/10.3390/mca27020031)
+
+### Informative websites
+- [ECMFF Interpolation Design document](https://sites.ecmwf.int/docs/atlas/design/interpolation/)
+- [NCAR's climate data guide](https://climatedataguide.ucar.edu/climate-tools/regridding-overview)
+- [Geocomputation with Python](https://py.geocompx.org/06-reproj)
+
+### Pangeo discussions
+
+- [What's Next - Software - Regridding](https://discourse.pangeo.io/t/whats-next-software-regridding/3896)
+- [Lazy regridding discussion](https://discourse.pangeo.io/t/can-a-reprojection-change-of-crs-operation-be-done-lazily-using-rioxarray/4468)
+- [Interpolation and regridding](https://discourse.pangeo.io/t/interpolation-and-regridding/309)
+- [Conservative Region Aggregation with Xarray, Geopandas, and Sparse](https://discourse.pangeo.io/t/conservative-region-aggregation-with-xarray-geopandas-and-sparse/2715)
+- [Can a reprojection/change of CRS opearation be done lazily using rioxarray?](https://discourse.pangeo.io/t/can-a-reprojection-change-of-crs-operation-be-done-lazily-using-rioxarray/4468/5)]
+
+### Some available regridding libraries in other languages
+
+- [XIOS](https://forge.ipsl.jussieu.fr/ioserver/browser/XIOS3/trunk)
+- [SCRIP](https://github.com/SCRIP-Project/SCRIP)
+- [YAC](https://gitlab.dkrz.de/dkrz-sw/yac)
+- [ATLAS](https://github.com/ecmwf/atlas)
+- [climate4R](https://github.com/SantanderMetGroup/climate4R)
+- [tempestremap](https://github.com/ClimateGlobalChange/tempestremap)

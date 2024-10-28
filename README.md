@@ -20,6 +20,7 @@ Compare memory and time performance for generating Web Mercator Quad Tree raster
 - [odc.geo.xr.xr_reproject](https://odc-geo.readthedocs.io/en/latest/_api/odc.geo.xr.xr_reproject.html)
 - [xcube.resampling](https://xcube.readthedocs.io/en/latest/api.html#cube-resampling)
 - [geowombat.config.update](https://geowombat.readthedocs.io/en/latest/tutorial-crs.html#transforming-a-crs-on-the-fly)
+- [xcdat.regridder.regrid2.Regrid2Regridder](https://xcdat.readthedocs.io/en/latest/generated/xcdat.regridder.regrid2.Regrid2Regridder.html#xcdat.regridder.regrid2.Regrid2Regridder)
 
 Out-of-scope:
 
@@ -39,11 +40,6 @@ These methods will be run on the full resolution dataset. Nearest neighbor inter
 ### Environment Setup
 
 The notebooks can be run on a JupyterHub environment using the docker image `quay.io/developmentseed/warp-resample-profiling:latest`, which is created using `repo2docker` using the Dockerfile contained within the `binder` directory.
-
-## References
-
-- [What's Next - Software - Regridding](https://discourse.pangeo.io/t/whats-next-software-regridding/3896)
-- [Lazy regridding discussion](https://discourse.pangeo.io/t/can-a-reprojection-change-of-crs-operation-be-done-lazily-using-rioxarray/4468)
 
 ### Acknowledgements
 
