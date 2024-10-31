@@ -4,6 +4,3 @@ tar
 zip
 unzip
 less
-build-essential
-binutils-dev
-gdb

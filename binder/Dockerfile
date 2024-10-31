@@ -17,20 +17,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     rm /tmp/apt.txt
 
-
-COPY binder/build-esmf.sh ${HOME}/build-esmf.sh
-
-RUN bash ${HOME}/build-esmf.sh
-
-ENV ESMFMKFILE="/usr/src/esmf/esmf-8.7.0/lib/libO/Linux.gfortran.64.mpiuni.default/esmf.mk"
-USER ${NB_USER}
-
-# Install xesmf
-RUN python -m pip install git+https://github.com/pangeo-data/xesmf.git
-
 # Install icechunk development packages (three steps required from https://github.com/earth-mover/icechunk/issues/197)
-RUN python -m pip install icechunk git+https://github.com/earth-mover/Virtualizarr@icechunk
-RUN python -m pip install git+https://github.com/pydata/xarray@zarr-v3 git+https://github.com/mpiannucci/kerchunk@v3
+RUN python -m pip install icechunk xarray VirtualiZarr
+RUN python -m pip install git+https://github.com/mpiannucci/kerchunk@v3
 RUN python -m pip install git+https://github.com/zarr-developers/numcodecs@zarr3-codecs
 RUN python -m pip install git+https://github.com/zarr-developers/zarr-python@main
 
