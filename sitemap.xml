@@ -2,134 +2,134 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/pages/slides.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.408Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/index.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/run-memray.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-zarr-xesmf-zarr-icechunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-zarr-rioxarray-zarr-icechunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-zarr-odc-zarr-icechunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-xesmfcached-zarr-icechunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-xesmfcached-h5netcdf-.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-xesmf-h5netcdf-local.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-rioxarray-zarr-icechunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-rioxarray-h5netcdf-.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-rasterio-netcdf-local.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-pyresample-h5netcdf-local.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-odc-zarr-icechunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.400Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-odc-h5netcdf-.html</loc>
-    <lastmod>2024-10-31T16:18:49.709Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.400Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/process-gpm-results.html</loc>
-    <lastmod>2024-10-31T16:18:49.709Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.400Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/earthdata-download.html</loc>
-    <lastmod>2024-10-31T16:18:49.709Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.400Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/generate-weights.html</loc>
-    <lastmod>2024-10-31T16:18:49.709Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.400Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/process-results.html</loc>
-    <lastmod>2024-10-31T16:18:49.709Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.400Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-odc-h5netcdf-local.html</loc>
-    <lastmod>2024-10-31T16:18:49.709Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.400Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-pyresample-h5netcdf-.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.400Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-pyresample-zarr-icechunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-rasterio-netcdf-vsis3.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-rioxarray-h5netcdf-local.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-xesmf-h5netcdf-.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-xesmf-zarr-icechunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-xesmfcached-h5netcdf-local.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-netcdf-xesmfcached-zarr-kerchunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-zarr-pyresample-zarr-icechunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-zarr-sparse-zarr-icechunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/resample-zarr-xesmfcached-zarr-icechunk.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/examples/run-pyinstrument.html</loc>
-    <lastmod>2024-10-31T16:18:49.713Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.404Z</lastmod>
   </url>
   <url>
     <loc>https://developmentseed.github.io/warp-resample-profiling/resources.html</loc>
-    <lastmod>2024-10-31T16:18:49.717Z</lastmod>
+    <lastmod>2024-10-31T16:35:10.408Z</lastmod>
   </url>
 </urlset>
