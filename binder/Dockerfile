@@ -17,23 +17,6 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     rm /tmp/apt.txt
 
-
-COPY binder/build-esmf.sh ${HOME}/build-esmf.sh
-
-RUN bash ${HOME}/build-esmf.sh
-
-ENV ESMFMKFILE="/usr/src/esmf/esmf-8.7.0/lib/libO/Linux.gfortran.64.mpiuni.default/esmf.mk"
-USER ${NB_USER}
-
-# Install xesmf
-RUN python -m pip install git+https://github.com/pangeo-data/xesmf.git
-
-# Install icechunk development packages (three steps required from https://github.com/earth-mover/icechunk/issues/197)
-RUN python -m pip install icechunk git+https://github.com/earth-mover/Virtualizarr@icechunk
-RUN python -m pip install git+https://github.com/pydata/xarray@zarr-v3 git+https://github.com/mpiannucci/kerchunk@v3
-RUN python -m pip install git+https://github.com/zarr-developers/numcodecs@zarr3-codecs
-RUN python -m pip install git+https://github.com/zarr-developers/zarr-python@main
-
 # Insall quarto
 USER root
 RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.57/quarto-1.5.57-linux-amd64.deb
@@ -46,3 +29,10 @@ USER ${NB_USER}
 COPY binder/install-vscode-ext.sh ${HOME}/.kernels/install-vscode-ext.sh
 
 RUN bash ${HOME}/.kernels/install-vscode-ext.sh
+
+# Install icechunk development packages (these steps required from https://github.com/earth-mover/icechunk/issues/197)
+RUN python -m pip install icechunk xarray VirtualiZarr
+RUN python -m pip install git+https://github.com/mpiannucci/kerchunk@v3
+RUN python -m pip install git+https://github.com/zarr-developers/numcodecs@zarr3-codecs
+RUN python -m pip install git+https://github.com/zarr-developers/zarr-python@main
+RUN python -m pip install git+https://github.com/pydata/xarray@main
