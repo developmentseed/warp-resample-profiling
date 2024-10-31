@@ -66,6 +66,7 @@ dependencies:
   # For building the quarto book
   - jupytext
   - pip:
+      - rio-cogeo
       - morecantile
       # For development on the Hub
       - gh-scoped-creds
