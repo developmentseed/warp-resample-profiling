@@ -125,6 +125,6 @@ format:
     code-overflow: wrap
     css: styles.css
     toc: true
-    toc-depth: 3
+    toc-depth: 4
 filters:
   - quarto
