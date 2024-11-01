@@ -38,7 +38,7 @@ def plot_time(
         location = "(local file)"
     else:
         location = "(remote file on s3)"
-    title = f"Duration for resampling {dataset_title} {location} (s)"
+    title = f"Duration for resampling {dataset_title} {location}"
     plt = subset.hvplot.bar(
         width=1000,
         rot=90,
