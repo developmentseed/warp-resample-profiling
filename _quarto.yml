@@ -42,6 +42,10 @@ website:
                 text: NetCDF Driver (Local storage)
               - href: examples/resample-netcdf-rasterio-netcdf-vsis3.ipynb
                 text: NetCDF Driver (S3 storage)
+              - href: examples/resample-weboptimizedzarr-rasterio-zarr-icechunk.ipynb
+                text: Web-Optimized Zarr (S3 storage)
+              - href: examples/resample-cog-rasterio-cog-.ipynb
+                text: Cloud-Optimized GeoTIFF (S3 storage)
           - section: Rioxarray
             contents:
               - href: examples/resample-netcdf-rioxarray-h5netcdf-local.ipynb
@@ -52,6 +56,8 @@ website:
                 text: Zarr Reader + Icechunk virtualization (S3 storage)
               - href: examples/resample-zarr-rioxarray-zarr-icechunk.ipynb
                 text: Zarr Reader (S3 storage)
+              - href: examples/resample-weboptimizedzarr-rioxarray-zarr-icechunk.ipynb
+                text: Web-Optimized Zarr (S3 storage)
           - section: Open Data Cube
             contents:
               - href: examples/resample-netcdf-odc-h5netcdf-local.ipynb
@@ -108,7 +114,8 @@ website:
             text: Memory and time usage (MURSST)
           - href: examples/process-gpm-results.ipynb
             text: Memory and time usage (GPM IMERG)
-
+      - href: examples/summarize-results.ipynb
+        text: Summary and interpretation
 format:
   html:
     theme:
