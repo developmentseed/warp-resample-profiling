@@ -483,6 +483,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#variability-related-to-io" id="toc-variability-related-to-io" class="nav-link" data-scroll-target="#variability-related-to-io">Variability related to I/O</a></li>
   <li><a href="#variability-related-to-web-optimization" id="toc-variability-related-to-web-optimization" class="nav-link" data-scroll-target="#variability-related-to-web-optimization">Variability related to web-optimization</a></li>
   <li><a href="#implications-for-future-development" id="toc-implications-for-future-development" class="nav-link" data-scroll-target="#implications-for-future-development">Implications for future development</a></li>
+  <li><a href="#summary-figures" id="toc-summary-figures" class="nav-link" data-scroll-target="#summary-figures">Summary figures</a>
+  <ul>
+  <li><a href="#summary-figures-for-comparing-resampling-methods" id="toc-summary-figures-for-comparing-resampling-methods" class="nav-link" data-scroll-target="#summary-figures-for-comparing-resampling-methods">Summary figures for comparing resampling methods</a></li>
+  <li><a href="#summary-figures-for-comparing-storage-formats-and-io-libraries" id="toc-summary-figures-for-comparing-storage-formats-and-io-libraries" class="nav-link" data-scroll-target="#summary-figures-for-comparing-storage-formats-and-io-libraries">Summary figures for comparing storage formats and I/O libraries</a></li>
+  <li><a href="#summary-figures-for-exploring-web-optimization" id="toc-summary-figures-for-exploring-web-optimization" class="nav-link" data-scroll-target="#summary-figures-for-exploring-web-optimization">Summary figures for exploring web-optimization</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.dev/developmentseed/warp-resample-profiling/blob/main/examples/summarize-results.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -519,7 +525,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Resampling methods typically had a peak memory allocation roughly twice the size of the required window of the input dataset. For example, the <code>analysed_sst</code> variable of the MUR SST dataset is ~5.2 GB and generating a global web mercator tile had ~10 GB peak memory allocation for most methods. Pyresample was a notable exception that had much greater peak memory allocation for global and nearly global tiles.</li>
 <li>Rasterio was not included as a resampling method for GPM IMERG due to a lack of simple methods for handling the non-standard axis order (e.g., (time, x, y) instead of (time, y, x)). Non-standard data and metadata would likely be a barrier to use for many NetCDF files.</li>
 </ul>
-<div id="cell-3" class="cell" data-execution_count="1">
+</section>
+<section id="variability-related-to-io" class="level3">
+<h3 class="anchored" data-anchor-id="variability-related-to-io">Variability related to I/O</h3>
+<p>The figures below show the resampling duration and peak memory allocation for data stored as NetCDF and accessed through the H5NetCDF library, data stored as NetCDF but virtualized into Zarr and accessed via the Zarr and Icechunk libraries, and data transformed to Zarr and accessed via the Zarr and Icechunk libraries. Here are some key takeaways:</p>
+<ul>
+<li>Virtualizing the data as Zarr gives a &gt;2x performance improvement relative to loading with the H5NetCDF library.</li>
+<li>If the chunk sizes remain the same, virtualization gives the same performance benefit as conversion to a cloud-optimized data format like Zarr. Differences would be observed if the chunk configuration and size is optimized for the particular workflow.</li>
+</ul>
+</section>
+<section id="variability-related-to-web-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="variability-related-to-web-optimization">Variability related to web-optimization</h3>
+<p>The figures below show the resampling duration and peak memory allocation for tile generation from cloud-optimized GeoTIFF relative to virtualized NetCDF and “web-optimized Zarr” (WOZ), which in this case are Zarr data spoofed to contain overviews. Here are some key takeaways:</p>
+<ul>
+<li>Overviews dramatically improve the performance of tile generation at all zoom levels. For example, tile generation was ~20x faster at zoom level 0 and ~3x faster at zoom level 6.</li>
+<li>Resampling from WOZ using rioxarray added overhead relative to resampling from Web-Optimized Zarr using rasterio, due to the increased import and object instantiation times in Xarray relative to using Zarr, Numpy, and Rasterio alone. While the performance differences between COG and WOZ resampling with rasterio could likely be eliminated with future development, rasterio will likely always be raster than rioxarray when using overviews.</li>
+</ul>
+</section>
+<section id="implications-for-future-development" class="level3">
+<h3 class="anchored" data-anchor-id="implications-for-future-development">Implications for future development</h3>
+<ul>
+<li>Virtualizing archival file formats greatly improves performance relative to archival file readers such as h5netcdf and motivates the generation of virtual references whenever possible.</li>
+<li>The Web-Optimized Zarr example shows the potential for Zarr overviews to enable highly performant visualization and motivates the development of the GeoZarr and multi-scales Zarr specifications.</li>
+<li>Pyinstrument showed a significant fraction of the total time when resampling Web-Optimized Zarr using rioxarray went towards Xarray importing Pandas and guessing the chunk manager. Both of these components could be improved or removed through future development.</li>
+<li>The dramatic difference between using XESMF with and without pre-generated weights raises the question of whether similar relative performance improvements could be gained by pre-generating weights for reprojection with GDAL. Given that pyinstrument shows only ~1/4 of the time is spent on the actual resampling operation when using COGs, building specifications for web-optimizing Zarr (i.e., GeoZarr and multi-scales), virtualizing existing datasets, and reducing import times would likely be much simpler and more fruitful activities.</li>
+</ul>
+</section>
+<section id="summary-figures" class="level3">
+<h3 class="anchored" data-anchor-id="summary-figures">Summary figures</h3>
+<div id="cell-7" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotting <span class="im">import</span> (</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    plot_duration_by_weboptimization,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    plot_memory,</span>
@@ -1112,7 +1146,9 @@ if (window.Jupyter !== undefined) {
 })(window);</script>
 </div>
 </div>
-<div id="cell-4" class="cell" data-execution_count="2">
+<section id="summary-figures-for-comparing-resampling-methods" class="level4">
+<h4 class="anchored" data-anchor-id="summary-figures-for-comparing-resampling-methods">Summary figures for comparing resampling methods</h4>
+<div id="cell-9" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot time required for resampling GPM IMERG</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>gpm_imerg_local <span class="op">=</span> plot_time(<span class="st">"gpm_imerg"</span>, local<span class="op">=</span><span class="va">True</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"netcdf"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>gpm_imerg_remote <span class="op">=</span> plot_time(<span class="st">"gpm_imerg"</span>, local<span class="op">=</span><span class="va">False</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"netcdf"</span>)</span>
@@ -1193,7 +1229,7 @@ if (window.Jupyter !== undefined) {
 })(window);</script>
 </div>
 </div>
-<div id="cell-5" class="cell" data-execution_count="3">
+<div id="cell-10" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot time required for resampling MUR SST</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mur_sst_local <span class="op">=</span> plot_time(<span class="st">"mursst"</span>, local<span class="op">=</span><span class="va">True</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"netcdf"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>mur_sst_remote <span class="op">=</span> plot_time(<span class="st">"mursst"</span>, local<span class="op">=</span><span class="va">False</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"netcdf"</span>)</span>
@@ -1274,7 +1310,7 @@ if (window.Jupyter !== undefined) {
 })(window);</script>
 </div>
 </div>
-<div id="cell-6" class="cell" data-execution_count="4">
+<div id="cell-11" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot memory required for resampling GPM IMERG</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>gpm_imerg_local <span class="op">=</span> plot_memory(<span class="st">"gpm_imerg"</span>, local<span class="op">=</span><span class="va">True</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"netcdf"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>gpm_imerg_remote <span class="op">=</span> plot_memory(<span class="st">"gpm_imerg"</span>, local<span class="op">=</span><span class="va">False</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"netcdf"</span>)</span>
@@ -1355,7 +1391,7 @@ if (window.Jupyter !== undefined) {
 })(window);</script>
 </div>
 </div>
-<div id="cell-7" class="cell" data-execution_count="5">
+<div id="cell-12" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot memory required for resampling MUR SST</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mur_sst_local <span class="op">=</span> plot_memory(<span class="st">"mursst"</span>, local<span class="op">=</span><span class="va">True</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"netcdf"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>mur_sst_remote <span class="op">=</span> plot_memory(<span class="st">"mursst"</span>, local<span class="op">=</span><span class="va">False</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"netcdf"</span>)</span>
@@ -1437,14 +1473,9 @@ if (window.Jupyter !== undefined) {
 </div>
 </div>
 </section>
-<section id="variability-related-to-io" class="level3">
-<h3 class="anchored" data-anchor-id="variability-related-to-io">Variability related to I/O</h3>
-<p>The figures below show the resampling duration and peak memory allocation for data stored as NetCDF and accessed through the H5NetCDF library, data stored as NetCDF but virtualized into Zarr and accessed via the Zarr and Icechunk libraries, and data transformed to Zarr and accessed via the Zarr and Icechunk libraries. Here are some key takeaways:</p>
-<ul>
-<li>Virtualizing the data as Zarr gives a &gt;2x performance improvement relative to loading with the H5NetCDF library.</li>
-<li>If the chunk sizes remain the same, virtualization gives the same performance benefit as conversion to a cloud-optimized data format like Zarr. Differences would be observed if the chunk configuration and size is optimized for the particular workflow.</li>
-</ul>
-<div id="cell-9" class="cell" data-execution_count="6">
+<section id="summary-figures-for-comparing-storage-formats-and-io-libraries" class="level4">
+<h4 class="anchored" data-anchor-id="summary-figures-for-comparing-storage-formats-and-io-libraries">Summary figures for comparing storage formats and I/O libraries</h4>
+<div id="cell-14" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_time_by_format(<span class="st">"mursst"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
@@ -1522,7 +1553,7 @@ if (window.Jupyter !== undefined) {
 })(window);</script>
 </div>
 </div>
-<div id="cell-10" class="cell" data-execution_count="7">
+<div id="cell-15" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot_time_by_format(<span class="st">"gpm_imerg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
@@ -1601,14 +1632,9 @@ if (window.Jupyter !== undefined) {
 </div>
 </div>
 </section>
-<section id="variability-related-to-web-optimization" class="level3">
-<h3 class="anchored" data-anchor-id="variability-related-to-web-optimization">Variability related to web-optimization</h3>
-<p>The figures below show the resampling duration and peak memory allocation for tile generation from cloud-optimized GeoTIFF relative to virtualized NetCDF and “web-optimized Zarr” (WOZ), which in this case are Zarr data spoofed to contain overviews. Here are some key takeaways:</p>
-<ul>
-<li>Overviews dramatically improve the performance of tile generation at all zoom levels. For example, tile generation was ~20x faster at zoom level 0 and ~3x faster at zoom level 6.</li>
-<li>Resampling from WOZ using rioxarray added overhead relative to resampling from Web-Optimized Zarr using rasterio, due to the increased import and object instantiation times in Xarray relative to using Zarr, Numpy, and Rasterio alone. While the performance differences between COG and WOZ resampling with rasterio could likely be eliminated with future development, rasterio will likely always be raster than rioxarray when using overviews.</li>
-</ul>
-<div id="cell-12" class="cell" data-execution_count="8">
+<section id="summary-figures-for-exploring-web-optimization" class="level4">
+<h4 class="anchored" data-anchor-id="summary-figures-for-exploring-web-optimization">Summary figures for exploring web-optimization</h4>
+<div id="cell-17" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot_duration_by_weboptimization()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
@@ -1686,7 +1712,7 @@ if (window.Jupyter !== undefined) {
 })(window);</script>
 </div>
 </div>
-<div id="cell-13" class="cell" data-execution_count="9">
+<div id="cell-18" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_memory_by_weboptimization()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
@@ -1764,17 +1790,9 @@ if (window.Jupyter !== undefined) {
 })(window);</script>
 </div>
 </div>
+
+
 </section>
-<section id="implications-for-future-development" class="level3">
-<h3 class="anchored" data-anchor-id="implications-for-future-development">Implications for future development</h3>
-<ul>
-<li>Virtualizing archival file formats greatly improves performance relative to archival file readers such as h5netcdf and motivates the generation of virtual references whenever possible.</li>
-<li>The Web-Optimized Zarr example shows the potential for Zarr overviews to enable highly performant visualization and motivates the development of the GeoZarr and multi-scales Zarr specifications.</li>
-<li>Pyinstrument showed a significant fraction of the total time when resampling Web-Optimized Zarr using rioxarray went towards Xarray importing Pandas and guessing the chunk manager. Both of these components could be improved or removed through future development.</li>
-<li>The dramatic difference between using XESMF with and without pre-generated weights raises the question of whether similar relative performance improvements could be gained by pre-generating weights for reprojection with GDAL. Given that pyinstrument shows only ~1/4 of the time is spent on the actual resampling operation when using COGs, building specifications for web-optimizing Zarr (i.e., GeoZarr and multi-scales), virtualizing existing datasets, and reducing import times would likely be much simpler and more fruitful activities.</li>
-</ul>
-
-
 </section>
 
 </main> <!-- /main -->
