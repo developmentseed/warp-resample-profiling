@@ -7,9 +7,9 @@ on:
   push:
     branches: main
   # Runs for pull requests should be disabled other than for testing purposes
-  # pull_request:
-  #   branches:
-  #     - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-deploy:
