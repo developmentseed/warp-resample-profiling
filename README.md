@@ -30,7 +30,7 @@ Out-of-scope:
 - [pygmt.grdproject](https://www.pygmt.org/latest/api/generated/pygmt.grdproject.html#pygmt.grdproject) - [web mercator not amongst supported projections](https://www.pygmt.org/latest/projections/index.html)
 - [verde](https://www.fatiando.org/verde/latest/) - not used for raster -> raster resampling (only points -> raster)
 
-These methods will be run on the full resolution dataset. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured. We also compare results when using a virtual dataset (e.g., VRT, Kerchunk reference file), when reading from a dataset stored locally versus in cloud object storage, and when using a cloud-optimized dataset (Zarr.)
+These methods will be run on the full resolution dataset. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured. We also compare results when using a virtual dataset (e.g., VRT, Kerchunk reference file), when reading from a dataset stored locally versus in cloud object storage, and when using a cloud-optimized dataset (Zarr).
 
 ### Possible extensions
 
