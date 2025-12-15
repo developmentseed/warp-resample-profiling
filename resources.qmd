@@ -5,7 +5,11 @@
 This excalidraw diagram shouws the components involved in a resampling workflow, along with the available Python implementations in 2024.
 
 ```{=html}
-<iframe width="780" height="500" src="https://link.excalidraw.com/readonly/GgF1qYswczuP9WKpoCvU" title="Resampling overview diagrame"></iframe>
+<iframe width="780" height="500" src="https://link.excalidraw.com/readonly/GgF1qYswczuP9WKpoCvU" title="Resampling overview diagram"></iframe>
+```
+
+```{=html}
+<iframe width="780" height="500" src="https://link.excalidraw.com/readonly/xuI4bOWknGiz4y4TeuHj" title="Resampling algorithms"></iframe>
 ```
 
 ### Academic papers
