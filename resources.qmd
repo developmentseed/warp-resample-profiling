@@ -8,6 +8,8 @@ This excalidraw diagram shouws the components involved in a resampling workflow,
 <iframe width="780" height="500" src="https://link.excalidraw.com/readonly/GgF1qYswczuP9WKpoCvU" title="Resampling overview diagram"></iframe>
 ```
 
+### Resampling algorithms (diagram)
+
 ```{=html}
 <iframe width="780" height="500" src="https://link.excalidraw.com/readonly/xuI4bOWknGiz4y4TeuHj" title="Resampling algorithms"></iframe>
 ```
