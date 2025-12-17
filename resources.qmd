@@ -5,8 +5,16 @@
 This excalidraw diagram shouws the components involved in a resampling workflow, along with the available Python implementations in 2024.
 
 ```{=html}
-<iframe width="780" height="500" src="https://link.excalidraw.com/readonly/GgF1qYswczuP9WKpoCvU" title="Resampling overview diagrame"></iframe>
+<iframe width="780" height="500" src="https://link.excalidraw.com/readonly/GgF1qYswczuP9WKpoCvU" title="Resampling overview diagram"></iframe>
 ```
+
+```{=html}
+<iframe width="780" height="500" src="https://link.excalidraw.com/readonly/xuI4bOWknGiz4y4TeuHj" title="Resampling algorithms"></iframe>
+```
+
+### Posters
+
+- [Fast and scalable general geospatial regridding by Justus Magin](https://zenodo.org/records/17297950)
 
 ### Academic papers
 
@@ -16,6 +24,7 @@ This excalidraw diagram shouws the components involved in a resampling workflow,
 - [ECMFF Interpolation Design document](https://sites.ecmwf.int/docs/atlas/design/interpolation/)
 - [NCAR's climate data guide](https://climatedataguide.ucar.edu/climate-tools/regridding-overview)
 - [Geocomputation with Python](https://py.geocompx.org/06-reproj)
+- [DGGS regridding](https://iaocea.github.io/regridding-ecosystem-overview/intro.html)
 
 ### Pangeo discussions
 
