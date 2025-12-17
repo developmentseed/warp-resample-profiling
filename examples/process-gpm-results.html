@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -57,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -66,17 +67,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <link href="../examples/summarize-results.html" rel="next">
 <link href="../examples/process-results.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b758ccaa5987ceb1b75504551e579abf.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-c16d2075821f60783b9dd602420178f9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-16478b34a896b384ef2a52b31167dcd0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-c16d2075821f60783b9dd602420178f9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -104,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -112,7 +117,169 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-sidebar docked">
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -487,6 +654,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../examples/process-results.html">Profiling results</a></li><li class="breadcrumb-item"><a href="../examples/process-gpm-results.html">Memory and time usage (GPM IMERG)</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Process results for GPM IMERG</h1>
@@ -507,8 +675,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div id="cell-2" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hvplot.pandas  <span class="co"># noqa</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils <span class="im">import</span> process_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hvplot.pandas  <span class="co"># noqa</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils <span class="im">import</span> process_results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="esms-options">{"shimMode": true}</script><style>*[data-root-id],
 *[data-root-id] > * {
@@ -1095,14 +1263,14 @@ if (window.Jupyter !== undefined) {
 </div>
 </div>
 <div id="cell-3" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> process_results(<span class="st">"results/2024-10-25"</span>).sort_values([<span class="st">"duration (s)"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> process_results(<span class="st">"results/2024-10-25"</span>).sort_values([<span class="st">"duration (s)"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="show-memory-and-time-for-warp-resampling-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="show-memory-and-time-for-warp-resampling-dataset">Show memory and time for warp resampling dataset</h2>
 <div id="cell-5" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">"task"</span>] <span class="op">==</span> <span class="st">"resample"</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">"task"</span>] <span class="op">==</span> <span class="st">"resample"</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">"dataset"</span>] <span class="op">==</span> <span class="st">"gpm_imerg"</span>]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">"zoom"</span>] <span class="op">==</span> <span class="st">"0"</span>].style.background_gradient(cmap<span class="op">=</span><span class="st">"YlOrRd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">"zoom"</span>] <span class="op">==</span> <span class="st">"0"</span>].style.background_gradient(cmap<span class="op">=</span><span class="st">"YlOrRd"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <style type="text/css">
 #T_e4bec_row0_col7 {
@@ -1219,7 +1387,7 @@ if (window.Jupyter !== undefined) {
 }
 </style>
 
-<table id="T_e4bec" class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table id="T_e4bec" class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
@@ -1236,7 +1404,7 @@ if (window.Jupyter !== undefined) {
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_e4bec_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">12</td>
+<th id="T_e4bec_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">12</th>
 <td id="T_e4bec_row0_col0" class="data row0 col0">gpm_imerg</td>
 <td id="T_e4bec_row0_col1" class="data row0 col1">resample</td>
 <td id="T_e4bec_row0_col2" class="data row0 col2">netcdf</td>
@@ -1248,7 +1416,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row0_col8" class="data row0 col8">2.825584</td>
 </tr>
 <tr class="even">
-<td id="T_e4bec_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">3</td>
+<th id="T_e4bec_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">3</th>
 <td id="T_e4bec_row1_col0" class="data row1 col0">gpm_imerg</td>
 <td id="T_e4bec_row1_col1" class="data row1 col1">resample</td>
 <td id="T_e4bec_row1_col2" class="data row1 col2">netcdf</td>
@@ -1260,7 +1428,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row1_col8" class="data row1 col8">2.873800</td>
 </tr>
 <tr class="odd">
-<td id="T_e4bec_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">51</td>
+<th id="T_e4bec_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">51</th>
 <td id="T_e4bec_row2_col0" class="data row2 col0">gpm_imerg</td>
 <td id="T_e4bec_row2_col1" class="data row2 col1">resample</td>
 <td id="T_e4bec_row2_col2" class="data row2 col2">zarr</td>
@@ -1272,7 +1440,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row2_col8" class="data row2 col8">3.248126</td>
 </tr>
 <tr class="even">
-<td id="T_e4bec_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">48</td>
+<th id="T_e4bec_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">48</th>
 <td id="T_e4bec_row3_col0" class="data row3 col0">gpm_imerg</td>
 <td id="T_e4bec_row3_col1" class="data row3 col1">resample</td>
 <td id="T_e4bec_row3_col2" class="data row3 col2">zarr</td>
@@ -1284,7 +1452,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row3_col8" class="data row3 col8">3.420104</td>
 </tr>
 <tr class="odd">
-<td id="T_e4bec_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">24</td>
+<th id="T_e4bec_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">24</th>
 <td id="T_e4bec_row4_col0" class="data row4 col0">gpm_imerg</td>
 <td id="T_e4bec_row4_col1" class="data row4 col1">resample</td>
 <td id="T_e4bec_row4_col2" class="data row4 col2">netcdf</td>
@@ -1296,7 +1464,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row4_col8" class="data row4 col8">3.432233</td>
 </tr>
 <tr class="even">
-<td id="T_e4bec_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">6</td>
+<th id="T_e4bec_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">6</th>
 <td id="T_e4bec_row5_col0" class="data row5 col0">gpm_imerg</td>
 <td id="T_e4bec_row5_col1" class="data row5 col1">resample</td>
 <td id="T_e4bec_row5_col2" class="data row5 col2">netcdf</td>
@@ -1308,7 +1476,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row5_col8" class="data row5 col8">3.527490</td>
 </tr>
 <tr class="odd">
-<td id="T_e4bec_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">45</td>
+<th id="T_e4bec_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">45</th>
 <td id="T_e4bec_row6_col0" class="data row6 col0">gpm_imerg</td>
 <td id="T_e4bec_row6_col1" class="data row6 col1">resample</td>
 <td id="T_e4bec_row6_col2" class="data row6 col2">zarr</td>
@@ -1320,7 +1488,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row6_col8" class="data row6 col8">3.595781</td>
 </tr>
 <tr class="even">
-<td id="T_e4bec_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">15</td>
+<th id="T_e4bec_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">15</th>
 <td id="T_e4bec_row7_col0" class="data row7 col0">gpm_imerg</td>
 <td id="T_e4bec_row7_col1" class="data row7 col1">resample</td>
 <td id="T_e4bec_row7_col2" class="data row7 col2">netcdf</td>
@@ -1332,7 +1500,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row7_col8" class="data row7 col8">3.631176</td>
 </tr>
 <tr class="odd">
-<td id="T_e4bec_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">21</td>
+<th id="T_e4bec_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">21</th>
 <td id="T_e4bec_row8_col0" class="data row8 col0">gpm_imerg</td>
 <td id="T_e4bec_row8_col1" class="data row8 col1">resample</td>
 <td id="T_e4bec_row8_col2" class="data row8 col2">netcdf</td>
@@ -1344,7 +1512,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row8_col8" class="data row8 col8">4.130201</td>
 </tr>
 <tr class="even">
-<td id="T_e4bec_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">39</td>
+<th id="T_e4bec_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">39</th>
 <td id="T_e4bec_row9_col0" class="data row9 col0">gpm_imerg</td>
 <td id="T_e4bec_row9_col1" class="data row9 col1">resample</td>
 <td id="T_e4bec_row9_col2" class="data row9 col2">netcdf</td>
@@ -1356,7 +1524,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row9_col8" class="data row9 col8">5.035078</td>
 </tr>
 <tr class="odd">
-<td id="T_e4bec_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">54</td>
+<th id="T_e4bec_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">54</th>
 <td id="T_e4bec_row10_col0" class="data row10 col0">gpm_imerg</td>
 <td id="T_e4bec_row10_col1" class="data row10 col1">resample</td>
 <td id="T_e4bec_row10_col2" class="data row10 col2">zarr</td>
@@ -1368,7 +1536,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row10_col8" class="data row10 col8">6.213787</td>
 </tr>
 <tr class="even">
-<td id="T_e4bec_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">0</td>
+<th id="T_e4bec_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">0</th>
 <td id="T_e4bec_row11_col0" class="data row11 col0">gpm_imerg</td>
 <td id="T_e4bec_row11_col1" class="data row11 col1">resample</td>
 <td id="T_e4bec_row11_col2" class="data row11 col2">netcdf</td>
@@ -1380,7 +1548,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row11_col8" class="data row11 col8">8.207994</td>
 </tr>
 <tr class="odd">
-<td id="T_e4bec_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">36</td>
+<th id="T_e4bec_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">36</th>
 <td id="T_e4bec_row12_col0" class="data row12 col0">gpm_imerg</td>
 <td id="T_e4bec_row12_col1" class="data row12 col1">resample</td>
 <td id="T_e4bec_row12_col2" class="data row12 col2">netcdf</td>
@@ -1392,7 +1560,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row12_col8" class="data row12 col8">9.760592</td>
 </tr>
 <tr class="even">
-<td id="T_e4bec_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">60</td>
+<th id="T_e4bec_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">60</th>
 <td id="T_e4bec_row13_col0" class="data row13 col0">gpm_imerg</td>
 <td id="T_e4bec_row13_col1" class="data row13 col1">resample</td>
 <td id="T_e4bec_row13_col2" class="data row13 col2">zarr</td>
@@ -1404,7 +1572,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row13_col8" class="data row13 col8">10.216686</td>
 </tr>
 <tr class="odd">
-<td id="T_e4bec_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">42</td>
+<th id="T_e4bec_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">42</th>
 <td id="T_e4bec_row14_col0" class="data row14 col0">gpm_imerg</td>
 <td id="T_e4bec_row14_col1" class="data row14 col1">resample</td>
 <td id="T_e4bec_row14_col2" class="data row14 col2">netcdf</td>
@@ -1416,7 +1584,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row14_col8" class="data row14 col8">10.589594</td>
 </tr>
 <tr class="even">
-<td id="T_e4bec_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">18</td>
+<th id="T_e4bec_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">18</th>
 <td id="T_e4bec_row15_col0" class="data row15 col0">gpm_imerg</td>
 <td id="T_e4bec_row15_col1" class="data row15 col1">resample</td>
 <td id="T_e4bec_row15_col2" class="data row15 col2">netcdf</td>
@@ -1428,7 +1596,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row15_col8" class="data row15 col8">10.647312</td>
 </tr>
 <tr class="odd">
-<td id="T_e4bec_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">9</td>
+<th id="T_e4bec_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">9</th>
 <td id="T_e4bec_row16_col0" class="data row16 col0">gpm_imerg</td>
 <td id="T_e4bec_row16_col1" class="data row16 col1">resample</td>
 <td id="T_e4bec_row16_col2" class="data row16 col2">netcdf</td>
@@ -1440,7 +1608,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row16_col8" class="data row16 col8">11.401241</td>
 </tr>
 <tr class="even">
-<td id="T_e4bec_level0_row17" class="row_heading level0 row17" data-quarto-table-cell-role="th">30</td>
+<th id="T_e4bec_level0_row17" class="row_heading level0 row17" data-quarto-table-cell-role="th">30</th>
 <td id="T_e4bec_row17_col0" class="data row17 col0">gpm_imerg</td>
 <td id="T_e4bec_row17_col1" class="data row17 col1">resample</td>
 <td id="T_e4bec_row17_col2" class="data row17 col2">netcdf</td>
@@ -1452,7 +1620,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row17_col8" class="data row17 col8">39.583973</td>
 </tr>
 <tr class="odd">
-<td id="T_e4bec_level0_row18" class="row_heading level0 row18" data-quarto-table-cell-role="th">57</td>
+<th id="T_e4bec_level0_row18" class="row_heading level0 row18" data-quarto-table-cell-role="th">57</th>
 <td id="T_e4bec_row18_col0" class="data row18 col0">gpm_imerg</td>
 <td id="T_e4bec_row18_col1" class="data row18 col1">resample</td>
 <td id="T_e4bec_row18_col2" class="data row18 col2">zarr</td>
@@ -1464,7 +1632,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row18_col8" class="data row18 col8">39.985007</td>
 </tr>
 <tr class="even">
-<td id="T_e4bec_level0_row19" class="row_heading level0 row19" data-quarto-table-cell-role="th">33</td>
+<th id="T_e4bec_level0_row19" class="row_heading level0 row19" data-quarto-table-cell-role="th">33</th>
 <td id="T_e4bec_row19_col0" class="data row19 col0">gpm_imerg</td>
 <td id="T_e4bec_row19_col1" class="data row19 col1">resample</td>
 <td id="T_e4bec_row19_col2" class="data row19 col2">netcdf</td>
@@ -1476,7 +1644,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_e4bec_row19_col8" class="data row19 col8">41.595189</td>
 </tr>
 <tr class="odd">
-<td id="T_e4bec_level0_row20" class="row_heading level0 row20" data-quarto-table-cell-role="th">27</td>
+<th id="T_e4bec_level0_row20" class="row_heading level0 row20" data-quarto-table-cell-role="th">27</th>
 <td id="T_e4bec_row20_col0" class="data row20 col0">gpm_imerg</td>
 <td id="T_e4bec_row20_col1" class="data row20 col1">resample</td>
 <td id="T_e4bec_row20_col2" class="data row20 col2">netcdf</td>
@@ -1492,7 +1660,7 @@ if (window.Jupyter !== undefined) {
 </div>
 </div>
 <div id="cell-6" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">"zoom"</span>] <span class="op">==</span> <span class="st">"1"</span>].style.background_gradient(cmap<span class="op">=</span><span class="st">"YlOrRd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">"zoom"</span>] <span class="op">==</span> <span class="st">"1"</span>].style.background_gradient(cmap<span class="op">=</span><span class="st">"YlOrRd"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <style type="text/css">
 #T_b06f4_row0_col7, #T_b06f4_row13_col7 {
@@ -1613,7 +1781,7 @@ if (window.Jupyter !== undefined) {
 }
 </style>
 
-<table id="T_b06f4" class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table id="T_b06f4" class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
@@ -1630,7 +1798,7 @@ if (window.Jupyter !== undefined) {
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_b06f4_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">13</td>
+<th id="T_b06f4_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">13</th>
 <td id="T_b06f4_row0_col0" class="data row0 col0">gpm_imerg</td>
 <td id="T_b06f4_row0_col1" class="data row0 col1">resample</td>
 <td id="T_b06f4_row0_col2" class="data row0 col2">netcdf</td>
@@ -1642,7 +1810,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row0_col8" class="data row0 col8">2.623957</td>
 </tr>
 <tr class="even">
-<td id="T_b06f4_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">4</td>
+<th id="T_b06f4_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">4</th>
 <td id="T_b06f4_row1_col0" class="data row1 col0">gpm_imerg</td>
 <td id="T_b06f4_row1_col1" class="data row1 col1">resample</td>
 <td id="T_b06f4_row1_col2" class="data row1 col2">netcdf</td>
@@ -1654,7 +1822,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row1_col8" class="data row1 col8">2.728585</td>
 </tr>
 <tr class="odd">
-<td id="T_b06f4_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">22</td>
+<th id="T_b06f4_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">22</th>
 <td id="T_b06f4_row2_col0" class="data row2 col0">gpm_imerg</td>
 <td id="T_b06f4_row2_col1" class="data row2 col1">resample</td>
 <td id="T_b06f4_row2_col2" class="data row2 col2">netcdf</td>
@@ -1666,7 +1834,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row2_col8" class="data row2 col8">2.744986</td>
 </tr>
 <tr class="even">
-<td id="T_b06f4_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">52</td>
+<th id="T_b06f4_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">52</th>
 <td id="T_b06f4_row3_col0" class="data row3 col0">gpm_imerg</td>
 <td id="T_b06f4_row3_col1" class="data row3 col1">resample</td>
 <td id="T_b06f4_row3_col2" class="data row3 col2">zarr</td>
@@ -1678,7 +1846,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row3_col8" class="data row3 col8">3.236913</td>
 </tr>
 <tr class="odd">
-<td id="T_b06f4_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">25</td>
+<th id="T_b06f4_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">25</th>
 <td id="T_b06f4_row4_col0" class="data row4 col0">gpm_imerg</td>
 <td id="T_b06f4_row4_col1" class="data row4 col1">resample</td>
 <td id="T_b06f4_row4_col2" class="data row4 col2">netcdf</td>
@@ -1690,7 +1858,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row4_col8" class="data row4 col8">3.243511</td>
 </tr>
 <tr class="even">
-<td id="T_b06f4_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">49</td>
+<th id="T_b06f4_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">49</th>
 <td id="T_b06f4_row5_col0" class="data row5 col0">gpm_imerg</td>
 <td id="T_b06f4_row5_col1" class="data row5 col1">resample</td>
 <td id="T_b06f4_row5_col2" class="data row5 col2">zarr</td>
@@ -1702,7 +1870,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row5_col8" class="data row5 col8">3.273793</td>
 </tr>
 <tr class="odd">
-<td id="T_b06f4_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">46</td>
+<th id="T_b06f4_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">46</th>
 <td id="T_b06f4_row6_col0" class="data row6 col0">gpm_imerg</td>
 <td id="T_b06f4_row6_col1" class="data row6 col1">resample</td>
 <td id="T_b06f4_row6_col2" class="data row6 col2">zarr</td>
@@ -1714,7 +1882,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row6_col8" class="data row6 col8">3.343807</td>
 </tr>
 <tr class="even">
-<td id="T_b06f4_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">7</td>
+<th id="T_b06f4_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">7</th>
 <td id="T_b06f4_row7_col0" class="data row7 col0">gpm_imerg</td>
 <td id="T_b06f4_row7_col1" class="data row7 col1">resample</td>
 <td id="T_b06f4_row7_col2" class="data row7 col2">netcdf</td>
@@ -1726,7 +1894,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row7_col8" class="data row7 col8">3.438085</td>
 </tr>
 <tr class="odd">
-<td id="T_b06f4_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">16</td>
+<th id="T_b06f4_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">16</th>
 <td id="T_b06f4_row8_col0" class="data row8 col0">gpm_imerg</td>
 <td id="T_b06f4_row8_col1" class="data row8 col1">resample</td>
 <td id="T_b06f4_row8_col2" class="data row8 col2">netcdf</td>
@@ -1738,7 +1906,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row8_col8" class="data row8 col8">3.451255</td>
 </tr>
 <tr class="even">
-<td id="T_b06f4_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">40</td>
+<th id="T_b06f4_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">40</th>
 <td id="T_b06f4_row9_col0" class="data row9 col0">gpm_imerg</td>
 <td id="T_b06f4_row9_col1" class="data row9 col1">resample</td>
 <td id="T_b06f4_row9_col2" class="data row9 col2">netcdf</td>
@@ -1750,7 +1918,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row9_col8" class="data row9 col8">4.936243</td>
 </tr>
 <tr class="odd">
-<td id="T_b06f4_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">55</td>
+<th id="T_b06f4_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">55</th>
 <td id="T_b06f4_row10_col0" class="data row10 col0">gpm_imerg</td>
 <td id="T_b06f4_row10_col1" class="data row10 col1">resample</td>
 <td id="T_b06f4_row10_col2" class="data row10 col2">zarr</td>
@@ -1762,7 +1930,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row10_col8" class="data row10 col8">5.932873</td>
 </tr>
 <tr class="even">
-<td id="T_b06f4_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">19</td>
+<th id="T_b06f4_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">19</th>
 <td id="T_b06f4_row11_col0" class="data row11 col0">gpm_imerg</td>
 <td id="T_b06f4_row11_col1" class="data row11 col1">resample</td>
 <td id="T_b06f4_row11_col2" class="data row11 col2">netcdf</td>
@@ -1774,7 +1942,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row11_col8" class="data row11 col8">8.025317</td>
 </tr>
 <tr class="odd">
-<td id="T_b06f4_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">1</td>
+<th id="T_b06f4_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">1</th>
 <td id="T_b06f4_row12_col0" class="data row12 col0">gpm_imerg</td>
 <td id="T_b06f4_row12_col1" class="data row12 col1">resample</td>
 <td id="T_b06f4_row12_col2" class="data row12 col2">netcdf</td>
@@ -1786,7 +1954,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row12_col8" class="data row12 col8">8.083535</td>
 </tr>
 <tr class="even">
-<td id="T_b06f4_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">10</td>
+<th id="T_b06f4_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">10</th>
 <td id="T_b06f4_row13_col0" class="data row13 col0">gpm_imerg</td>
 <td id="T_b06f4_row13_col1" class="data row13 col1">resample</td>
 <td id="T_b06f4_row13_col2" class="data row13 col2">netcdf</td>
@@ -1798,7 +1966,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row13_col8" class="data row13 col8">8.201538</td>
 </tr>
 <tr class="odd">
-<td id="T_b06f4_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">61</td>
+<th id="T_b06f4_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">61</th>
 <td id="T_b06f4_row14_col0" class="data row14 col0">gpm_imerg</td>
 <td id="T_b06f4_row14_col1" class="data row14 col1">resample</td>
 <td id="T_b06f4_row14_col2" class="data row14 col2">zarr</td>
@@ -1810,7 +1978,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row14_col8" class="data row14 col8">10.472459</td>
 </tr>
 <tr class="even">
-<td id="T_b06f4_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">37</td>
+<th id="T_b06f4_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">37</th>
 <td id="T_b06f4_row15_col0" class="data row15 col0">gpm_imerg</td>
 <td id="T_b06f4_row15_col1" class="data row15 col1">resample</td>
 <td id="T_b06f4_row15_col2" class="data row15 col2">netcdf</td>
@@ -1822,7 +1990,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row15_col8" class="data row15 col8">10.723995</td>
 </tr>
 <tr class="odd">
-<td id="T_b06f4_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">43</td>
+<th id="T_b06f4_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">43</th>
 <td id="T_b06f4_row16_col0" class="data row16 col0">gpm_imerg</td>
 <td id="T_b06f4_row16_col1" class="data row16 col1">resample</td>
 <td id="T_b06f4_row16_col2" class="data row16 col2">netcdf</td>
@@ -1834,7 +2002,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row16_col8" class="data row16 col8">11.147670</td>
 </tr>
 <tr class="even">
-<td id="T_b06f4_level0_row17" class="row_heading level0 row17" data-quarto-table-cell-role="th">31</td>
+<th id="T_b06f4_level0_row17" class="row_heading level0 row17" data-quarto-table-cell-role="th">31</th>
 <td id="T_b06f4_row17_col0" class="data row17 col0">gpm_imerg</td>
 <td id="T_b06f4_row17_col1" class="data row17 col1">resample</td>
 <td id="T_b06f4_row17_col2" class="data row17 col2">netcdf</td>
@@ -1846,7 +2014,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row17_col8" class="data row17 col8">38.868661</td>
 </tr>
 <tr class="odd">
-<td id="T_b06f4_level0_row18" class="row_heading level0 row18" data-quarto-table-cell-role="th">58</td>
+<th id="T_b06f4_level0_row18" class="row_heading level0 row18" data-quarto-table-cell-role="th">58</th>
 <td id="T_b06f4_row18_col0" class="data row18 col0">gpm_imerg</td>
 <td id="T_b06f4_row18_col1" class="data row18 col1">resample</td>
 <td id="T_b06f4_row18_col2" class="data row18 col2">zarr</td>
@@ -1858,7 +2026,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row18_col8" class="data row18 col8">39.246454</td>
 </tr>
 <tr class="even">
-<td id="T_b06f4_level0_row19" class="row_heading level0 row19" data-quarto-table-cell-role="th">34</td>
+<th id="T_b06f4_level0_row19" class="row_heading level0 row19" data-quarto-table-cell-role="th">34</th>
 <td id="T_b06f4_row19_col0" class="data row19 col0">gpm_imerg</td>
 <td id="T_b06f4_row19_col1" class="data row19 col1">resample</td>
 <td id="T_b06f4_row19_col2" class="data row19 col2">netcdf</td>
@@ -1870,7 +2038,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_b06f4_row19_col8" class="data row19 col8">46.250185</td>
 </tr>
 <tr class="odd">
-<td id="T_b06f4_level0_row20" class="row_heading level0 row20" data-quarto-table-cell-role="th">28</td>
+<th id="T_b06f4_level0_row20" class="row_heading level0 row20" data-quarto-table-cell-role="th">28</th>
 <td id="T_b06f4_row20_col0" class="data row20 col0">gpm_imerg</td>
 <td id="T_b06f4_row20_col1" class="data row20 col1">resample</td>
 <td id="T_b06f4_row20_col2" class="data row20 col2">netcdf</td>
@@ -1886,7 +2054,7 @@ if (window.Jupyter !== undefined) {
 </div>
 </div>
 <div id="cell-7" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">"zoom"</span>] <span class="op">==</span> <span class="st">"2"</span>].style.background_gradient(cmap<span class="op">=</span><span class="st">"YlOrRd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">"zoom"</span>] <span class="op">==</span> <span class="st">"2"</span>].style.background_gradient(cmap<span class="op">=</span><span class="st">"YlOrRd"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <style type="text/css">
 #T_414d0_row0_col7, #T_414d0_row7_col8, #T_414d0_row8_col8 {
@@ -1995,7 +2163,7 @@ if (window.Jupyter !== undefined) {
 }
 </style>
 
-<table id="T_414d0" class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table id="T_414d0" class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
@@ -2012,7 +2180,7 @@ if (window.Jupyter !== undefined) {
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_414d0_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">23</td>
+<th id="T_414d0_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">23</th>
 <td id="T_414d0_row0_col0" class="data row0 col0">gpm_imerg</td>
 <td id="T_414d0_row0_col1" class="data row0 col1">resample</td>
 <td id="T_414d0_row0_col2" class="data row0 col2">netcdf</td>
@@ -2024,7 +2192,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row0_col8" class="data row0 col8">2.382297</td>
 </tr>
 <tr class="even">
-<td id="T_414d0_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">14</td>
+<th id="T_414d0_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">14</th>
 <td id="T_414d0_row1_col0" class="data row1 col0">gpm_imerg</td>
 <td id="T_414d0_row1_col1" class="data row1 col1">resample</td>
 <td id="T_414d0_row1_col2" class="data row1 col2">netcdf</td>
@@ -2036,7 +2204,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row1_col8" class="data row1 col8">2.642978</td>
 </tr>
 <tr class="odd">
-<td id="T_414d0_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">5</td>
+<th id="T_414d0_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">5</th>
 <td id="T_414d0_row2_col0" class="data row2 col0">gpm_imerg</td>
 <td id="T_414d0_row2_col1" class="data row2 col1">resample</td>
 <td id="T_414d0_row2_col2" class="data row2 col2">netcdf</td>
@@ -2048,7 +2216,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row2_col8" class="data row2 col8">2.802723</td>
 </tr>
 <tr class="even">
-<td id="T_414d0_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">53</td>
+<th id="T_414d0_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">53</th>
 <td id="T_414d0_row3_col0" class="data row3 col0">gpm_imerg</td>
 <td id="T_414d0_row3_col1" class="data row3 col1">resample</td>
 <td id="T_414d0_row3_col2" class="data row3 col2">zarr</td>
@@ -2060,7 +2228,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row3_col8" class="data row3 col8">3.109849</td>
 </tr>
 <tr class="odd">
-<td id="T_414d0_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">50</td>
+<th id="T_414d0_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">50</th>
 <td id="T_414d0_row4_col0" class="data row4 col0">gpm_imerg</td>
 <td id="T_414d0_row4_col1" class="data row4 col1">resample</td>
 <td id="T_414d0_row4_col2" class="data row4 col2">zarr</td>
@@ -2072,7 +2240,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row4_col8" class="data row4 col8">3.223160</td>
 </tr>
 <tr class="even">
-<td id="T_414d0_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">17</td>
+<th id="T_414d0_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">17</th>
 <td id="T_414d0_row5_col0" class="data row5 col0">gpm_imerg</td>
 <td id="T_414d0_row5_col1" class="data row5 col1">resample</td>
 <td id="T_414d0_row5_col2" class="data row5 col2">netcdf</td>
@@ -2084,7 +2252,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row5_col8" class="data row5 col8">3.265925</td>
 </tr>
 <tr class="odd">
-<td id="T_414d0_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">26</td>
+<th id="T_414d0_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">26</th>
 <td id="T_414d0_row6_col0" class="data row6 col0">gpm_imerg</td>
 <td id="T_414d0_row6_col1" class="data row6 col1">resample</td>
 <td id="T_414d0_row6_col2" class="data row6 col2">netcdf</td>
@@ -2096,7 +2264,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row6_col8" class="data row6 col8">3.282040</td>
 </tr>
 <tr class="even">
-<td id="T_414d0_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">47</td>
+<th id="T_414d0_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">47</th>
 <td id="T_414d0_row7_col0" class="data row7 col0">gpm_imerg</td>
 <td id="T_414d0_row7_col1" class="data row7 col1">resample</td>
 <td id="T_414d0_row7_col2" class="data row7 col2">zarr</td>
@@ -2108,7 +2276,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row7_col8" class="data row7 col8">3.430303</td>
 </tr>
 <tr class="odd">
-<td id="T_414d0_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">8</td>
+<th id="T_414d0_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">8</th>
 <td id="T_414d0_row8_col0" class="data row8 col0">gpm_imerg</td>
 <td id="T_414d0_row8_col1" class="data row8 col1">resample</td>
 <td id="T_414d0_row8_col2" class="data row8 col2">netcdf</td>
@@ -2120,7 +2288,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row8_col8" class="data row8 col8">3.491717</td>
 </tr>
 <tr class="even">
-<td id="T_414d0_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">41</td>
+<th id="T_414d0_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">41</th>
 <td id="T_414d0_row9_col0" class="data row9 col0">gpm_imerg</td>
 <td id="T_414d0_row9_col1" class="data row9 col1">resample</td>
 <td id="T_414d0_row9_col2" class="data row9 col2">netcdf</td>
@@ -2132,7 +2300,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row9_col8" class="data row9 col8">4.907868</td>
 </tr>
 <tr class="odd">
-<td id="T_414d0_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">56</td>
+<th id="T_414d0_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">56</th>
 <td id="T_414d0_row10_col0" class="data row10 col0">gpm_imerg</td>
 <td id="T_414d0_row10_col1" class="data row10 col1">resample</td>
 <td id="T_414d0_row10_col2" class="data row10 col2">zarr</td>
@@ -2144,7 +2312,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row10_col8" class="data row10 col8">5.912529</td>
 </tr>
 <tr class="even">
-<td id="T_414d0_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">11</td>
+<th id="T_414d0_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">11</th>
 <td id="T_414d0_row11_col0" class="data row11 col0">gpm_imerg</td>
 <td id="T_414d0_row11_col1" class="data row11 col1">resample</td>
 <td id="T_414d0_row11_col2" class="data row11 col2">netcdf</td>
@@ -2156,7 +2324,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row11_col8" class="data row11 col8">8.141710</td>
 </tr>
 <tr class="odd">
-<td id="T_414d0_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">2</td>
+<th id="T_414d0_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">2</th>
 <td id="T_414d0_row12_col0" class="data row12 col0">gpm_imerg</td>
 <td id="T_414d0_row12_col1" class="data row12 col1">resample</td>
 <td id="T_414d0_row12_col2" class="data row12 col2">netcdf</td>
@@ -2168,7 +2336,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row12_col8" class="data row12 col8">8.328904</td>
 </tr>
 <tr class="even">
-<td id="T_414d0_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">20</td>
+<th id="T_414d0_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">20</th>
 <td id="T_414d0_row13_col0" class="data row13 col0">gpm_imerg</td>
 <td id="T_414d0_row13_col1" class="data row13 col1">resample</td>
 <td id="T_414d0_row13_col2" class="data row13 col2">netcdf</td>
@@ -2180,7 +2348,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row13_col8" class="data row13 col8">8.705396</td>
 </tr>
 <tr class="odd">
-<td id="T_414d0_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">62</td>
+<th id="T_414d0_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">62</th>
 <td id="T_414d0_row14_col0" class="data row14 col0">gpm_imerg</td>
 <td id="T_414d0_row14_col1" class="data row14 col1">resample</td>
 <td id="T_414d0_row14_col2" class="data row14 col2">zarr</td>
@@ -2192,7 +2360,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row14_col8" class="data row14 col8">10.346199</td>
 </tr>
 <tr class="even">
-<td id="T_414d0_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">44</td>
+<th id="T_414d0_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">44</th>
 <td id="T_414d0_row15_col0" class="data row15 col0">gpm_imerg</td>
 <td id="T_414d0_row15_col1" class="data row15 col1">resample</td>
 <td id="T_414d0_row15_col2" class="data row15 col2">netcdf</td>
@@ -2204,7 +2372,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row15_col8" class="data row15 col8">10.624055</td>
 </tr>
 <tr class="odd">
-<td id="T_414d0_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">38</td>
+<th id="T_414d0_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">38</th>
 <td id="T_414d0_row16_col0" class="data row16 col0">gpm_imerg</td>
 <td id="T_414d0_row16_col1" class="data row16 col1">resample</td>
 <td id="T_414d0_row16_col2" class="data row16 col2">netcdf</td>
@@ -2216,7 +2384,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row16_col8" class="data row16 col8">10.637578</td>
 </tr>
 <tr class="even">
-<td id="T_414d0_level0_row17" class="row_heading level0 row17" data-quarto-table-cell-role="th">32</td>
+<th id="T_414d0_level0_row17" class="row_heading level0 row17" data-quarto-table-cell-role="th">32</th>
 <td id="T_414d0_row17_col0" class="data row17 col0">gpm_imerg</td>
 <td id="T_414d0_row17_col1" class="data row17 col1">resample</td>
 <td id="T_414d0_row17_col2" class="data row17 col2">netcdf</td>
@@ -2228,7 +2396,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row17_col8" class="data row17 col8">38.748044</td>
 </tr>
 <tr class="odd">
-<td id="T_414d0_level0_row18" class="row_heading level0 row18" data-quarto-table-cell-role="th">59</td>
+<th id="T_414d0_level0_row18" class="row_heading level0 row18" data-quarto-table-cell-role="th">59</th>
 <td id="T_414d0_row18_col0" class="data row18 col0">gpm_imerg</td>
 <td id="T_414d0_row18_col1" class="data row18 col1">resample</td>
 <td id="T_414d0_row18_col2" class="data row18 col2">zarr</td>
@@ -2240,7 +2408,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row18_col8" class="data row18 col8">39.848156</td>
 </tr>
 <tr class="even">
-<td id="T_414d0_level0_row19" class="row_heading level0 row19" data-quarto-table-cell-role="th">35</td>
+<th id="T_414d0_level0_row19" class="row_heading level0 row19" data-quarto-table-cell-role="th">35</th>
 <td id="T_414d0_row19_col0" class="data row19 col0">gpm_imerg</td>
 <td id="T_414d0_row19_col1" class="data row19 col1">resample</td>
 <td id="T_414d0_row19_col2" class="data row19 col2">netcdf</td>
@@ -2252,7 +2420,7 @@ if (window.Jupyter !== undefined) {
 <td id="T_414d0_row19_col8" class="data row19 col8">42.124982</td>
 </tr>
 <tr class="odd">
-<td id="T_414d0_level0_row20" class="row_heading level0 row20" data-quarto-table-cell-role="th">29</td>
+<th id="T_414d0_level0_row20" class="row_heading level0 row20" data-quarto-table-cell-role="th">29</th>
 <td id="T_414d0_row20_col0" class="data row20 col0">gpm_imerg</td>
 <td id="T_414d0_row20_col1" class="data row20 col1">resample</td>
 <td id="T_414d0_row20_col2" class="data row20 col2">netcdf</td>
@@ -2273,383 +2441,256 @@ if (window.Jupyter !== undefined) {
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
     }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
       return false;
     }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/developmentseed\.github\.io\/warp-resample-profiling\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/developmentseed\.github\.io\/warp-resample-profiling\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -2657,185 +2698,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../examples/process-results.html" class="pagination-link" aria-label="Memory and time usage (MURSST)">
