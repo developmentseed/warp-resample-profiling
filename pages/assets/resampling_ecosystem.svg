@@ -279,26 +279,31 @@
   <g>
     <rect x="30" y="756" width="1180" height="120" fill="#e8f5e9" stroke="#2e7d32"/>
     <text x="48" y="784" font-size="15" font-weight="700" fill="#1b5e20">Layer 2 — Cloud I/O (native grid, no resampling)</text>
-    <text x="48" y="802" font-size="11" fill="#1b5e20">Returns pixels in their native CRS/grid. Defers all resampling to the consumer. Native-grid loaders shown here; underlying filesystem, readers, codecs, and backends are detailed separately.</text>
+    <text x="48" y="802" font-size="11" fill="#1b5e20">Returns pixels in their native CRS/grid; defers resampling to the consumer. Mix of metadata indices, virtualization manifests, and async readers — the full filesystem / codec / reader stack is detailed separately.</text>
 
     <g transform="translate(48, 814)">
       <rect x="0" y="0" width="230" height="52" rx="6" fill="white" stroke="#555" stroke-width="1.3" stroke-dasharray="4,2"/>
       <text x="115" y="22" font-size="13" font-weight="700" text-anchor="middle">rasteret</text>
-      <text x="115" y="40" font-size="10" fill="#555" text-anchor="middle">pre-built Parquet metadata index · byte-range reads</text>
+      <text x="115" y="40" font-size="10" fill="#555" text-anchor="middle">Parquet metadata index · byte-range reads</text>
     </g>
 
     <g transform="translate(298, 814)">
       <rect x="0" y="0" width="230" height="52" rx="6" fill="white" stroke="#555" stroke-width="1.3" stroke-dasharray="4,2"/>
       <text x="115" y="22" font-size="13" font-weight="700" text-anchor="middle">virtual-tiff</text>
-      <text x="115" y="40" font-size="10" fill="#555" text-anchor="middle">VirtualiZarr manifest · zero-copy Zarr view over TIFFs</text>
+      <text x="115" y="40" font-size="10" fill="#555" text-anchor="middle">VirtualiZarr manifest · TIFF as virtual Zarr</text>
     </g>
 
-    <!-- Cross-reference pill to I/O stack -->
-    <rect x="548" y="818" width="250" height="22" rx="11" fill="white" stroke="#2e7d32" stroke-width="1.5"/>
-    <text x="673" y="833" font-size="10.5" font-weight="700" fill="#1b5e20" text-anchor="middle">→ See I/O &amp; Storage Stack diagram</text>
+    <g transform="translate(548, 814)">
+      <rect x="0" y="0" width="230" height="52" rx="6" fill="white" stroke="#555" stroke-width="1.3" stroke-dasharray="4,2"/>
+      <text x="115" y="22" font-size="13" font-weight="700" text-anchor="middle">async-tiff</text>
+      <text x="115" y="40" font-size="10" fill="#555" text-anchor="middle">Rust async TIFF reader · pipelined GETs</text>
+    </g>
 
-    <text x="548" y="854" font-size="10" fill="#1b5e20" font-style="italic">loaders + any Layer-4 sublayer = the separable pattern;</text>
-    <text x="548" y="868" font-size="10" fill="#1b5e20">the consumer picks the family that matches the data's semantics.</text>
+    <g transform="translate(798, 814)">
+      <rect x="0" y="0" width="230" height="52" rx="6" fill="white" stroke="#555" stroke-width="1.3" stroke-dasharray="4,2"/>
+      <text x="115" y="22" font-size="13" font-weight="700" text-anchor="middle">zarr-python v3 async</text>
+      <text x="115" y="40" font-size="10" fill="#555" text-anchor="middle">async chunk reads · obstore-backed</text>
+    </g>
   </g>
 
   <!-- ============================================================ -->

@@ -123,7 +123,7 @@
       <rect x="665" y="382" width="70" height="20" rx="3" fill="white" stroke="#616161" stroke-width="1.5"/><text x="700" y="396" fill="#212121">Cubed</text>
     </g>
 
-    <text x="750" y="396" font-size="9" fill="#666" font-style="italic">chunked backends dispatch through xarray's ChunkManager interface (see prose)</text>
+    <text x="750" y="396" font-size="9" fill="#666" font-style="italic">Dask is the dominant choice; Cubed targets serverless / embarrassingly-parallel work</text>
   </g>
 
   <!-- ============================================================ -->
@@ -144,7 +144,7 @@
       <rect x="454" y="458" width="60"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="484" y="472" fill="#bf360c">h5py</text>
       <rect x="520" y="458" width="100" height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="570" y="472" fill="#bf360c">netCDF4-py</text>
       <rect x="626" y="458" width="70"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="661" y="472" fill="#bf360c">tifffile</text>
-      <rect x="702" y="458" width="75"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="740" y="472" fill="#bf360c">zarr-py</text>
+      <rect x="702" y="458" width="75"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="740" y="472" fill="#bf360c">zarr-python</text>
     </g>
 
     <!-- Row B: Async (emphasized) -->
@@ -154,7 +154,7 @@
       <rect x="181" y="494" width="110" height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1.8" stroke-dasharray="3,2"/><text x="236" y="508" fill="#bf360c">async-geotiff</text>
       <rect x="297" y="494" width="100" height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1.8" stroke-dasharray="3,2"/><text x="347" y="508" fill="#bf360c">async-hdf5</text>
       <rect x="403" y="494" width="75"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1.8" stroke-dasharray="3,2"/><text x="440" y="508" fill="#bf360c">h5coro</text>
-      <rect x="484" y="494" width="110" height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1.8" stroke-dasharray="3,2"/><text x="539" y="508" fill="#bf360c">zarr-py v3 async</text>
+      <rect x="484" y="494" width="110" height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1.8" stroke-dasharray="3,2"/><text x="539" y="508" fill="#bf360c">zarr-python v3 async</text>
     </g>
     <text x="610" y="508" font-size="10" fill="#bf360c" font-style="italic">dashed = async; the cloud-native frontier</text>
   </g>
@@ -205,7 +205,7 @@
   <g>
     <rect x="30" y="678" width="1180" height="72" fill="#e0f2f1" stroke="#00695c" stroke-width="1"/>
     <text x="44" y="696" font-size="13" font-weight="700" fill="#004d40">7 · Virtualization &amp; reference files</text>
-    <text x="300" y="696" font-size="10" fill="#004d40" font-style="italic">bytes-to-chunks maps · makes legacy formats look like Zarr</text>
+    <text x="300" y="696" font-size="10" fill="#004d40" font-style="italic">bytes-to-chunks maps · address chunks inside archival formats without rewriting them</text>
 
     <g font-size="11" font-weight="600" text-anchor="middle">
       <rect x="44"  y="704" width="140" height="24" rx="3" fill="white" stroke="#00695c" stroke-width="1"/><text x="114" y="720" fill="#004d40">Kerchunk (JSON)</text>
@@ -235,7 +235,7 @@
       <rect x="409" y="784" width="70"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1"/><text x="444" y="800" fill="#6d5200">Zarr v2</text>
       <rect x="485" y="784" width="70"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1.6"/><text x="520" y="800" fill="#6d5200">Zarr v3</text>
       <rect x="561" y="784" width="75"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1"/><text x="598" y="800" fill="#6d5200">GRIB2</text>
-      <rect x="642" y="784" width="75"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1"/><text x="679" y="800" fill="#6d5200">GeoZarr</text>
+      <rect x="642" y="784" width="75"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1.6"/><text x="679" y="800" fill="#6d5200">GeoZarr</text>
     </g>
     <text x="735" y="800" font-size="10" fill="#6d5200" font-style="italic">bold outline = cloud-native by design; thin = legacy</text>
   </g>
@@ -248,8 +248,8 @@
     <text x="44" y="872" font-size="13" font-weight="700" fill="#6d5200">How to read this</text>
 
     <text x="44" y="894" font-size="11" fill="#333"><tspan font-weight="700">Direction:</tspan> user code at top (lane 1–2) calls down through the stack; bytes on object storage are at the bottom (lane 8).</text>
-    <text x="44" y="912" font-size="11" fill="#333"><tspan font-weight="700">Lane 2 has three sub-roles</tspan> — engines (bytes → arrays), containers (what user code holds, xarray + non-xarray), accessors (domain namespaces). A fourth role — ChunkManager plugins — is internal dispatch plumbing and isn't drawn (see prose).</text>
-    <text x="44" y="930" font-size="11" fill="#333"><tspan font-weight="700">Lane 3 splits</tspan> single-process arrays (NumPy, CuPy, Sparse, pyarrow) from parallel / chunked arrays (Dask, Cubed). Xarray's ChunkManager interface is the bridge between containers and chunked backends.</text>
+    <text x="44" y="912" font-size="11" fill="#333"><tspan font-weight="700">Lane 2 has three sub-roles</tspan> — engines (bytes → arrays), containers (what user code holds; xarray family + non-xarray geospatial), accessors (domain namespaces).</text>
+    <text x="44" y="930" font-size="11" fill="#333"><tspan font-weight="700">Lane 3 splits</tspan> single-process arrays (NumPy, CuPy, Sparse, pyarrow) from parallel / chunked arrays (Dask, Cubed). Parallelization deserves its own diagram; this one stops at "what does the array hold."</text>
     <text x="44" y="948" font-size="11" fill="#333"><tspan font-weight="700">Sync/async split in lane 4</tspan> is the cloud-native battle line. Async readers pipeline byte-range GETs; central to lazycogs, async-tiff, h5coro.</text>
     <text x="44" y="966" font-size="11" fill="#333"><tspan font-weight="700">Lane 7 (virtualization)</tspan> is the newer role: reference/manifest files indexing chunk byte ranges inside legacy formats.</text>
     <text x="44" y="982" font-size="11" fill="#333"><tspan font-weight="700">Main ecosystem diagram's Layer 1 &amp; 2</tspan> collapse lanes 1–8 above; this companion expands them.</text>

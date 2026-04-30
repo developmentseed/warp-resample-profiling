@@ -54,7 +54,7 @@ Conflating the two is the source of most silent resampling errors.
 | Layer | Role | Exemplar tools |
 |---|---|---|
 | **1. Bytes & formats** | COG, GeoTIFF, NetCDF, HDF5, HDF4, Zarr v2/v3, GeoZarr; virtualization formats (Kerchunk JSON/Parquet, VirtualiZarr manifest, GDAL VRT, GDAL GTI, DMR++); on cloud object storage | see the [I/O & Storage Stack](io-stack.qmd) page for full detail |
-| **2. Native-grid I/O** | loaders that return pixels in native CRS, no resampling; sits atop a deep I/O stack (filesystem, codecs, readers, xarray backends) | rasteret, virtual-tiff · see [I/O & Storage Stack](io-stack.qmd) |
+| **2. Native-grid I/O** | loaders that return pixels in native CRS, no resampling; sits atop a deep I/O stack (filesystem, codecs, readers, xarray backends) | rasteret, virtual-tiff, async-tiff, zarr-python v3 async · see [I/O & Storage Stack](io-stack.qmd) |
 | **3. Loader + read-time warp** | integrated resampling per dask chunk; Family 1 only | stackstac, odc-stac, lazycogs |
 | **4. Grid math (post-load)** | separable from I/O; five input→output sublayers (see below) | see 4a–4e |
 
@@ -181,7 +181,7 @@ Picking a tool from the right family matters more than picking the fastest tool 
 | **Scattered observations** → polygon zones | any zones | `zagg` (Phase 2), or `geopandas.sjoin + groupby` for small data | zagg scales; geopandas is local-only |
 | **Raster → polygon zonal stats** | any polygon set | `exactextract` (fastest, exact), `xagg` (xarray-native), `rasterstats` (simple) | exactextract for production; xagg for xarray workflows |
 | **Raster → point sampling** (ML features, validation) | any query points | `rioxarray.sample`, `xvec`, `rio-tiler` (COGs), `torchgeo` samplers (ML) | xvec is newest; torchgeo for ML pipelines |
-| **Legacy TIFFs** → Zarr-native workflow | Zarr view | `virtual-tiff` | zero-copy virtualization |
+| **Legacy TIFFs** → chunked / lazy-array access | virtual chunks via Zarr API | `virtual-tiff` | zero-copy VirtualiZarr manifest over TIFF bytes |
 | **STAC archive** → lazy xarray, tile-like output | small AOI | `stackstac`, `odc-stac`, or `lazycogs` (no-GDAL) | read-time warp; F1 only |
 
 ## 8. How to cite this site
