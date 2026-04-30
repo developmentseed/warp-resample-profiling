@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1100" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1200" height="980" fill="white"/>
+
+  <!-- Title -->
+  <text x="600" y="38" font-size="22" font-weight="700" text-anchor="middle" fill="#1a1a1a">Resampling — mathematical families</text>
+  <text x="600" y="60" font-size="12" fill="#666" text-anchor="middle">methods · properties · grid compatibility — see Legend at bottom for symbol key</text>
+
+  <!-- Column headers -->
+  <g font-size="11" font-weight="700" fill="#333" letter-spacing="0.5">
+    <text x="44"  y="86">FAMILY</text>
+    <text x="292" y="86">VISUAL</text>
+    <text x="472" y="86">REPRESENTATIVE METHODS</text>
+    <text x="792" y="86">PROPERTIES</text>
+    <text x="992" y="86">GRIDS</text>
+  </g>
+  <line x1="30" y1="94" x2="1170" y2="94" stroke="#333" stroke-width="1.2"/>
+
+  <!-- ROW 1: Kernel convolution -->
+  <g>
+    <rect x="30" y="98" width="1140" height="140" fill="#fafafa" stroke="#e5e5e5"/>
+
+    <text x="44" y="124" font-size="15" font-weight="700" fill="#1a1a1a">Kernel</text>
+    <text x="44" y="142" font-size="15" font-weight="700" fill="#1a1a1a">convolution</text>
+    <text x="44" y="166" font-size="11" fill="#555">Piecewise reconstruction</text>
+    <text x="44" y="180" font-size="11" fill="#555">of a continuous field.</text>
+    <text x="44" y="208" font-size="10" fill="#777" font-style="italic">f̃(x) = Σ f(xᵢ)·k(x−xᵢ)</text>
+
+    <g transform="translate(290, 116)">
+      <g fill="#fff" stroke="#888">
+        <rect x="0" y="0" width="22" height="22"/><rect x="22" y="0" width="22" height="22"/><rect x="44" y="0" width="22" height="22"/>
+        <rect x="0" y="22" width="22" height="22"/><rect x="22" y="22" width="22" height="22"/><rect x="44" y="22" width="22" height="22"/>
+        <rect x="0" y="44" width="22" height="22"/><rect x="22" y="44" width="22" height="22"/><rect x="44" y="44" width="22" height="22"/>
+      </g>
+      <g fill="#666">
+        <circle cx="11" cy="11" r="2"/><circle cx="33" cy="11" r="2"/><circle cx="55" cy="11" r="2"/>
+        <circle cx="11" cy="33" r="2"/><circle cx="33" cy="33" r="2"/><circle cx="55" cy="33" r="2"/>
+        <circle cx="11" cy="55" r="2"/><circle cx="33" cy="55" r="2"/><circle cx="55" cy="55" r="2"/>
+      </g>
+      <circle cx="40" cy="38" r="5" fill="#c62828"/>
+      <g stroke="#1565c0" stroke-width="1.3" fill="none" opacity="0.8">
+        <line x1="33" y1="33" x2="40" y2="38"/><line x1="55" y1="33" x2="40" y2="38"/>
+        <line x1="33" y1="55" x2="40" y2="38"/><line x1="55" y1="55" x2="40" y2="38"/>
+      </g>
+      <text x="33" y="94" font-size="10" fill="#555" text-anchor="middle">weighted sum of nearest neighbors</text>
+    </g>
+
+    <g font-size="11.5" fill="#1a1a1a">
+      <text x="472" y="120"><tspan font-weight="700">nearest</tspan><tspan fill="#666">  — 0-order, categorical-safe</tspan></text>
+      <text x="472" y="138"><tspan font-weight="700">bilinear</tspan><tspan fill="#666">  — 1st-order, bounded, fast</tspan></text>
+      <text x="472" y="156"><tspan font-weight="700">cubic / cubic-spline</tspan><tspan fill="#666">  — C¹/C², may overshoot</tspan></text>
+      <text x="472" y="174"><tspan font-weight="700">Lanczos</tspan><tspan fill="#666">  — windowed sinc, sharp, ringing</tspan></text>
+    </g>
+    <text x="472" y="208" font-size="10" fill="#888" font-style="italic">GDAL/rasterio · stackstac · odc-stac · lazycogs (nearest only)</text>
+
+    <g transform="translate(792, 116)">
+      <rect x="0" y="0" width="36" height="20" rx="10" fill="#e8f5e9" stroke="#2e7d32"/>
+      <text x="18" y="14" font-size="11" font-weight="700" fill="#2e7d32" text-anchor="middle">L</text>
+      <text x="42" y="14" font-size="10" fill="#555">linear</text>
+
+      <rect x="0" y="26" width="52" height="20" rx="10" fill="#e3f2fd" stroke="#1565c0"/>
+      <text x="26" y="40" font-size="10" font-weight="700" fill="#1565c0" text-anchor="middle">LOCAL</text>
+      <text x="58" y="40" font-size="10" fill="#555">chunk-friendly</text>
+
+      <text x="0" y="64" font-size="10" fill="#999">∫ not conservation-preserving</text>
+      <text x="0" y="80" font-size="10" fill="#555"># cat-safe: nearest only</text>
+    </g>
+
+    <g transform="translate(990, 116)">
+      <g stroke="white" stroke-width="1.3" fill="none">
+        <!-- R: rectilinear, supported -->
+        <rect x="0"  y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <line x1="11" y1="4" x2="11" y2="24"/>
+        <line x1="17" y1="4" x2="17" y2="24"/>
+        <line x1="4"  y1="11" x2="24" y2="11"/>
+        <line x1="4"  y1="17" x2="24" y2="17"/>
+        <!-- C: curvilinear, partial (all lines curved) -->
+        <rect x="32" y="0" width="28" height="28" fill="#f9a825" stroke="#c28500"/>
+        <path d="M 36 11 Q 46 7 56 11"/>
+        <path d="M 36 17 Q 46 21 56 17"/>
+        <path d="M 43 4 Q 40 14 43 24"/>
+        <path d="M 49 4 Q 52 14 49 24"/>
+        <!-- D: DGGS, N/A -->
+        <rect x="64" y="0" width="28" height="28" fill="#fff" stroke="#bbb" stroke-dasharray="3,2"/>
+        <polygon points="78,5 85,9 85,19 78,23 71,19 71,9" stroke="#bbb"/>
+        <!-- U: unstructured, N/A (irregular polygon) -->
+        <rect x="96" y="0" width="28" height="28" fill="#fff" stroke="#bbb" stroke-dasharray="3,2"/>
+        <polygon points="104,6 116,8 120,16 112,23 102,20 100,12" stroke="#bbb"/>
+      </g>
+      <!-- per-row grid legend removed; see Legend at bottom of diagram -->
+      <text x="0" y="50" font-size="9" fill="#999" font-style="italic">see Legend below</text>
+    </g>
+  </g>
+
+  <!-- ROW 2: Scattered-data -->
+  <g>
+    <rect x="30" y="238" width="1140" height="140" fill="#f4f7fa" stroke="#e5e5e5"/>
+
+    <text x="44" y="264" font-size="15" font-weight="700">Scattered</text>
+    <text x="44" y="282" font-size="15" font-weight="700">data</text>
+    <text x="44" y="306" font-size="11" fill="#555">Interpolate from irregular</text>
+    <text x="44" y="320" font-size="11" fill="#555">point cloud onto target.</text>
+    <text x="44" y="348" font-size="10" fill="#777" font-style="italic">f̃(x) = Σ wᵢ(x)·f(xᵢ)</text>
+
+    <g transform="translate(290, 256)">
+      <g fill="#666">
+        <circle cx="8" cy="14" r="2"/><circle cx="18" cy="32" r="2"/><circle cx="28" cy="10" r="2"/>
+        <circle cx="12" cy="48" r="2"/><circle cx="32" cy="40" r="2"/><circle cx="22" cy="60" r="2"/>
+        <circle cx="6" cy="30" r="2"/>
+      </g>
+      <g fill="#fff" stroke="#888">
+        <rect x="50" y="10" width="22" height="22"/><rect x="72" y="10" width="22" height="22"/>
+        <rect x="50" y="32" width="22" height="22"/><rect x="72" y="32" width="22" height="22"/>
+      </g>
+      <circle cx="83" cy="43" r="4" fill="#c62828"/>
+      <g stroke="#1565c0" stroke-width="0.8" fill="none" opacity="0.55">
+        <line x1="8"  y1="14" x2="83" y2="43"/><line x1="18" y1="32" x2="83" y2="43"/>
+        <line x1="28" y1="10" x2="83" y2="43"/><line x1="12" y1="48" x2="83" y2="43"/>
+        <line x1="32" y1="40" x2="83" y2="43"/><line x1="22" y1="60" x2="83" y2="43"/>
+        <line x1="6"  y1="30" x2="83" y2="43"/>
+      </g>
+      <text x="50" y="94" font-size="10" fill="#555" text-anchor="middle">all points contribute by distance/covariance</text>
+    </g>
+
+    <g font-size="11.5">
+      <text x="472" y="260"><tspan font-weight="700">IDW</tspan><tspan fill="#666">  — inverse distance weighting</tspan></text>
+      <text x="472" y="278"><tspan font-weight="700">kriging</tspan><tspan fill="#666">  — covariance model; provides σ²</tspan></text>
+      <text x="472" y="296"><tspan font-weight="700">RBF / thin-plate</tspan><tspan fill="#666">  — global smooth interpolant</tspan></text>
+      <text x="472" y="314"><tspan font-weight="700">natural neighbor</tspan><tspan fill="#666">  — Voronoi weighting</tspan></text>
+    </g>
+    <text x="472" y="348" font-size="10" fill="#888" font-style="italic">scipy.interpolate · pyKrige · gstools · verde · pyresample kd-tree</text>
+
+    <g transform="translate(792, 256)">
+      <rect x="0" y="0" width="98" height="20" rx="10" fill="#fff3e0" stroke="#e65100"/>
+      <text x="49" y="14" font-size="10" font-weight="700" fill="#e65100" text-anchor="middle">L / N  mixed</text>
+
+      <rect x="0" y="26" width="56" height="20" rx="10" fill="#f3e5f5" stroke="#6a1b9a"/>
+      <text x="28" y="40" font-size="10" font-weight="700" fill="#6a1b9a" text-anchor="middle">GLOBAL</text>
+      <text x="62" y="40" font-size="10" fill="#555">needs spatial index</text>
+
+      <text x="0" y="64" font-size="10" fill="#999">∫ not conservation (kriging: BLUE)</text>
+      <text x="0" y="80" font-size="10" fill="#999"># not categorical</text>
+    </g>
+
+    <g transform="translate(990, 256)">
+      <g stroke="white" stroke-width="1.3" fill="none">
+        <!-- R: rectilinear -->
+        <rect x="0"  y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <line x1="11" y1="4" x2="11" y2="24"/>
+        <line x1="17" y1="4" x2="17" y2="24"/>
+        <line x1="4"  y1="11" x2="24" y2="11"/>
+        <line x1="4"  y1="17" x2="24" y2="17"/>
+        <!-- C: curvilinear (all lines curved) -->
+        <rect x="32" y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <path d="M 36 11 Q 46 7 56 11"/>
+        <path d="M 36 17 Q 46 21 56 17"/>
+        <path d="M 43 4 Q 40 14 43 24"/>
+        <path d="M 49 4 Q 52 14 49 24"/>
+        <!-- D: DGGS -->
+        <rect x="64" y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <polygon points="78,5 85,9 85,19 78,23 71,19 71,9"/>
+        <!-- U: unstructured (irregular polygon) -->
+        <rect x="96" y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <polygon points="104,6 116,8 120,16 112,23 102,20 100,12"/>
+      </g>
+      <text x="0" y="50" font-size="9" fill="#666">source is scatter;</text>
+      <text x="0" y="62" font-size="9" fill="#666">target grid type is free</text>
+    </g>
+  </g>
+
+  <!-- ROW 3: Conservative -->
+  <g>
+    <rect x="30" y="378" width="1140" height="140" fill="#fafafa" stroke="#e5e5e5"/>
+
+    <text x="44" y="404" font-size="15" font-weight="700">Area-weighted</text>
+    <text x="44" y="422" font-size="15" font-weight="700">(conservative)</text>
+    <text x="44" y="446" font-size="11" fill="#555">Area-of-intersection</text>
+    <text x="44" y="460" font-size="11" fill="#555">weighting. Preserves ∫.</text>
+    <text x="44" y="488" font-size="10" fill="#777" font-style="italic">f̃(Cⱼ) = Σᵢ f(Cᵢ)·|Cᵢ∩Cⱼ| / |Cⱼ|</text>
+
+    <g transform="translate(290, 396)">
+      <!-- target cell (axis aligned) -->
+      <rect x="10" y="14" width="60" height="46" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.3"/>
+      <!-- source cell (rotated square) -->
+      <g transform="translate(50, 40) rotate(30)">
+        <rect x="-28" y="-22" width="56" height="44" fill="#fff3e0" stroke="#e65100" stroke-width="1.3" fill-opacity="0.6"/>
+      </g>
+      <!-- intersection polygon (actual 6-vertex geometry) -->
+      <polygon points="49,14 70,26 70,60 41,60 15,45 33,14" fill="#c62828" fill-opacity="0.45" stroke="#b71c1c" stroke-width="0.8"/>
+      <text x="40" y="94" font-size="10" fill="#555" text-anchor="middle">weight ∝ overlap area</text>
+    </g>
+
+    <g font-size="11.5">
+      <text x="472" y="400"><tspan font-weight="700">1st-order conservative</tspan><tspan fill="#666">  — area-weighted mean</tspan></text>
+      <text x="472" y="418"><tspan font-weight="700">2nd-order conservative</tspan><tspan fill="#666">  — preserves gradients</tspan></text>
+      <text x="472" y="436"><tspan font-weight="700">GDAL ‘average’</tspan><tspan fill="#666">  — rectangular-only approximation</tspan></text>
+    </g>
+    <text x="472" y="488" font-size="10" fill="#888" font-style="italic">xESMF · ESMF · CDO remapcon · grid-weights + grid-indexing</text>
+
+    <g transform="translate(792, 396)">
+      <rect x="0" y="0" width="36" height="20" rx="10" fill="#e8f5e9" stroke="#2e7d32"/>
+      <text x="18" y="14" font-size="11" font-weight="700" fill="#2e7d32" text-anchor="middle">L</text>
+      <text x="42" y="14" font-size="10" fill="#555">linear (sparse W)</text>
+
+      <rect x="0" y="26" width="56" height="20" rx="10" fill="#f3e5f5" stroke="#6a1b9a"/>
+      <text x="28" y="40" font-size="10" font-weight="700" fill="#6a1b9a" text-anchor="middle">GLOBAL</text>
+      <text x="62" y="40" font-size="10" fill="#555">needs overlap index</text>
+
+      <rect x="0" y="52" width="110" height="20" rx="10" fill="#e0f2f1" stroke="#00695c"/>
+      <text x="55" y="66" font-size="10" font-weight="700" fill="#00695c" text-anchor="middle">∫ conservation-preserving</text>
+
+      <text x="0" y="88" font-size="10" fill="#999"># not categorical</text>
+    </g>
+
+    <g transform="translate(990, 396)">
+      <g stroke="white" stroke-width="1.3" fill="none">
+        <!-- R: rectilinear -->
+        <rect x="0"  y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <line x1="11" y1="4" x2="11" y2="24"/>
+        <line x1="17" y1="4" x2="17" y2="24"/>
+        <line x1="4"  y1="11" x2="24" y2="11"/>
+        <line x1="4"  y1="17" x2="24" y2="17"/>
+        <!-- C: curvilinear (all lines curved) -->
+        <rect x="32" y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <path d="M 36 11 Q 46 7 56 11"/>
+        <path d="M 36 17 Q 46 21 56 17"/>
+        <path d="M 43 4 Q 40 14 43 24"/>
+        <path d="M 49 4 Q 52 14 49 24"/>
+        <!-- D: DGGS -->
+        <rect x="64" y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <polygon points="78,5 85,9 85,19 78,23 71,19 71,9"/>
+        <!-- U: unstructured (irregular polygon) -->
+        <rect x="96" y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <polygon points="104,6 116,8 120,16 112,23 102,20 100,12"/>
+      </g>
+      <text x="0" y="50" font-size="9" fill="#666">polygon intersection</text>
+      <text x="0" y="62" font-size="9" fill="#666">works on any cell topology</text>
+    </g>
+  </g>
+
+  <!-- ROW 4: Statistical aggregation -->
+  <g>
+    <rect x="30" y="518" width="1140" height="140" fill="#f4f7fa" stroke="#e5e5e5"/>
+
+    <text x="44" y="544" font-size="15" font-weight="700">Statistical</text>
+    <text x="44" y="562" font-size="15" font-weight="700">aggregation</text>
+    <text x="44" y="586" font-size="11" fill="#555">Apply statistic σ to source</text>
+    <text x="44" y="600" font-size="11" fill="#555">samples in each target cell.</text>
+    <text x="44" y="624" font-size="10" fill="#777" font-style="italic">f̃(Cⱼ) = σ({f(xᵢ) : xᵢ ∈ Cⱼ})</text>
+    <text x="44" y="644" font-size="9"  fill="#bf360c" font-weight="700">TWO VARIANTS ↓</text>
+
+    <g transform="translate(290, 536)">
+      <!-- many small source pixels -->
+      <g fill="#e3f2fd" stroke="#1565c0" stroke-width="0.6">
+        <rect x="0" y="0" width="9" height="9"/><rect x="9" y="0" width="9" height="9"/>
+        <rect x="18" y="0" width="9" height="9"/><rect x="27" y="0" width="9" height="9"/>
+        <rect x="0" y="9" width="9" height="9"/><rect x="9" y="9" width="9" height="9"/>
+        <rect x="18" y="9" width="9" height="9"/><rect x="27" y="9" width="9" height="9"/>
+        <rect x="0" y="18" width="9" height="9"/><rect x="9" y="18" width="9" height="9"/>
+        <rect x="18" y="18" width="9" height="9"/><rect x="27" y="18" width="9" height="9"/>
+        <rect x="0" y="27" width="9" height="9"/><rect x="9" y="27" width="9" height="9"/>
+        <rect x="18" y="27" width="9" height="9"/><rect x="27" y="27" width="9" height="9"/>
+      </g>
+      <!-- arrow -->
+      <path d="M 48 20 L 66 20" stroke="#333" stroke-width="1.3" marker-end="url(#arrowhead)" fill="none"/>
+      <!-- target cell with σ -->
+      <rect x="68" y="4" width="36" height="32" fill="#fff3e0" stroke="#e65100" stroke-width="1.3"/>
+      <text x="86" y="26" font-size="17" font-weight="700" fill="#e65100" text-anchor="middle">σ</text>
+      <text x="50" y="60" font-size="10" fill="#555" text-anchor="middle">many source samples → one summary</text>
+    </g>
+
+    <defs>
+      <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 z" fill="#333"/>
+      </marker>
+    </defs>
+
+    <g font-size="10.5">
+      <text x="472" y="540" font-weight="700" fill="#bf360c">▸ Within-cell reduction (raster downsampling)</text>
+      <text x="472" y="556"><tspan font-weight="700">mean · sum · RMS</tspan><tspan fill="#666">  linear  ·  </tspan><tspan font-weight="700">mode</tspan><tspan fill="#666">  cat-safe</tspan></text>
+      <text x="472" y="570"><tspan font-weight="700">median · Q1 · Q3</tspan><tspan fill="#666">  robust  ·  </tspan><tspan font-weight="700">max · min</tspan><tspan fill="#666">  envelope</tspan></text>
+      <text x="472" y="584" font-size="10" fill="#888" font-style="italic">↳ GDAL · xarray groupby · pyresample</text>
+
+      <text x="472" y="606" font-weight="700" fill="#bf360c">▸ Point-to-cell gridding (scatter → grid)</text>
+      <text x="472" y="622"><tspan fill="#666">same statistics, but source is sparse observations,</tspan></text>
+      <text x="472" y="636"><tspan fill="#666">not a regular raster being downsampled</tspan></text>
+      <text x="472" y="650" font-size="10" fill="#888" font-style="italic">↳ zagg (DGGS, generalizing) · xagg (polygon zones) · geopandas sjoin+groupby</text>
+    </g>
+
+    <g transform="translate(792, 536)">
+      <rect x="0" y="0" width="98" height="20" rx="10" fill="#fff3e0" stroke="#e65100"/>
+      <text x="49" y="14" font-size="10" font-weight="700" fill="#e65100" text-anchor="middle">L / N  mixed</text>
+
+      <rect x="0" y="26" width="52" height="20" rx="10" fill="#e3f2fd" stroke="#1565c0"/>
+      <text x="26" y="40" font-size="10" font-weight="700" fill="#1565c0" text-anchor="middle">LOCAL</text>
+      <text x="58" y="40" font-size="10" fill="#555">per-cell reduce</text>
+
+      <text x="0" y="64" font-size="10" fill="#00695c">∫ mean/sum only</text>
+
+      <rect x="0" y="70" width="120" height="18" rx="9" fill="#efebe9" stroke="#5d4037"/>
+      <text x="60" y="83" font-size="10" font-weight="700" fill="#5d4037" text-anchor="middle"># cat-safe: mode</text>
+    </g>
+
+    <g transform="translate(990, 536)">
+      <g stroke="white" stroke-width="1.3" fill="none">
+        <!-- R: rectilinear -->
+        <rect x="0"  y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <line x1="11" y1="4" x2="11" y2="24"/>
+        <line x1="17" y1="4" x2="17" y2="24"/>
+        <line x1="4"  y1="11" x2="24" y2="11"/>
+        <line x1="4"  y1="17" x2="24" y2="17"/>
+        <!-- C: curvilinear (all lines curved) -->
+        <rect x="32" y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <path d="M 36 11 Q 46 7 56 11"/>
+        <path d="M 36 17 Q 46 21 56 17"/>
+        <path d="M 43 4 Q 40 14 43 24"/>
+        <path d="M 49 4 Q 52 14 49 24"/>
+        <!-- D: DGGS -->
+        <rect x="64" y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <polygon points="78,5 85,9 85,19 78,23 71,19 71,9"/>
+        <!-- U: unstructured (irregular polygon) -->
+        <rect x="96" y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <polygon points="104,6 116,8 120,16 112,23 102,20 100,12"/>
+      </g>
+      <text x="0" y="50" font-size="9" fill="#666">indexing is the hard part;</text>
+      <text x="0" y="62" font-size="9" fill="#666">apply is trivial once mapped</text>
+    </g>
+  </g>
+
+  <!-- ROW 5: Mesh / Galerkin -->
+  <g>
+    <rect x="30" y="658" width="1140" height="140" fill="#fafafa" stroke="#e5e5e5"/>
+
+    <text x="44" y="684" font-size="15" font-weight="700">Mesh /</text>
+    <text x="44" y="702" font-size="15" font-weight="700">Galerkin L²</text>
+    <text x="44" y="726" font-size="11" fill="#555">Project onto target basis</text>
+    <text x="44" y="740" font-size="11" fill="#555">via sparse linear solve.</text>
+    <text x="44" y="768" font-size="10" fill="#777" font-style="italic">min ‖f̃ − f‖² on target basis</text>
+
+    <g transform="translate(290, 676)">
+      <!-- triangulated mesh -->
+      <g stroke="#1565c0" stroke-width="1" fill="none">
+        <path d="M 0 40 L 20 10 L 40 38 Z"/>
+        <path d="M 40 38 L 20 10 L 45 5 Z"/>
+        <path d="M 40 38 L 45 5 L 62 25 Z"/>
+        <path d="M 0 40 L 40 38 L 18 62 Z"/>
+        <path d="M 18 62 L 40 38 L 50 60 Z"/>
+        <path d="M 50 60 L 40 38 L 62 25 Z"/>
+      </g>
+      <!-- arrow -->
+      <path d="M 72 36 L 90 36" stroke="#333" stroke-width="1.3" marker-end="url(#arrowhead)" fill="none"/>
+      <!-- target regular grid -->
+      <g fill="#fff" stroke="#888">
+        <rect x="92" y="14" width="14" height="14"/><rect x="106" y="14" width="14" height="14"/>
+        <rect x="92" y="28" width="14" height="14"/><rect x="106" y="28" width="14" height="14"/>
+        <rect x="92" y="42" width="14" height="14"/><rect x="106" y="42" width="14" height="14"/>
+      </g>
+      <text x="60" y="88" font-size="10" fill="#555" text-anchor="middle">L²-projection from mesh basis → target basis</text>
+    </g>
+
+    <g font-size="11.5">
+      <text x="472" y="680"><tspan font-weight="700">bilinear on mesh</tspan><tspan fill="#666">  — FE basis, linear</tspan></text>
+      <text x="472" y="698"><tspan font-weight="700">Galerkin conservative</tspan><tspan fill="#666">  — ∫-preserving L² projection</tspan></text>
+      <text x="472" y="716"><tspan font-weight="700">higher-order remap</tspan><tspan fill="#666">  — TempestRemap et al.</tspan></text>
+    </g>
+    <text x="472" y="768" font-size="10" fill="#888" font-style="italic">ESMF · TempestRemap · MOAB (climate/ocean/engineering)</text>
+
+    <g transform="translate(792, 676)">
+      <rect x="0" y="0" width="36" height="20" rx="10" fill="#e8f5e9" stroke="#2e7d32"/>
+      <text x="18" y="14" font-size="11" font-weight="700" fill="#2e7d32" text-anchor="middle">L</text>
+      <text x="42" y="14" font-size="10" fill="#555">linear (sparse W)</text>
+
+      <rect x="0" y="26" width="56" height="20" rx="10" fill="#f3e5f5" stroke="#6a1b9a"/>
+      <text x="28" y="40" font-size="10" font-weight="700" fill="#6a1b9a" text-anchor="middle">GLOBAL</text>
+      <text x="62" y="40" font-size="10" fill="#555">linear solve</text>
+
+      <rect x="0" y="52" width="110" height="20" rx="10" fill="#e0f2f1" stroke="#00695c"/>
+      <text x="55" y="66" font-size="10" font-weight="700" fill="#00695c" text-anchor="middle">∫ if Galerkin-conservative</text>
+
+      <text x="0" y="88" font-size="10" fill="#999"># not categorical</text>
+    </g>
+
+    <g transform="translate(990, 676)">
+      <g stroke="white" stroke-width="1.3" fill="none">
+        <!-- R: rectilinear, partial -->
+        <rect x="0"  y="0" width="28" height="28" fill="#f9a825" stroke="#c28500"/>
+        <line x1="11" y1="4" x2="11" y2="24"/>
+        <line x1="17" y1="4" x2="17" y2="24"/>
+        <line x1="4"  y1="11" x2="24" y2="11"/>
+        <line x1="4"  y1="17" x2="24" y2="17"/>
+        <!-- C: curvilinear, partial (all lines curved) -->
+        <rect x="32" y="0" width="28" height="28" fill="#f9a825" stroke="#c28500"/>
+        <path d="M 36 11 Q 46 7 56 11"/>
+        <path d="M 36 17 Q 46 21 56 17"/>
+        <path d="M 43 4 Q 40 14 43 24"/>
+        <path d="M 49 4 Q 52 14 49 24"/>
+        <!-- D: DGGS, partial -->
+        <rect x="64" y="0" width="28" height="28" fill="#f9a825" stroke="#c28500"/>
+        <polygon points="78,5 85,9 85,19 78,23 71,19 71,9"/>
+        <!-- U: unstructured, supported (irregular polygon) -->
+        <rect x="96" y="0" width="28" height="28" fill="#2e7d32" stroke="#1b5e20"/>
+        <polygon points="104,6 116,8 120,16 112,23 102,20 100,12"/>
+      </g>
+      <text x="0" y="50" font-size="9" fill="#666">unstructured is the</text>
+      <text x="0" y="62" font-size="9" fill="#666">native home of this family</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- LEGEND                                                            -->
+  <!-- ================================================================ -->
+  <g>
+    <rect x="30" y="798" width="1140" height="130" fill="#f8f9fb" stroke="#9e9e9e" stroke-width="1.2"/>
+    <text x="44" y="820" font-size="13" font-weight="700" fill="#333">Legend</text>
+
+    <!-- Section A: Property badges -->
+    <text x="44" y="844" font-size="11" font-weight="700" fill="#555">Property badges</text>
+
+    <!-- L pill -->
+    <rect x="44" y="852" width="22" height="16" rx="8" fill="#e8f5e9" stroke="#2e7d32"/>
+    <text x="55" y="864" font-size="10" font-weight="700" fill="#2e7d32" text-anchor="middle">L</text>
+    <text x="72" y="864" font-size="10" fill="#333">linear — encodable as sparse matrix W (precomputable)</text>
+
+    <!-- L/N mixed pill -->
+    <rect x="44" y="874" width="80" height="16" rx="8" fill="#fff3e0" stroke="#e65100"/>
+    <text x="84" y="886" font-size="9" font-weight="700" fill="#e65100" text-anchor="middle">L / N mixed</text>
+    <text x="130" y="886" font-size="10" fill="#333">family has both linear and nonlinear methods</text>
+
+    <!-- LOCAL pill -->
+    <rect x="44" y="896" width="50" height="16" rx="8" fill="#e3f2fd" stroke="#1565c0"/>
+    <text x="69" y="908" font-size="9" font-weight="700" fill="#1565c0" text-anchor="middle">LOCAL</text>
+    <text x="100" y="908" font-size="10" fill="#333">local support — chunk-friendly, apply per-chunk</text>
+
+    <!-- Divider -->
+    <line x1="520" y1="836" x2="520" y2="918" stroke="#ddd"/>
+
+    <!-- GLOBAL pill -->
+    <rect x="540" y="852" width="56" height="16" rx="8" fill="#f3e5f5" stroke="#6a1b9a"/>
+    <text x="568" y="864" font-size="9" font-weight="700" fill="#6a1b9a" text-anchor="middle">GLOBAL</text>
+    <text x="602" y="864" font-size="10" fill="#333">global support — needs full target grid</text>
+
+    <!-- ∫ pill -->
+    <rect x="540" y="874" width="100" height="16" rx="8" fill="#e0f2f1" stroke="#00695c"/>
+    <text x="590" y="886" font-size="9" font-weight="700" fill="#00695c" text-anchor="middle">∫ conservation</text>
+    <text x="646" y="886" font-size="10" fill="#333">∫-preserving (f · area invariant)</text>
+
+    <!-- # cat-safe pill -->
+    <rect x="540" y="896" width="82" height="16" rx="8" fill="#efebe9" stroke="#5d4037"/>
+    <text x="581" y="908" font-size="9" font-weight="700" fill="#5d4037" text-anchor="middle"># cat-safe</text>
+    <text x="628" y="908" font-size="10" fill="#333">categorical-safe (no fractional IDs)</text>
+
+    <!-- Section B: Grid compatibility -->
+    <line x1="860" y1="836" x2="860" y2="918" stroke="#ddd"/>
+    <text x="880" y="844" font-size="11" font-weight="700" fill="#555">Grid compatibility</text>
+
+    <!-- Pictogram meanings (2x2) — order: R C / D U -->
+    <g stroke="white" stroke-width="1.1" fill="none">
+      <!-- Rectilinear -->
+      <rect x="880" y="852" width="18" height="18" fill="#2e7d32" stroke="#1b5e20"/>
+      <line x1="887" y1="854" x2="887" y2="868"/>
+      <line x1="891" y1="854" x2="891" y2="868"/>
+      <line x1="882" y1="858" x2="896" y2="858"/>
+      <line x1="882" y1="864" x2="896" y2="864"/>
+      <!-- Curvilinear (all lines curved) -->
+      <rect x="1020" y="852" width="18" height="18" fill="#2e7d32" stroke="#1b5e20"/>
+      <path d="M 1022 858 Q 1029 855 1036 858"/>
+      <path d="M 1022 864 Q 1029 867 1036 864"/>
+      <path d="M 1027 854 Q 1025 861 1027 868"/>
+      <path d="M 1031 854 Q 1033 861 1031 868"/>
+      <!-- DGGS hexagon (now in bottom-left) -->
+      <rect x="880" y="874" width="18" height="18" fill="#2e7d32" stroke="#1b5e20"/>
+      <polygon points="889,876 894,879 894,887 889,890 884,887 884,879"/>
+      <!-- Unstructured irregular polygon (now in bottom-right) -->
+      <rect x="1020" y="874" width="18" height="18" fill="#2e7d32" stroke="#1b5e20"/>
+      <polygon points="1023,876 1033,877 1036,883 1032,889 1024,888 1021,881"/>
+    </g>
+    <text x="904" y="866" font-size="10" fill="#333">rectilinear</text>
+    <text x="1044" y="866" font-size="10" fill="#333">curvilinear</text>
+    <text x="904" y="888" font-size="10" fill="#333">DGGS</text>
+    <text x="1044" y="888" font-size="10" fill="#333">unstructured</text>
+
+    <!-- Fill-state meanings (single row) -->
+    <text x="880" y="912" font-size="11" font-weight="700" fill="#555">Fill:</text>
+    <g>
+      <rect x="912" y="902" width="16" height="14" fill="#2e7d32" stroke="#1b5e20"/>
+      <text x="933" y="912" font-size="10" fill="#333">supported</text>
+    </g>
+    <g>
+      <rect x="1000" y="902" width="16" height="14" fill="#f9a825" stroke="#c28500"/>
+      <text x="1020" y="912" font-size="10" fill="#333">partial</text>
+    </g>
+    <g>
+      <rect x="1066" y="902" width="16" height="14" fill="#fff" stroke="#bbb" stroke-dasharray="3,2"/>
+      <text x="1086" y="912" font-size="10" fill="#333">not applicable</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- FOOTER: reprojection vs regridding                                -->
+  <!-- ================================================================ -->
+  <g>
+    <rect x="30" y="938" width="1140" height="136" fill="#fffbe6" stroke="#e6c84a"/>
+    <text x="44" y="966" font-size="13" font-weight="700" fill="#6d5200">Reprojection ≠ Regridding</text>
+
+    <text x="44"  y="990"  font-size="11" fill="#333"><tspan font-weight="700">Reprojection</tspan> changes CRS; pixels stay pixels. Family 1 (kernel convolution) is sufficient.</text>
+    <text x="44"  y="1008" font-size="11" fill="#333"><tspan font-weight="700">Regridding</tspan> changes grid structure (size, topology). Family 1 is rarely the right answer.</text>
+    <text x="44"  y="1034" font-size="11" fill="#333">Mass-preserving data (precipitation, flux, population) → <tspan font-weight="700">Family 3 (conservative)</tspan>.</text>
+    <text x="44"  y="1052" font-size="11" fill="#333">Categorical data (land cover, classifications) → <tspan font-weight="700">Family 1 nearest</tspan> or <tspan font-weight="700">Family 4 mode</tspan>; never bilinear/cubic.</text>
+
+    <text x="700" y="990"  font-size="11" fill="#333"><tspan font-weight="700">Linear methods</tspan> encode as a sparse weight matrix W and apply as <tspan font-family="Courier, monospace">output = W·input</tspan>.</text>
+    <text x="700" y="1008" font-size="11" fill="#333">Cached W amortizes across time steps &amp; variables — xESMF / grid-weights pattern.</text>
+    <text x="700" y="1034" font-size="11" fill="#333"><tspan font-weight="700">Nonlinear methods</tspan> (mode, median, max…) precompute only <tspan font-style="italic">indexing</tspan>, not the operator.</text>
+    <text x="700" y="1052" font-size="11" fill="#333">That's why grid-indexing is a standalone library from grid-weights.</text>
+  </g>
+</svg>

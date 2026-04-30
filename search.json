@@ -12,7 +12,7 @@
   {
     "objectID": "examples/run-memray.html",
     "href": "examples/run-memray.html",
-    "title": "Geospatial reprojection in Python (2024)",
+    "title": "Cloud-native resampling and reprojection in Python",
     "section": "",
     "text": "import subprocess\nfrom datetime import datetime\nfrom pathlib import Path\n\nimport fsspec\nfrom utils import sync_notebook\n\n\nfs = fsspec.filesystem(\"file\")\ncurrent_date = datetime.today().strftime(\"%Y-%m-%d\")\noutput_folder = f\"results/{current_date}/\"\nfs.mkdirs(output_folder, exist_ok=True)\n\n\ndataset = \"gpm_imerg\"\n\n\ndef run_memray(file: str, zoom: str):\n    output_file = f\"{output_folder}memray-{dataset}-{Path(file).stem}-{zoom}.bin\"\n    summary_file = f\"{output_folder}memray-{dataset}-{Path(file).stem}-{zoom}.json\"\n    command = [\n        \"memray\",\n        \"run\",\n        \"--force\",\n        \"--output\",\n        output_file,\n        file,\n        \"--dataset\",\n        dataset,\n        \"--zoom\",\n        zoom,\n    ]\n    subprocess.run(command)\n    summary_command = [\n        \"memray\",\n        \"stats\",\n        \"--force\",\n        \"--json\",\n        \"--output\",\n        summary_file,\n        output_file,\n    ]\n    subprocess.run(summary_command)\n\n\ndef sync_and_run(zoom, input_methods):\n    notebooks = []\n    for fp in input_methods:\n        notebooks.extend(fs.glob(f\"resample-*-{fp}*.ipynb\"))\n    for file in notebooks:\n        sync_notebook(file)\n    modules = []\n    for fp in input_methods:\n        modules.extend(fs.glob(f\"resample-*-{fp}*.py\"))\n    for file in modules:\n        # Skip kerchunk since it requires a different image build due to incompatibility with Zarr V3\n        if \"kerchunk\" not in file:\n            run_memray(file, zoom)\n\n\nif dataset == \"gpm_imerg\":\n    input_methods = [\"rioxarray\", \"odc\", \"pyresample\", \"rioxarray\", \"xesmf\", \"sparse\"]\n    zoom_levels = [\"0\", \"1\", \"2\"]\nelif dataset == \"mursst\":\n    input_methods = [\"odc\", \"pyresample\", \"rioxarray\", \"rasterio\"]\n    zoom_levels = [\"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\"]\n\n\nfor zoom in zoom_levels:\n    sync_and_run(zoom, input_methods)"
   },
@@ -338,9 +338,109 @@
     ]
   },
   {
+    "objectID": "pages/ecosystem.html",
+    "href": "pages/ecosystem.html",
+    "title": "The cloud-native resampling ecosystem",
+    "section": "",
+    "text": "The core of this site is a set of benchmarks for Web Mercator tile generation on continuous gridded data — a narrow, well-scoped slice of the “resampling” problem space. This page is the positioning layer underneath those benchmarks: it frames where they sit within the broader ecosystem of cloud-native geospatial resampling tooling, and it tracks what we plan to add so the site can grow into the broader survey it’s often treated as.\nTwo audiences:\n\nPractitioners choosing a resampling tool should read §2 (the math), §3 (the tool landscape), §4 (what these benchmarks actually measure), and §7 (a decision grid).\nPeople citing this site should read §4 and §8 to scope the citation correctly.",
+    "crumbs": [
+      "Ecosystem & Roadmap"
+    ]
+  },
+  {
+    "objectID": "pages/ecosystem.html#why-this-page",
+    "href": "pages/ecosystem.html#why-this-page",
+    "title": "The cloud-native resampling ecosystem",
+    "section": "",
+    "text": "The core of this site is a set of benchmarks for Web Mercator tile generation on continuous gridded data — a narrow, well-scoped slice of the “resampling” problem space. This page is the positioning layer underneath those benchmarks: it frames where they sit within the broader ecosystem of cloud-native geospatial resampling tooling, and it tracks what we plan to add so the site can grow into the broader survey it’s often treated as.\nTwo audiences:\n\nPractitioners choosing a resampling tool should read §2 (the math), §3 (the tool landscape), §4 (what these benchmarks actually measure), and §7 (a decision grid).\nPeople citing this site should read §4 and §8 to scope the citation correctly.",
+    "crumbs": [
+      "Ecosystem & Roadmap"
+    ]
+  },
+  {
+    "objectID": "pages/ecosystem.html#mathematical-families",
+    "href": "pages/ecosystem.html#mathematical-families",
+    "title": "The cloud-native resampling ecosystem",
+    "section": "2. Mathematical families",
+    "text": "2. Mathematical families\n“Resampling” collapses at least five mathematically distinct operations. Picking the wrong family is silent and common; the library can’t catch the error — only the user knows what the data means.\n\n\n\nMathematical families of resampling\n\n\n\n\n\n\n\n\n\n\nFamily\nOperation\nKey properties\n\n\n\n\nF1 Kernel convolution\nreconstruct a continuous field from samples, sample at target\nlinear, local, not conservation-preserving, only nearest is categorical-safe\n\n\nF2 Scattered-data\nirregular points → grid via distance/covariance weighting\nmixed linearity, global, needs spatial index\n\n\nF3 Conservative\narea-weighted polygon intersection\nlinear (sparse W), global, preserves ∫\n\n\nF4 Statistical aggregation\napply σ to source samples per cell (two variants — see below)\nmixed linearity, local, conservation for mean/sum, cat-safe for mode\n\n\nF5 Mesh / Galerkin L²\nproject onto target basis by sparse linear solve\nlinear, global, can be conservative\n\n\n\n\nF4 is really two operations\n\nWithin-cell reduction (raster downsampling) — source is a dense grid; statistics collapse contributing pixels. Tools: GDAL (mode/med/q1/q3/max/min/sum/rms), xarray groupby, pyresample.\nPoint-to-cell gridding (scattered → grid) — source is sparse observations; statistics populate a grid from scratch. Tools: zagg (DGGS/generalizing), xagg (polygon zones), geopandas sjoin+groupby.\n\nSame statistic family, different pipelines. Most libraries expose only one variant.\n\n\nCross-cutting axes\n\nLinearity: linear methods encode as a sparse weight matrix W and apply as output = W · input; W caches across time steps and variables. Nonlinear methods (mode, median, max, quantile) cache only indexing, not the operator. This is why grid-indexing and grid-weights are separate libraries.\nSupport: local (kernel has finite support → chunk-friendly) vs. global (needs full target grid spec before weights can be built).\nConservation: preserves ∫? F3 and F4-mean/sum only.\nCategorical safety: nearest (F1) and mode (F4) only. Bilinear/cubic/Lanczos on class IDs produces fractional nonsense.\n\n\n\nReprojection ≠ regridding\n\nReprojection: change CRS, keep pixel semantics. F1 works.\nRegridding: change grid structure (size, topology). Mass-preserving data → F3. Categorical data → F1 nearest or F4 mode. Continuous data → F1 bilinear/cubic or F2.\n\nConflating the two is the source of most silent resampling errors.",
+    "crumbs": [
+      "Ecosystem & Roadmap"
+    ]
+  },
+  {
+    "objectID": "pages/ecosystem.html#architectural-layers",
+    "href": "pages/ecosystem.html#architectural-layers",
+    "title": "The cloud-native resampling ecosystem",
+    "section": "3. Architectural layers",
+    "text": "3. Architectural layers\n\n\n\nLayered architecture of the cloud-native raster ecosystem\n\n\n\n\n\nLayer\nRole\nExemplar tools\n\n\n\n\n1. Bytes & formats\nCOG, GeoTIFF, NetCDF, HDF5, HDF4, Zarr v2/v3, GeoZarr; virtualization formats (Kerchunk JSON/Parquet, VirtualiZarr manifest, GDAL VRT, GDAL GTI, DMR++); on cloud object storage\nsee the I/O & Storage Stack page for full detail\n\n\n2. Native-grid I/O\nloaders that return pixels in native CRS, no resampling; sits atop a deep I/O stack (filesystem, codecs, readers, xarray backends)\nrasteret, virtual-tiff, async-tiff, zarr-python v3 async · see I/O & Storage Stack\n\n\n3. Loader + read-time warp\nintegrated resampling per dask chunk; Family 1 only\nstackstac, odc-stac, lazycogs\n\n\n4. Grid math (post-load)\nseparable from I/O; five input→output sublayers (see below)\nsee 4a–4e\n\n\n\nLayer 4 is a container for five parallel sublayers — same architectural layer, different input→output combinations. Each row has its own math, tooling, and use cases; they share only the “post-load, runs on a lazy xarray” pattern.\n\n\n\n\n\n\n\n\nSublayer\nInput → Output\nExemplar tools\n\n\n\n\n4a Grid → Grid\nreprojection & regridding\nodc-geo xr_reproject, grid-weights + grid-indexing, xESMF, pyresample (grid mode), xarray-regrid\n\n\n4b Points → Grid\nscattered interp + point-cloud aggregation\nscipy / pyKrige / verde, pyresample (kd-tree), zagg\n\n\n4c Grid → Polygon\nzonal statistics on polygon geometries\nxagg, exactextract, rasterstats\n\n\n4d Points → Polygon\nscattered observations aggregated onto polygon zones\ngeopandas sjoin + groupby, zagg (polygon-zones, Phase 2)\n\n\n4e Grid → Points\nsampling — raster values at query locations\nrio-tiler, rioxarray.sample, xvec, torchgeo samplers\n\n\n\n\nTwo architectural patterns in tension\n\nLoader-integrated warp (Layer 3) saves I/O via overview selection but bakes the target grid into the loader API and is limited to Family 1.\nSeparable pattern (Layer 2 → any Layer 4 sublayer) composes any family with any loader; pays for I/O at native resolution but has no family restriction.\n\nThe Pangeo / OpenEO community is consolidating on the separable pattern for correctness-critical work. A Pangeo thread from Sep 2024 established that odc-geo.xr.xr_reproject is the current canonical tool for lazy, dask-aware CRS warp on xarray — and the OpenEO reference implementation uses it for resample_spatial. rioxarray.reproject() breaks laziness by calling GDAL synchronously on the full array; don’t use it for large cloud arrays.",
+    "crumbs": [
+      "Ecosystem & Roadmap"
+    ]
+  },
+  {
+    "objectID": "pages/ecosystem.html#scope-of-current-benchmarks",
+    "href": "pages/ecosystem.html#scope-of-current-benchmarks",
+    "title": "The cloud-native resampling ecosystem",
+    "section": "4. Scope of current benchmarks",
+    "text": "4. Scope of current benchmarks\nThe benchmarks on this site measure a specific slice of the space above.\nTools profiled: rasterio, rioxarray, pyresample, xesmf, xesmfcached, odc-geo xr_reproject, xcube, geowombat, xcdat.\nDatasets: MUR SST, GPM IMERG. Both continuous.\nWorkload: Web Mercator tile generation (Z0–6).\nMetrics: wall-time + peak heap memory (memray / pyinstrument).\nVariability axes: I/O backend (h5netcdf vs zarr-icechunk vs rasterio), storage (local vs S3), format optimizations (overviews, Zarr virtualization).\n\nCurrent findings\n\nGDAL-backed tools dominate on speed + memory (odc-geo, rioxarray). Consistent across I/O backends.\nI/O choice matters more than algorithm. Virtualization + overviews beat algorithm micro-optimizations by factors of 2–20.\nxESMF is slowest without cached weights. With pre-computed weights it becomes competitive; without them it pays for weight construction every run.\nThe lazy-vs-eager axis is hidden. Every run calls .load() on the result, so the cost of dask graph construction vs. materialization is not isolated.\n\n\n\nWhat these findings don’t say\nThe scope above means these benchmarks cannot speak to:\n\nF3 conservative regridding of mass-preserving data. GDAL-nearest/bilinear is fast but incorrect for precipitation, population density, or flux.\nCategorical data. Nearest at any non-matching scale silently corrupts land-cover statistics.\nLarge-scale workloads. Z0–6 tiles are tens of MB; scaling behavior to full scenes, time-series stacks, or continental mosaics is untested.\nAsync-native I/O paths. lazycogs, async-tiff, and similar no-GDAL pipelines are not in the benchmark set.\nLayer 4 sublayers beyond 4a. Points → grid (zagg, scattered-data interp), grid → polygon zonal stats (xagg, exactextract, rasterstats), points → polygon aggregation, and grid → points sampling (rio-tiler, rioxarray.sample, xvec, torchgeo samplers) are all untested here.\nCorrectness. The site measures time and memory; whether two tools produce the same output for the same task is not verified.",
+    "crumbs": [
+      "Ecosystem & Roadmap"
+    ]
+  },
+  {
+    "objectID": "pages/ecosystem.html#roadmap",
+    "href": "pages/ecosystem.html#roadmap",
+    "title": "The cloud-native resampling ecosystem",
+    "section": "5. Roadmap",
+    "text": "5. Roadmap\nWhat we plan to add, prioritized by impact on the breadth-of-authority the site is often cited for.\n\nTier 1 — closes the widest gap\n\nF3 conservation scenario with a conservation-error metric. Dataset candidate: GPCP precipitation or TerraClimate aggregated to a coarser target. Tools: xESMF conservative, grid-weights, xarray-regrid conservative, CDO remapcon, plus GDAL average as the rectangular approximation for contrast. Metric: |Σ input·area − Σ output·area| / Σ input·area.\nCategorical scenario with class-frequency divergence. Dataset: ESA WorldCover or USDA CDL; downsample by 4×–10×. Tools: rasterio nearest / mode, rioxarray, gdalwarp -r mode, xarray groupby-mode. Metric: KL divergence or histogram delta against a scale-aware reference.\nCorrectness as a first-class metric across all scenarios. MAE/RMSE for continuous (vs. GDAL warp with Lanczos as reference); conservation-error for mass-preserving; class-frequency divergence for categorical; gradient-magnitude artifacts for smooth reprojection.\n\n\n\nTier 2 — scope extensions\n\nLazy-vs-eager isolation. Same tool, same data, run as lazy-constructed / dask-distributed-computed / .load()ed. Directly serves the Pangeo thread above.\nScale axis. Full Sentinel-2 scene (10980² at 10 m), time-series stack (50–100 scenes), continental mosaic. Surfaces divergence that Z0–6 tiles hide.\nAsync-native paths. Add lazycogs (F1 nearest), async-tiff-backed experiments. Test whether removing GDAL’s threading/env complexity translates to throughput at scale.\nLayer 4 sublayer benchmarks. Expand beyond 4a (grid → grid): add 4b Points → Grid (zagg, pyresample kd-tree, verde), 4c Grid → Polygon zonal stats (xagg, exactextract, rasterstats), 4d Points → Polygon (geopandas.sjoin + groupby), and 4e Grid → Points sampling (rio-tiler, rioxarray.sample, xvec, torchgeo samplers). Points/sec or samples/sec, memory, correctness vs. reference.\n\n\n\nTier 3 — delivered by this page\n\nTaxonomy overview. §2 and §3 above.\nCoverage matrix. §6 below.\nRecommendations table. §7 below.\nExplicit citation guidance. §8 below.\nSynthetic / no-auth dataset for CI and external contributors — planned alongside Tier 1.",
+    "crumbs": [
+      "Ecosystem & Roadmap"
+    ]
+  },
+  {
+    "objectID": "pages/ecosystem.html#coverage-matrix",
+    "href": "pages/ecosystem.html#coverage-matrix",
+    "title": "The cloud-native resampling ecosystem",
+    "section": "6. Coverage matrix",
+    "text": "6. Coverage matrix\nWhich tools are benchmarked today, and which families they can cover in principle. Green = benchmarked; yellow = exists in tool but not yet tested; grey = out of scope for the tool. The Sublayer column indicates where each tool primarily lives in Layer 4 (see Architectural layers); tools can appear in multiple sublayers where applicable.\n\n\n\n\n\n\n\n\n\n\n\n\n\nTool\nSublayer\nF1 kernel\nF2 scatter\nF3 conservative\nF4 stat-agg\nF5 mesh\nNative-grid I/O\n\n\n\n\nrasterio\n4a\n✅\n—\n🟡 (average)\n🟡 (mode, med)\n—\n—\n\n\nrioxarray\n4a\n✅\n—\n🟡\n🟡\n—\n—\n\n\nodc-geo xr_reproject\n4a\n✅\n—\n—\n🟡\n—\n—\n\n\npyresample (grid mode)\n4a\n✅\n—\n—\n🟡\n—\n—\n\n\npyresample (kd-tree)\n4b\n—\n🟡\n—\n—\n—\n—\n\n\nxESMF\n4a\n🟡 (bilinear)\n—\n🟡\n—\n🟡\n—\n\n\nxcube\n4a\n✅\n—\n🟡\n—\n—\n—\n\n\ngeowombat\n4a\n✅\n—\n—\n—\n—\n—\n\n\nxcdat\n4a\n✅\n—\n—\n—\n—\n—\n\n\nxarray-regrid\n4a\n—\n—\n🟡\n—\n—\n—\n\n\ngrid-weights + grid-indexing\n4a\n—\n—\n🟡\n—\n—\n—\n\n\nscipy / pyKrige / verde\n4b\n—\n🟡\n—\n—\n—\n—\n\n\nzagg\n4b (→ 4d in Phase 2)\n—\n—\n—\n🟡 (pt→cell; pt→zone planned)\n—\n—\n\n\nxagg\n4c\n—\n—\n🟡 (weighted mode)\n🟡 (zonal stats)\n—\n—\n\n\nexactextract\n4c\n—\n—\n🟡 (exact weighted)\n🟡 (zonal stats)\n—\n—\n\n\nrasterstats\n4c\n—\n—\n—\n🟡 (zonal stats)\n—\n—\n\n\ngeopandas sjoin + groupby\n4d\n—\n—\n—\n🟡 (pt→zone)\n—\n—\n\n\nrio-tiler\n4e\n🟡 (sampling)\n—\n—\n—\n—\n—\n\n\nrioxarray.sample\n4e\n🟡 (sampling)\n—\n—\n—\n—\n—\n\n\nxvec\n4e\n🟡 (sampling)\n—\n—\n—\n—\n—\n\n\ntorchgeo samplers\n4e\n🟡 (sampling)\n—\n—\n—\n—\n—\n\n\nlazycogs\nLayer 3\n—\n—\n—\n—\n—\n🟡\n\n\nvirtual-tiff\nLayer 2\n—\n—\n—\n—\n—\n🟡\n\n\nrasteret\nLayer 2\n—\n—\n—\n—\n—\n🟡\n\n\n\nRight column covers Layer 2 (native-grid I/O). Yellow entries in the other columns are the bulk of the Tier 1/2 roadmap. Tools appear in one primary sublayer; some (e.g., pyresample, zagg) fan out across multiple sublayers and are listed in each.",
+    "crumbs": [
+      "Ecosystem & Roadmap"
+    ]
+  },
+  {
+    "objectID": "pages/ecosystem.html#recommendations-by-data-semantics",
+    "href": "pages/ecosystem.html#recommendations-by-data-semantics",
+    "title": "The cloud-native resampling ecosystem",
+    "section": "7. Recommendations by data semantics",
+    "text": "7. Recommendations by data semantics\nPicking a tool from the right family matters more than picking the fastest tool in a family.\n\n\n\n\n\n\n\n\n\nData semantics\nTarget\nRecommended tool(s)\nPrimary tradeoff\n\n\n\n\nContinuous, CRS warp → tile output\nWeb Mercator tiles\nodc-geo.xr_reproject or rioxarray.reproject\nGDAL speed; F1 only\n\n\nContinuous, CRS warp → analysis-ready xarray\nany\nodc-geo.xr_reproject (lazy)\nseparable, dask-aware; F1 only\n\n\nMass-preserving (precip, flux, population) → new grid\nany\nxESMF conservative (cached W), or grid-weights\nprecompute cost amortizes across time\n\n\nMass-preserving → rectilinear climate grid\nregular lat/lon\nxarray-regrid conservative\nsimpler API; rectilinear only\n\n\nCategorical (land cover, classifications)\nany scale change\nonly mode-capable tools; GDAL mode, rasterio, rioxarray\ncorrectness non-negotiable\n\n\nScattered observations → grid\nany\npyresample kd-tree (IDW/nearest) or verde (spline/kriging)\nkriging gives σ²; IDW is cheaper\n\n\nScattered observations → DGGS\nHEALPix, H3, S2\nzagg\nserverless fan-out; point-cloud scale\n\n\nScattered observations → polygon zones\nany zones\nzagg (Phase 2), or geopandas.sjoin + groupby for small data\nzagg scales; geopandas is local-only\n\n\nRaster → polygon zonal stats\nany polygon set\nexactextract (fastest, exact), xagg (xarray-native), rasterstats (simple)\nexactextract for production; xagg for xarray workflows\n\n\nRaster → point sampling (ML features, validation)\nany query points\nrioxarray.sample, xvec, rio-tiler (COGs), torchgeo samplers (ML)\nxvec is newest; torchgeo for ML pipelines\n\n\nLegacy TIFFs → chunked / lazy-array access\nvirtual chunks via Zarr API\nvirtual-tiff\nzero-copy VirtualiZarr manifest over TIFF bytes\n\n\nSTAC archive → lazy xarray, tile-like output\nsmall AOI\nstackstac, odc-stac, or lazycogs (no-GDAL)\nread-time warp; F1 only",
+    "crumbs": [
+      "Ecosystem & Roadmap"
+    ]
+  },
+  {
+    "objectID": "pages/ecosystem.html#how-to-cite-this-site",
+    "href": "pages/ecosystem.html#how-to-cite-this-site",
+    "title": "The cloud-native resampling ecosystem",
+    "section": "8. How to cite this site",
+    "text": "8. How to cite this site\nThe site is at its most useful when cited with its scope made explicit.\nRecommended framing: “Tile-generation benchmarks for Family 1 (kernel convolution) on continuous gridded data, targeting Web Mercator output.”\nFor a broader ecosystem review, cite this ecosystem.qmd page rather than an individual benchmark notebook. This page frames current scope, planned additions, and positions all the tools in a common taxonomy.\nWhat to avoid: citing narrow time/memory findings as general claims about a tool’s correctness or fitness. “GDAL wins” is a true finding within the scope — it’s not a universal claim. Tools that the benchmark marks as “slow” (e.g., xESMF without cached weights) are often the only correct choice for workloads the benchmark doesn’t cover (mass-preserving regridding).",
+    "crumbs": [
+      "Ecosystem & Roadmap"
+    ]
+  },
+  {
+    "objectID": "pages/ecosystem.html#references",
+    "href": "pages/ecosystem.html#references",
+    "title": "The cloud-native resampling ecosystem",
+    "section": "9. References",
+    "text": "9. References\n\nEcosystem discussions\n\nSean Harkins’ proposal for modular libraries (gist) — separating I/O, indexing, and resampling into composable Rust-based libraries; proposes a generic transform-aware indexing library and a chunkwise resampling library.\nPangeo thread on lazy reprojection (Sep 2024) — community consensus on odc-geo.xr.xr_reproject for lazy, dask-aware CRS warp.\n\n\n\nLoader + read-time warp (Layer 3)\n\nstackstac — STAC → lazy xarray via rasterio.vrt.WarpedVRT per chunk.\nodc-stac — STAC → lazy xarray via odc-loader; EO3 metadata; pixel fusion.\nlazycogs — STAC → lazy xarray with async-geotiff backend; no GDAL dependency.\n\n\n\nNative-grid I/O (Layer 2)\n\nvirtual-tiff — VirtualiZarr 2.0 manifest over TIFFs; zero-copy Zarr view.\nrasteret — pre-built Parquet metadata index; byte-range reads via obstore.\n\n\n\nLayer 4a — Grid → Grid\n\nodc-geo — GeoBox abstraction; xr_reproject for lazy CRS warp.\ngrid-indexing — Rust R*-tree cell-overlap indexing.\ngrid-weights — area-weighted conservative regridding; uses grid-indexing.\nxESMF — ESMF-backed regridding for rectilinear and mesh.\npyresample — kd-tree and resample_blocks backends (grid-mode entry here; kd-tree entry in 4b).\nxarray-regrid — rectilinear climate grid regridding.\n\n\n\nLayer 4b — Points → Grid\n\npyresample kd-tree — scattered-to-grid via nearest-neighbor or weighted kernels.\nscipy.interpolate — generic scatter interpolation (griddata, RBF).\npyKrige — ordinary/universal kriging with σ² output.\nverde — spline- and greens-function-based gridding; Fatiando ecosystem.\nzagg — cloud-native point-cloud → DGGS aggregation; serverless fan-out. Generalizing to arbitrary output grids (Phase 2 → polygon zones, see Layer 4d).\n\n\n\nLayer 4c — Grid → Polygon (zonal statistics)\n\nxagg — xarray-native zonal aggregation; area-weighted mode available.\nexactextract — C++-backed exact polygon-raster intersection; fastest in class. Python bindings.\nrasterstats — rasterio + shapely zonal stats; simple pure-Python.\n\n\n\nLayer 4d — Points → Polygon\n\ngeopandas.sjoin + groupby — ad-hoc spatial-join pattern; works for small-to-medium data.\nzagg (Phase 2 polygon-zones) — point-cloud → polygon aggregation with serverless fan-out.\n\n\n\nLayer 4e — Grid → Points (sampling)\n\nrio-tiler — point queries on COGs; tile-server-style API.\nrioxarray.sample — xarray-native point sampling from rasters.\nxvec — vector-geometry indexing on xarray; growing adoption.\ntorchgeo samplers — ML feature-extraction workflow wrappers.\n\n\n\nStandards\n\nxdggs — DGGS Zarr metadata specification.\nGeoZarr — rectilinear/CF Zarr metadata.\nSTAC — SpatioTemporal Asset Catalog.\n\n\n\nRelated reviews\n\nCF Conventions — baseline for coordinate/axis metadata.\n\n\nThis page will evolve as the benchmark scope and the broader ecosystem change. Open an issue or PR at github.com/developmentseed/warp-resample-profiling to propose additions or corrections.",
+    "crumbs": [
+      "Ecosystem & Roadmap"
+    ]
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Geospatial reprojection in Python (2024)",
+    "title": "Cloud-native resampling and reprojection in Python",
     "section": "",
     "text": "This repository and the accompanying Quarto book contains examples of using warp resampling / reprojection methods in Python, along with memory and statistical wall-time profiling results.",
     "crumbs": [
@@ -350,7 +450,7 @@
   {
     "objectID": "index.html#overview",
     "href": "index.html#overview",
-    "title": "Geospatial reprojection in Python (2024)",
+    "title": "Cloud-native resampling and reprojection in Python",
     "section": "",
     "text": "This repository and the accompanying Quarto book contains examples of using warp resampling / reprojection methods in Python, along with memory and statistical wall-time profiling results.",
     "crumbs": [
@@ -360,7 +460,7 @@
   {
     "objectID": "index.html#memory-and-time-profiling",
     "href": "index.html#memory-and-time-profiling",
-    "title": "Geospatial reprojection in Python (2024)",
+    "title": "Cloud-native resampling and reprojection in Python",
     "section": "Memory and time profiling",
     "text": "Memory and time profiling\nResampling and reprojection (i.e., warp resampling) are essential steps for generating raster tiles for browser based visualization. Further, warp resampling is often one of the most time consuming and memory intensive portions of the tile generation process. The importance and complexity of this step motivates an exploration of different warp resampling options.\n\nGoals\nCompare memory and time performance for generating Web Mercator Quad Tree raster tiles from one timestep and variable of the MUR SST and GPM IMERG dataset using the following approaches:\n\nosgeo.warp\nrasterio.warp.reproject\nrioxarray.reproject\npyresample.resample_blocks\nxesmf.Regridder\ngeoutils.Raster.reproject\nraster_tools.warp.reproject\nodc.geo.xr.xr_reproject\nxcube.resampling\ngeowombat.config.update\n\nOut-of-scope:\n\nxarray-regrid - only regrids within the same rectilinear coordinate system\nweatherbench2/regridding - only seems to regrid within the same rectilinear coordinate system\ndinosaur - only seems to regrid within the same rectilinear coordinate system\npygmt.grdproject - web mercator not amongst supported projections\nverde - not used for raster -&gt; raster resampling (only points -&gt; raster)\n\nThese methods will be run on the full resolution dataset. Nearest neighbor interpolation will be used for the first comparison. For simplicity, the amount of time necessary to generate a resampled array and the maximum amount of heap memory allocated will be measured. We also compare results when using a virtual dataset (e.g., VRT, Kerchunk reference file), when reading from a dataset stored locally versus in cloud object storage, and when using a cloud-optimized dataset (Zarr.)\n\n\nPossible extensions\n\nCompare other resampling methods (e.g., bilinear, conservative).\nCompare with methods that don’t rely on existing packages (e.g., Conservative regridding with Xarray, GeoPandas, and Sparse and KDTree wrappers).\n\n\n\nEnvironment Setup\nThe notebooks can be run on a JupyterHub environment using the docker image quay.io/developmentseed/warp-resample-profiling:latest, which is created using repo2docker using the Dockerfile contained within the binder directory.",
     "crumbs": [
@@ -370,7 +470,7 @@
   {
     "objectID": "index.html#references",
     "href": "index.html#references",
-    "title": "Geospatial reprojection in Python (2024)",
+    "title": "Cloud-native resampling and reprojection in Python",
     "section": "References",
     "text": "References\n\nWhat’s Next - Software - Regridding\nLazy regridding discussion\n\n\nAcknowledgements\nThis work was made possible through support from NASA IMPACT. Numerous people have guided development, especially Aimee Barciauskas (@abarciauskas-bgse), Justus Magin (@keewis), and Michael Sumner (@mdsumner). The resources page contains references for source information. Quarto configuration based on Cloud Native Geospatial Formats Guide and the Tile Benchmarking. All mistakes my own.",
     "crumbs": [
@@ -378,9 +478,99 @@
     ]
   },
   {
+    "objectID": "pages/io-stack.html",
+    "href": "pages/io-stack.html",
+    "title": "I/O & storage stack",
+    "section": "",
+    "text": "The main Ecosystem & Roadmap diagram treats Layers 1 and 2 (bytes and native-grid I/O) as two thin rows. In reality, a lot happens between an S3 object and an xr.open_dataset(...) call. This page expands that region of the stack.\nThe goal is to make visible: (a) which tools serve which architectural role, (b) where the sync/async divide falls, (c) where virtualization fits relative to formats and readers, and (d) which tools cross roles. If you’re trying to place a new tool or pick between existing ones, this is the page to read first.",
+    "crumbs": [
+      "I/O & Storage Stack"
+    ]
+  },
+  {
+    "objectID": "pages/io-stack.html#why-this-page",
+    "href": "pages/io-stack.html#why-this-page",
+    "title": "I/O & storage stack",
+    "section": "",
+    "text": "The main Ecosystem & Roadmap diagram treats Layers 1 and 2 (bytes and native-grid I/O) as two thin rows. In reality, a lot happens between an S3 object and an xr.open_dataset(...) call. This page expands that region of the stack.\nThe goal is to make visible: (a) which tools serve which architectural role, (b) where the sync/async divide falls, (c) where virtualization fits relative to formats and readers, and (d) which tools cross roles. If you’re trying to place a new tool or pick between existing ones, this is the page to read first.",
+    "crumbs": [
+      "I/O & Storage Stack"
+    ]
+  },
+  {
+    "objectID": "pages/io-stack.html#the-stack",
+    "href": "pages/io-stack.html#the-stack",
+    "title": "I/O & storage stack",
+    "section": "The stack",
+    "text": "The stack\n\n\n\nCloud-native I/O and storage stack",
+    "crumbs": [
+      "I/O & Storage Stack"
+    ]
+  },
+  {
+    "objectID": "pages/io-stack.html#reading-direction",
+    "href": "pages/io-stack.html#reading-direction",
+    "title": "I/O & storage stack",
+    "section": "Reading direction",
+    "text": "Reading direction\nUser code sits at the top. A call like xr.open_dataset(store) or rasterio.open(uri) flows downward through the stack:\n\nDiscovery (if you don’t already know the URI): STAC, pystac-client, CMR, earthaccess.\nUser-facing data representation: xarray adapters (what the codebase calls “engines”) that label reader output; accessors that add domain-specific namespaces; containers that hold the result.\nIn-memory array backends: the actual in-memory representation the DataArray wraps.\nReaders & serializers: C libraries or Python readers that turn bytes into arrays. Sync and async variants diverge here.\nCodecs: invoked by readers to decompress or de-transform byte ranges.\nObject store / virtual filesystem: cloud-agnostic access; sits between readers and the actual storage.\nVirtualization & reference files: byte-range-to-chunk maps that address chunks inside archival formats without rewriting the underlying bytes. Optional layer — only present when virtualization is used.\nStorage formats: what’s at rest on object storage.\n\nThe diagram is a reference atlas, not a call graph — not every call visits every lane (virtualization is optional; some codecs are built into format readers; discovery can be skipped when you already have a URI). Treat the layers as slots that may or may not be filled for a given workflow.",
+    "crumbs": [
+      "I/O & Storage Stack"
+    ]
+  },
+  {
+    "objectID": "pages/io-stack.html#whats-genuinely-architectural-vs.-just-a-tool-choice",
+    "href": "pages/io-stack.html#whats-genuinely-architectural-vs.-just-a-tool-choice",
+    "title": "I/O & storage stack",
+    "section": "What’s genuinely architectural (vs. just a tool choice)",
+    "text": "What’s genuinely architectural (vs. just a tool choice)\nFour observations that the diagram surfaces:\n\nThe sync/async split in lane 4 is the cloud-native frontier\nSync readers block on every byte-range GET. Async readers (async-tiff, async-geotiff, async-hdf5, h5coro, zarr-python v3 async) pipeline many GETs concurrently, which matters when latency rather than throughput dominates — i.e., cloud object storage. The async lane’s dashed borders in the diagram mark this newer track.\nThe two tracks are load-bearing for different workloads. Sync GDAL remains the workhorse for production tile serving, batch ETL, and most of the rasterio / rioxarray ecosystem; its breadth of format support is unmatched. The async entries are clean-room Rust-backed readers that skip GDAL — trading format coverage for tighter control over concurrency and dependencies. lazycogs takes the no-GDAL path explicitly. This is a real architectural divergence, not a style preference, but it isn’t a horse race: most production workflows still ride on sync GDAL.\n\n\nVirtualization (lane 7) is a genuinely new architectural role\nFive years ago the stack was: reader → format. Virtualization inserts a byte-range map between them: reader → virtualization manifest → format. It looks like another format from above (Zarr-compatible interface) and like another client from below (fetches byte ranges from the original file). This is why VirtualiZarr, Kerchunk, and GDAL VRT/GTI are a first-class lane: they’re not a variant of format or reader, they’re an architectural middleman.\nIcechunk is a hybrid case — it’s a virtualization format and an object-store-like repository, hence it appears in both lane 6 (object store / VFS) and lane 7.\n\n\nTwo distinct object-store lineages: fsspec and obstore\nfsspec is the long-established Python filesystem abstraction; nearly every Python tool that opens a remote URL touches it directly or indirectly, and it is not going anywhere. obstore is a newer Rust-backed, async-first object-store library that pairs naturally with the async readers above it. Most cloud-native projects pick one of the two, and the choice correlates with sync-vs-async readers in lane 4: sync tools generally route through fsspec, async Rust-backed tools generally route through obstore. GDAL’s VFS is a third lineage, architecturally separate because it’s embedded in GDAL.\n\n\nUser-facing data representation (lane 2) has three sub-roles\nLane 2 is the API surface user code touches directly. It covers three sub-roles:\n\nXarray adapters (h5netcdf, netCDF4, zarr, rasterio, stackstac, odc-stac, VirtualiZarr) register via the xarray.backends entry point. Their distinctive work is labeling: parsing format-specific metadata (HDF5 dimension_scales, GeoTIFF affine transform + CRS, Zarr _ARRAY_DIMENSIONS attrs, CF conventions for _FillValue / scale / offset) and translating it into xarray’s conventions — dimension names, coordinate arrays, attributes — then wrapping the reader’s output in a DataArray or Dataset. A rasterio reader gives you a (bands, y, x) ndarray plus a transform and CRS string; the rasterio adapter turns that into a DataArray with named band/y/x dims, coord arrays computed from the transform, and a spatial reference attribute. The interpretation work is the distinctive part — wrapping is the obvious part. Triggered by xr.open_dataset(..., engine=...). (The xarray codebase calls these “engines”; “adapter” is more architecturally accurate because the work is a Gang-of-Four Adapter — bridging one interface to another.)\nContainers — the actual data structures users hold and operate on. The xarray family (DataArray, Dataset, DataTree) plus non-xarray geospatial containers (rasterio.DatasetReader, GDAL.Dataset, rio-tiler.Reader, pyresample.ImageContainer, geoutils.Raster, raster_tools.Raster, and metadata-only odc.geo.GeoBox). The non-xarray containers are shown to honestly represent the cloud-native raster ecosystem, not just the xarray world.\nAccessors (rioxarray, xcube accessors, odc.geo, xvec) register via accessor-registration hooks and add namespaces (.rio, .xcube, .odc, .xvec) to xarray containers for domain-specific operations. Invoked as method-like calls: da.rio.reproject(...).\n\nThe three patterns are frequently conflated. They’re architecturally distinct:\n\n\n\n\n\n\n\n\n\nPattern\nRegistered via\nUser-facing call\nJob\n\n\n\n\nXarray adapter (= “engine”)\nxarray.backends entry point\nxr.open_dataset(engine=...)\nlabel reader output (dims / coords / attrs) and wrap in containers\n\n\nContainer\n(core class or third-party class)\nconstruction / receiving from adapters\nhold the data\n\n\nAccessor\naccessor decorator / entry point\nda.NAMESPACE.method()\nadd domain-specific methods\n\n\n\nParallelization (which chunked-array library xarray uses internally — Dask, Cubed) is its own concern and is intentionally out of scope for this diagram; see the parallelization view for that.\n\n\nWhy Lane 2 adapters and Lane 4 readers share names\nrasterio appears in both Lane 2 (as an xarray adapter) and Lane 4 (as a sync reader). zarr, h5netcdf-via-h5py, netCDF4-via-netCDF4-py follow the same pattern. These aren’t duplicate drawings — they’re one package playing two distinct architectural roles:\n\nLane 4 rasterio reads bytes and returns raw arrays (plus format metadata like affine transform and CRS).\nLane 2 rasterio adapter takes that output and labels it into an xarray DataArray.\n\nThe adapter could in principle be a separate package (e.g., the rasterio adapter lives in rioxarray for much of the work), but xarray’s entry-point system registers them under the same logical name for users. Showing both lanes makes the two roles visible, which is the point.\n\n\nstackstac, odc-stac, and VirtualiZarr: adapters that do more\nThree adapter entries in Lane 2 aren’t just 1:1 with a Lane-4 reader:\n\nstackstac and odc-stac are multi-file adapters. They take a list of STAC items and orchestrate many rasterio reads into one lazy, chunked DataArray. They fit the adapter pattern (call readers, label output, wrap in container) but the “call readers” step is plural. In the main ecosystem diagram they’re Layer 3 (loader + read-time warp) — this is the same thing viewed from a different angle.\nVirtualiZarr is an adapter that reads via a manifest (Lane 7). The novel artifact is the manifest format; the adapter is mostly standard zarr-engine plumbing that looks up byte ranges through the manifest before fetching. Listed in both Lane 2 (adapter) and Lane 7 (manifest format).\n\n\n\nWhy non-xarray containers are drawn\nMuch cloud-native raster work happens without xarray at all. rasterio.open(...) returns a DatasetReader, not a DataArray. rio-tiler.Reader(...) does similar. GDAL Python bindings return GDAL Datasets. These are first-class data containers with their own read/query/windowing APIs; to show only the xarray family would misrepresent the ecosystem. The green fill on the xarray family boxes marks the xarray sub-group visually; white boxes are non-xarray.\n\n\nChunked vs non-chunked array backends (lane 3)\nLane 3’s split matters because it determines how xarray’s containers interact with the underlying arrays:\n\nSingle-process (NumPy, CuPy, Sparse, pyarrow): the DataArray wraps them directly and operations execute immediately.\nParallel / chunked (Dask, Cubed): the DataArray wraps a chunked array; operations build a task graph that runs lazily.\n\nHow xarray dispatches work to a particular chunked backend is parallelization plumbing, deliberately out of scope for this diagram. A separate parallelization-frameworks view is the right place for that story.",
+    "crumbs": [
+      "I/O & Storage Stack"
+    ]
+  },
+  {
+    "objectID": "pages/io-stack.html#how-this-maps-to-the-main-ecosystem-diagram",
+    "href": "pages/io-stack.html#how-this-maps-to-the-main-ecosystem-diagram",
+    "title": "I/O & storage stack",
+    "section": "How this maps to the main ecosystem diagram",
+    "text": "How this maps to the main ecosystem diagram\n\n\n\n\n\n\n\nIn the main Ecosystem diagram\nHere in the I/O stack\n\n\n\n\nLayer 1 “Bytes & formats”\nLane 8 (formats) + Lane 7 (virtualization) — combined\n\n\nLayer 2 “Native-grid I/O”\nLanes 2, 4, 5, 6 — most of the work happens here\n\n\nLayer 3 “Loader + read-time warp”\nMostly Lane 2 adapters (stackstac, odc-stac, lazycogs) with the warp happening above the I/O stack\n\n\nLayer 4 “Grid math (post-load)”\nAbove this diagram — consumes xarray, no format/byte concerns\n\n\n\nSo the main diagram’s Layer 1–2 is this diagram’s lanes 2–8. Layer 3 loaders are a subset of Lane 2 engines. Layer 4 is above all of this.",
+    "crumbs": [
+      "I/O & Storage Stack"
+    ]
+  },
+  {
+    "objectID": "pages/io-stack.html#tools-that-cross-lanes",
+    "href": "pages/io-stack.html#tools-that-cross-lanes",
+    "title": "I/O & storage stack",
+    "section": "Tools that cross lanes",
+    "text": "Tools that cross lanes\nSome tools appear in one primary lane but touch others:\n\nIcechunk — primarily virtualization (lane 7); also a filesystem interface (lane 6). Listed in both.\nstackstac / odc-stac — xarray engines (lane 2) that internally use GDAL/rasterio (lane 4 sync). Placed in lane 2 as their user-facing role.\nGDAL — C library (lane 4 sync) with its own VFS (lane 6) and VRT/GTI (lane 7). Placed in lane 4 as primary.\nrasterio — Python wrapper on GDAL (lane 4 sync) and an Xarray engine via rioxarray (lane 2). Placed in both.\nVirtualiZarr — both an Xarray engine (lane 2) and produces manifests (lane 7). Placed in both.\n\nThe diagram shows primary placement. This list is where to look for cross-lane connections when tracing a specific workflow.",
+    "crumbs": [
+      "I/O & Storage Stack"
+    ]
+  },
+  {
+    "objectID": "pages/io-stack.html#out-of-scope-for-this-diagram",
+    "href": "pages/io-stack.html#out-of-scope-for-this-diagram",
+    "title": "I/O & storage stack",
+    "section": "Out of scope for this diagram",
+    "text": "Out of scope for this diagram\n\nResampling methods — those live on the main ecosystem diagram (Layers 3 and 4).\nIn-memory array operations — basic array math; once you’re in a DataArray, you’re out of this diagram’s scope.\nSpecific encoding schemes inside codecs (predictor transforms, filter chains) — this is one level of detail deeper than the diagram aims for.\nNon-Python bindings (Julia, Rust, R, JS) — this diagram is the Python-ecosystem view. Analogous diagrams in other languages would differ.",
+    "crumbs": [
+      "I/O & Storage Stack"
+    ]
+  },
+  {
+    "objectID": "pages/io-stack.html#further-reading",
+    "href": "pages/io-stack.html#further-reading",
+    "title": "I/O & storage stack",
+    "section": "Further reading",
+    "text": "Further reading\n\nEcosystem overviews\n\nMain ecosystem diagram & roadmap — the resampling-centric view this page complements.\nzarr-developers · Resampling-workflows diagram — a broader data-flow view that also covers resampling methods and in-memory representations. Some overlap with this page; different organizing axis.\n\n\n\nStandards & specs\n\nSTAC — spatio-temporal asset catalog (lane 1).\nxdggs — DGGS metadata for Zarr (lane 2).\nGeoZarr — rectilinear/CF Zarr metadata (lane 8).\nVirtualiZarr manifest spec — manifest format (lane 7).\nKerchunk format — reference-file spec (lane 7).\n\n\n\nCommentary\n\nPangeo lazy-reprojection thread (Sep 2024) — touches on the sync/async readers debate.\nSean Harkins’ modular-libraries gist — advocates splitting I/O, indexing, and resampling (parts of which this page makes visible).\n\n\nThis page lists pieces by role; placement is informed but opinionated. Corrections and additions welcome via issue or PR at github.com/developmentseed/warp-resample-profiling.",
+    "crumbs": [
+      "I/O & Storage Stack"
+    ]
+  },
+  {
     "objectID": "resources.html",
     "href": "resources.html",
-    "title": "Geospatial reprojection in Python (2024)",
+    "title": "Cloud-native resampling and reprojection in Python",
     "section": "",
     "text": "This excalidraw diagram shouws the components involved in a resampling workflow, along with the available Python implementations in 2024.\n\n\n\n\n\n\nFast and scalable general geospatial regridding by Justus Magin\n\n\n\n\n\nValcke S, Piacentini A, Jonville G. Benchmarking Regridding Libraries Used in Earth System Modelling. Mathematical and Computational Applications. 2022; 27(2):31. https://doi.org/10.3390/mca27020031\n\n\n\n\n\nECMFF Interpolation Design document\nNCAR’s climate data guide\nGeocomputation with Python\nDGGS regridding\n\n\n\n\n\nWhat’s Next - Software - Regridding\nLazy regridding discussion\nInterpolation and regridding\nConservative Region Aggregation with Xarray, Geopandas, and Sparse\nCan a reprojection/change of CRS opearation be done lazily using rioxarray?]\n\n\n\n\n\nXIOS\nSCRIP\nYAC\nATLAS\nclimate4R\ntempestremap",
     "crumbs": [
@@ -390,7 +580,7 @@
   {
     "objectID": "resources.html#resources",
     "href": "resources.html#resources",
-    "title": "Geospatial reprojection in Python (2024)",
+    "title": "Cloud-native resampling and reprojection in Python",
     "section": "",
     "text": "This excalidraw diagram shouws the components involved in a resampling workflow, along with the available Python implementations in 2024.\n\n\n\n\n\n\nFast and scalable general geospatial regridding by Justus Magin\n\n\n\n\n\nValcke S, Piacentini A, Jonville G. Benchmarking Regridding Libraries Used in Earth System Modelling. Mathematical and Computational Applications. 2022; 27(2):31. https://doi.org/10.3390/mca27020031\n\n\n\n\n\nECMFF Interpolation Design document\nNCAR’s climate data guide\nGeocomputation with Python\nDGGS regridding\n\n\n\n\n\nWhat’s Next - Software - Regridding\nLazy regridding discussion\nInterpolation and regridding\nConservative Region Aggregation with Xarray, Geopandas, and Sparse\nCan a reprojection/change of CRS opearation be done lazily using rioxarray?]\n\n\n\n\n\nXIOS\nSCRIP\nYAC\nATLAS\nclimate4R\ntempestremap",
     "crumbs": [
@@ -597,7 +787,7 @@
   {
     "objectID": "examples/run-pyinstrument.html",
     "href": "examples/run-pyinstrument.html",
-    "title": "Geospatial reprojection in Python (2024)",
+    "title": "Cloud-native resampling and reprojection in Python",
     "section": "",
     "text": "import subprocess\nfrom datetime import datetime\nfrom pathlib import Path\nfrom typing import Literal\n\nimport fsspec\nfrom utils import sync_notebook\n\n\nfs = fsspec.filesystem(\"file\")\ncurrent_date = datetime.today().strftime(\"%Y-%m-%d\")\noutput_folder = f\"results/{current_date}/\"\nfs.mkdirs(output_folder, exist_ok=True)\n\n\ndataset = \"gpm_imerg\"\n\n\ndef run_pyinstrument(file: str, zoom: str, output_format: Literal[\"json\", \"html\"]):\n    output_file = f\"{output_folder}pyinstrument-{dataset}-{Path(file).stem}-{zoom}.{output_format}\"\n    command = [\n        \"pyinstrument\",\n        \"--outfile\",\n        output_file,\n        \"-r\",\n        output_format,\n        file,\n        \"--dataset\",\n        dataset,\n        \"--zoom\",\n        zoom,\n    ]\n    subprocess.run(command)\n\n\ndef sync_and_run(zoom, input_methods):\n    notebooks = []\n    for fp in input_methods:\n        notebooks.extend(fs.glob(f\"resample-*-{fp}*.ipynb\"))\n    for file in notebooks:\n        sync_notebook(file)\n    modules = []\n    for fp in input_methods:\n        modules.extend(fs.glob(f\"resample-*-{fp}*.py\"))\n    for file in modules:\n        # Skip kerchunk since it requires a different image build due to incompatibility with Zarr V3\n        if \"kerchunk\" not in file:\n            run_pyinstrument(file, zoom, \"json\")\n\n\nif dataset == \"gpm_imerg\":\n    input_methods = [\"rioxarray\", \"odc\", \"pyresample\", \"rioxarray\", \"xesmf\", \"sparse\"]\n    zoom_levels = [\"0\", \"1\", \"2\"]\nelif dataset == \"mursst\":\n    input_methods = [\"odc\", \"pyresample\", \"rioxarray\", \"rasterio\"]\n    zoom_levels = [\"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\"]\n\n\nfor zoom in zoom_levels:\n    sync_and_run(zoom, input_methods)"
   }

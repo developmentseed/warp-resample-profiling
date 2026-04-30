@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Resampling with XESMF (S3 storage, NetCDF file, Zarr reader, icechunk virtualization, and pre-generated weights) – Cloud-native resampling and reprojection in Python</title>
+<title>I/O &amp; storage stack – Cloud-native resampling and reprojection in Python</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -68,8 +33,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../examples/resample-netcdf-xesmfcached-zarr-kerchunk.html" rel="next">
-<link href="../examples/resample-netcdf-xesmfcached-h5netcdf-.html" rel="prev">
+<link href="../pages/slides.html" rel="next">
+<link href="../pages/ecosystem.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -287,7 +252,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Resampling libraries</li><li class="breadcrumb-item"><a href="../examples/generate-weights.html">XESMF (with pre-generated weights)</a></li><li class="breadcrumb-item"><a href="../examples/resample-netcdf-xesmfcached-zarr-icechunk.html">Zarr Reader + Icechunk virtualization (S3 storage)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pages/io-stack.html">I/O &amp; Storage Stack</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -330,7 +295,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../pages/io-stack.html" class="sidebar-item-text sidebar-link">
+  <a href="../pages/io-stack.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">I/O &amp; Storage Stack</span></a>
   </div>
 </li>
@@ -555,13 +520,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
  <span class="menu-text">XESMF (with pre-generated weights)</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../examples/generate-weights.html" class="sidebar-item-text sidebar-link">
@@ -582,7 +547,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../examples/resample-netcdf-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link active">
+  <a href="../examples/resample-netcdf-xesmfcached-zarr-icechunk.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Zarr Reader + Icechunk virtualization (S3 storage)</span></a>
   </div>
 </li>
@@ -653,16 +618,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-this-page" id="toc-why-this-page" class="nav-link active" data-scroll-target="#why-this-page">Why this page</a></li>
+  <li><a href="#the-stack" id="toc-the-stack" class="nav-link" data-scroll-target="#the-stack">The stack</a></li>
+  <li><a href="#reading-direction" id="toc-reading-direction" class="nav-link" data-scroll-target="#reading-direction">Reading direction</a></li>
+  <li><a href="#whats-genuinely-architectural-vs.-just-a-tool-choice" id="toc-whats-genuinely-architectural-vs.-just-a-tool-choice" class="nav-link" data-scroll-target="#whats-genuinely-architectural-vs.-just-a-tool-choice">What’s genuinely architectural (vs.&nbsp;just a tool choice)</a>
+  <ul>
+  <li><a href="#the-syncasync-split-in-lane-4-is-the-cloud-native-frontier" id="toc-the-syncasync-split-in-lane-4-is-the-cloud-native-frontier" class="nav-link" data-scroll-target="#the-syncasync-split-in-lane-4-is-the-cloud-native-frontier">The sync/async split in lane 4 is the cloud-native frontier</a></li>
+  <li><a href="#virtualization-lane-7-is-a-genuinely-new-architectural-role" id="toc-virtualization-lane-7-is-a-genuinely-new-architectural-role" class="nav-link" data-scroll-target="#virtualization-lane-7-is-a-genuinely-new-architectural-role">Virtualization (lane 7) is a genuinely new architectural role</a></li>
+  <li><a href="#two-distinct-object-store-lineages-fsspec-and-obstore" id="toc-two-distinct-object-store-lineages-fsspec-and-obstore" class="nav-link" data-scroll-target="#two-distinct-object-store-lineages-fsspec-and-obstore">Two distinct object-store lineages: fsspec and obstore</a></li>
+  <li><a href="#user-facing-data-representation-lane-2-has-three-sub-roles" id="toc-user-facing-data-representation-lane-2-has-three-sub-roles" class="nav-link" data-scroll-target="#user-facing-data-representation-lane-2-has-three-sub-roles">User-facing data representation (lane 2) has three sub-roles</a></li>
+  <li><a href="#why-lane-2-adapters-and-lane-4-readers-share-names" id="toc-why-lane-2-adapters-and-lane-4-readers-share-names" class="nav-link" data-scroll-target="#why-lane-2-adapters-and-lane-4-readers-share-names">Why Lane 2 adapters and Lane 4 readers share names</a></li>
+  <li><a href="#stackstac-odc-stac-and-virtualizarr-adapters-that-do-more" id="toc-stackstac-odc-stac-and-virtualizarr-adapters-that-do-more" class="nav-link" data-scroll-target="#stackstac-odc-stac-and-virtualizarr-adapters-that-do-more">stackstac, odc-stac, and VirtualiZarr: adapters that do more</a></li>
+  <li><a href="#why-non-xarray-containers-are-drawn" id="toc-why-non-xarray-containers-are-drawn" class="nav-link" data-scroll-target="#why-non-xarray-containers-are-drawn">Why non-xarray containers are drawn</a></li>
+  <li><a href="#chunked-vs-non-chunked-array-backends-lane-3" id="toc-chunked-vs-non-chunked-array-backends-lane-3" class="nav-link" data-scroll-target="#chunked-vs-non-chunked-array-backends-lane-3">Chunked vs non-chunked array backends (lane 3)</a></li>
+  </ul></li>
+  <li><a href="#how-this-maps-to-the-main-ecosystem-diagram" id="toc-how-this-maps-to-the-main-ecosystem-diagram" class="nav-link" data-scroll-target="#how-this-maps-to-the-main-ecosystem-diagram">How this maps to the main ecosystem diagram</a></li>
+  <li><a href="#tools-that-cross-lanes" id="toc-tools-that-cross-lanes" class="nav-link" data-scroll-target="#tools-that-cross-lanes">Tools that cross lanes</a></li>
+  <li><a href="#out-of-scope-for-this-diagram" id="toc-out-of-scope-for-this-diagram" class="nav-link" data-scroll-target="#out-of-scope-for-this-diagram">Out of scope for this diagram</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul>
+  <li><a href="#ecosystem-overviews" id="toc-ecosystem-overviews" class="nav-link" data-scroll-target="#ecosystem-overviews">Ecosystem overviews</a></li>
+  <li><a href="#standards-specs" id="toc-standards-specs" class="nav-link" data-scroll-target="#standards-specs">Standards &amp; specs</a></li>
+  <li><a href="#commentary" id="toc-commentary" class="nav-link" data-scroll-target="#commentary">Commentary</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/developmentseed/warp-resample-profiling/edit/main/pages/io-stack.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Resampling libraries</li><li class="breadcrumb-item"><a href="../examples/generate-weights.html">XESMF (with pre-generated weights)</a></li><li class="breadcrumb-item"><a href="../examples/resample-netcdf-xesmfcached-zarr-icechunk.html">Zarr Reader + Icechunk virtualization (S3 storage)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Resampling with XESMF (S3 storage, NetCDF file, Zarr reader, icechunk virtualization, and pre-generated weights)</h1>
+<h1 class="title">I/O &amp; storage stack</h1>
+<p class="subtitle lead">Layers 1–2 expanded — companion to the Ecosystem &amp; Roadmap page</p>
 </div>
 
 
@@ -679,103 +673,216 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="cell-2" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> argparse</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xesmf <span class="im">as</span> xe</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> icechunk <span class="im">import</span> IcechunkStore, StorageConfig</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="why-this-page" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-page">Why this page</h2>
+<p>The main <a href="../pages/ecosystem.html">Ecosystem &amp; Roadmap</a> diagram treats Layers 1 and 2 (bytes and native-grid I/O) as two thin rows. In reality, a lot happens between an S3 object and an <code>xr.open_dataset(...)</code> call. This page expands that region of the stack.</p>
+<p>The goal is to make visible: (a) which tools serve which architectural role, (b) where the sync/async divide falls, (c) where virtualization fits relative to formats and readers, and (d) which tools cross roles. If you’re trying to place a new tool or pick between existing ones, this is the page to read first.</p>
+</section>
+<section id="the-stack" class="level2">
+<h2 class="anchored" data-anchor-id="the-stack">The stack</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./assets/io_stack.svg" class="img-fluid figure-img"></p>
+<figcaption>Cloud-native I/O and storage stack</figcaption>
+</figure>
 </div>
-<div id="cell-3" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _reconstruct_xesmf_weights(ds_w):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Reconstruct weights into format that xESMF understands</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Notes</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">    -----</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    From ndpyramid - https://github.com/carbonplan/ndpyramid</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> sparse</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> xarray <span class="im">as</span> xr</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    col <span class="op">=</span> ds_w[<span class="st">"col"</span>].values <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    row <span class="op">=</span> ds_w[<span class="st">"row"</span>].values <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> ds_w[<span class="st">"S"</span>].values</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    n_out, n_in <span class="op">=</span> ds_w.attrs[<span class="st">"n_out"</span>], ds_w.attrs[<span class="st">"n_in"</span>]</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    crds <span class="op">=</span> np.stack([row, col])</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xr.DataArray(</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        sparse.COO(crds, s, (n_out, n_in)), dims<span class="op">=</span>(<span class="st">"out_dim"</span>, <span class="st">"in_dim"</span>), name<span class="op">=</span><span class="st">"weights"</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="cell-4" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> regrid(dataset, zoom<span class="op">=</span><span class="dv">0</span>):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> common <span class="im">import</span> earthaccess_args  <span class="co"># noqa: 402</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> earthaccess_args[dataset]</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load pre-generated weights and target dataset</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    weights_storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        prefix<span class="op">=</span><span class="ss">f"resampling/test-weight-caching/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-weights-</span><span class="sc">{</span>zoom<span class="sc">}</span><span class="ss">"</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    target_storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        prefix<span class="op">=</span><span class="ss">f"resampling/test-weight-caching/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-target-</span><span class="sc">{</span>zoom<span class="sc">}</span><span class="ss">"</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    weights_store <span class="op">=</span> IcechunkStore.open_existing(storage<span class="op">=</span>weights_storage, mode<span class="op">=</span><span class="st">"r"</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    target_store <span class="op">=</span> IcechunkStore.open_existing(storage<span class="op">=</span>target_storage, mode<span class="op">=</span><span class="st">"r"</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    weights <span class="op">=</span> _reconstruct_xesmf_weights(</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        xr.open_zarr(weights_store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> xr.open_zarr(target_store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Open dataset</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    storage <span class="op">=</span> StorageConfig.s3_from_env(</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        bucket<span class="op">=</span><span class="st">"nasa-veda-scratch"</span>,</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        prefix<span class="op">=</span><span class="ss">f"resampling/icechunk/</span><span class="sc">{</span>dataset<span class="sc">}</span><span class="ss">-reference"</span>,</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        region<span class="op">=</span><span class="st">"us-west-2"</span>,</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    store <span class="op">=</span> IcechunkStore.open_existing(storage<span class="op">=</span>storage, mode<span class="op">=</span><span class="st">"r"</span>)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> xr.open_zarr(store, zarr_format<span class="op">=</span><span class="dv">3</span>, consolidated<span class="op">=</span><span class="va">False</span>)[args[<span class="st">"variable"</span>]]</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create XESMF regridder</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    regridder <span class="op">=</span> xe.Regridder(</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        da,</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        grid,</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">"nearest_s2d"</span>,</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        periodic<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        extrap_method<span class="op">=</span><span class="st">"nearest_s2d"</span>,</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        ignore_degenerate<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        reuse_weights<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        weights<span class="op">=</span>weights,</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Regrid dataset</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> regridder(da)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="cell-5" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"get_ipython"</span> <span class="kw">in</span> <span class="bu">dir</span>():</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Just call warp_resample if running as a Jupyter Notebook</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        da <span class="op">=</span> regrid(<span class="st">"gpm_imerg"</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Configure dataset via argpase if running via CLI</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        parser <span class="op">=</span> argparse.ArgumentParser(description<span class="op">=</span><span class="st">"Set environment for the script."</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        parser.add_argument(</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"--dataset"</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            default<span class="op">=</span><span class="st">"gpm_imerg"</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">help</span><span class="op">=</span><span class="st">"Dataset to resample."</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            choices<span class="op">=</span>[<span class="st">"gpm_imerg"</span>, <span class="st">"mursst"</span>],</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        parser.add_argument(</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"--zoom"</span>,</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            default<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            <span class="bu">help</span><span class="op">=</span><span class="st">"Zoom level for tile extent."</span>,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        user_args <span class="op">=</span> parser.parse_args()</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        da <span class="op">=</span> regrid(user_args.dataset, <span class="bu">int</span>(user_args.zoom))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+</section>
+<section id="reading-direction" class="level2">
+<h2 class="anchored" data-anchor-id="reading-direction">Reading direction</h2>
+<p>User code sits at the top. A call like <code>xr.open_dataset(store)</code> or <code>rasterio.open(uri)</code> flows downward through the stack:</p>
+<ol type="1">
+<li><strong>Discovery</strong> (if you don’t already know the URI): STAC, pystac-client, CMR, earthaccess.</li>
+<li><strong>User-facing data representation</strong>: xarray adapters (what the codebase calls “engines”) that label reader output; accessors that add domain-specific namespaces; containers that hold the result.</li>
+<li><strong>In-memory array backends</strong>: the actual in-memory representation the DataArray wraps.</li>
+<li><strong>Readers &amp; serializers</strong>: C libraries or Python readers that turn bytes into arrays. Sync and async variants diverge here.</li>
+<li><strong>Codecs</strong>: invoked by readers to decompress or de-transform byte ranges.</li>
+<li><strong>Object store / virtual filesystem</strong>: cloud-agnostic access; sits between readers and the actual storage.</li>
+<li><strong>Virtualization &amp; reference files</strong>: byte-range-to-chunk maps that address chunks inside archival formats without rewriting the underlying bytes. Optional layer — only present when virtualization is used.</li>
+<li><strong>Storage formats</strong>: what’s at rest on object storage.</li>
+</ol>
+<p>The diagram is a reference atlas, not a call graph — not every call visits every lane (virtualization is optional; some codecs are built into format readers; discovery can be skipped when you already have a URI). Treat the layers as slots that may or may not be filled for a given workflow.</p>
+</section>
+<section id="whats-genuinely-architectural-vs.-just-a-tool-choice" class="level2">
+<h2 class="anchored" data-anchor-id="whats-genuinely-architectural-vs.-just-a-tool-choice">What’s genuinely architectural (vs.&nbsp;just a tool choice)</h2>
+<p>Four observations that the diagram surfaces:</p>
+<section id="the-syncasync-split-in-lane-4-is-the-cloud-native-frontier" class="level3">
+<h3 class="anchored" data-anchor-id="the-syncasync-split-in-lane-4-is-the-cloud-native-frontier">The sync/async split in lane 4 is the cloud-native frontier</h3>
+<p>Sync readers block on every byte-range GET. Async readers (<code>async-tiff</code>, <code>async-geotiff</code>, <code>async-hdf5</code>, <code>h5coro</code>, <code>zarr-python v3 async</code>) pipeline many GETs concurrently, which matters when latency rather than throughput dominates — i.e., cloud object storage. The async lane’s dashed borders in the diagram mark this newer track.</p>
+<p>The two tracks are load-bearing for different workloads. Sync GDAL remains the workhorse for production tile serving, batch ETL, and most of the rasterio / rioxarray ecosystem; its breadth of format support is unmatched. The async entries are clean-room Rust-backed readers that skip GDAL — trading format coverage for tighter control over concurrency and dependencies. <code>lazycogs</code> takes the no-GDAL path explicitly. This is a real architectural divergence, not a style preference, but it isn’t a horse race: most production workflows still ride on sync GDAL.</p>
+</section>
+<section id="virtualization-lane-7-is-a-genuinely-new-architectural-role" class="level3">
+<h3 class="anchored" data-anchor-id="virtualization-lane-7-is-a-genuinely-new-architectural-role">Virtualization (lane 7) is a genuinely new architectural role</h3>
+<p>Five years ago the stack was: reader → format. Virtualization inserts a byte-range map between them: reader → virtualization manifest → format. It looks like another format from above (Zarr-compatible interface) and like another client from below (fetches byte ranges from the original file). This is why VirtualiZarr, Kerchunk, and GDAL VRT/GTI are a first-class lane: they’re not a variant of format or reader, they’re an architectural middleman.</p>
+<p>Icechunk is a hybrid case — it’s a virtualization format <em>and</em> an object-store-like repository, hence it appears in both lane 6 (object store / VFS) and lane 7.</p>
+</section>
+<section id="two-distinct-object-store-lineages-fsspec-and-obstore" class="level3">
+<h3 class="anchored" data-anchor-id="two-distinct-object-store-lineages-fsspec-and-obstore">Two distinct object-store lineages: fsspec and obstore</h3>
+<p><code>fsspec</code> is the long-established Python filesystem abstraction; nearly every Python tool that opens a remote URL touches it directly or indirectly, and it is not going anywhere. <code>obstore</code> is a newer Rust-backed, async-first object-store library that pairs naturally with the async readers above it. Most cloud-native projects pick one of the two, and the choice correlates with sync-vs-async readers in lane 4: sync tools generally route through fsspec, async Rust-backed tools generally route through obstore. GDAL’s VFS is a third lineage, architecturally separate because it’s embedded in GDAL.</p>
+</section>
+<section id="user-facing-data-representation-lane-2-has-three-sub-roles" class="level3">
+<h3 class="anchored" data-anchor-id="user-facing-data-representation-lane-2-has-three-sub-roles">User-facing data representation (lane 2) has three sub-roles</h3>
+<p>Lane 2 is the API surface user code touches directly. It covers three sub-roles:</p>
+<ul>
+<li><strong>Xarray adapters</strong> (<code>h5netcdf</code>, <code>netCDF4</code>, <code>zarr</code>, <code>rasterio</code>, <code>stackstac</code>, <code>odc-stac</code>, <code>VirtualiZarr</code>) register via the <code>xarray.backends</code> entry point. Their distinctive work is <strong>labeling</strong>: parsing format-specific metadata (HDF5 dimension_scales, GeoTIFF affine transform + CRS, Zarr <code>_ARRAY_DIMENSIONS</code> attrs, CF conventions for <code>_FillValue</code> / scale / offset) and translating it into xarray’s conventions — dimension names, coordinate arrays, attributes — then wrapping the reader’s output in a <code>DataArray</code> or <code>Dataset</code>. A rasterio reader gives you a <code>(bands, y, x)</code> ndarray plus a transform and CRS string; the rasterio adapter turns that into a DataArray with named <code>band/y/x</code> dims, coord arrays computed from the transform, and a spatial reference attribute. The interpretation work is the distinctive part — wrapping is the obvious part. Triggered by <code>xr.open_dataset(..., engine=...)</code>. <em>(The xarray codebase calls these “engines”; “adapter” is more architecturally accurate because the work is a Gang-of-Four Adapter — bridging one interface to another.)</em></li>
+<li><strong>Containers</strong> — the actual data structures users hold and operate on. The xarray family (<code>DataArray</code>, <code>Dataset</code>, <code>DataTree</code>) plus non-xarray geospatial containers (<code>rasterio.DatasetReader</code>, <code>GDAL.Dataset</code>, <code>rio-tiler.Reader</code>, <code>pyresample.ImageContainer</code>, <code>geoutils.Raster</code>, <code>raster_tools.Raster</code>, and metadata-only <code>odc.geo.GeoBox</code>). The non-xarray containers are shown to honestly represent the cloud-native raster ecosystem, not just the xarray world.</li>
+<li><strong>Accessors</strong> (<code>rioxarray</code>, <code>xcube accessors</code>, <code>odc.geo</code>, <code>xvec</code>) register via accessor-registration hooks and add namespaces (<code>.rio</code>, <code>.xcube</code>, <code>.odc</code>, <code>.xvec</code>) to xarray containers for domain-specific operations. Invoked as method-like calls: <code>da.rio.reproject(...)</code>.</li>
+</ul>
+<p>The three patterns are frequently conflated. They’re architecturally distinct:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pattern</th>
+<th>Registered via</th>
+<th>User-facing call</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Xarray adapter (= “engine”)</td>
+<td><code>xarray.backends</code> entry point</td>
+<td><code>xr.open_dataset(engine=...)</code></td>
+<td>label reader output (dims / coords / attrs) and wrap in containers</td>
+</tr>
+<tr class="even">
+<td>Container</td>
+<td>(core class or third-party class)</td>
+<td>construction / receiving from adapters</td>
+<td>hold the data</td>
+</tr>
+<tr class="odd">
+<td>Accessor</td>
+<td>accessor decorator / entry point</td>
+<td><code>da.NAMESPACE.method()</code></td>
+<td>add domain-specific methods</td>
+</tr>
+</tbody>
+</table>
+<p>Parallelization (which chunked-array library xarray uses internally — Dask, Cubed) is its own concern and is intentionally out of scope for this diagram; see the parallelization view for that.</p>
+</section>
+<section id="why-lane-2-adapters-and-lane-4-readers-share-names" class="level3">
+<h3 class="anchored" data-anchor-id="why-lane-2-adapters-and-lane-4-readers-share-names">Why Lane 2 adapters and Lane 4 readers share names</h3>
+<p><code>rasterio</code> appears in both Lane 2 (as an xarray adapter) and Lane 4 (as a sync reader). <code>zarr</code>, <code>h5netcdf</code>-via-<code>h5py</code>, <code>netCDF4</code>-via-<code>netCDF4-py</code> follow the same pattern. These aren’t duplicate drawings — they’re one package playing two distinct architectural roles:</p>
+<ul>
+<li>Lane 4 <code>rasterio</code> reads bytes and returns raw arrays (plus format metadata like affine transform and CRS).</li>
+<li>Lane 2 <code>rasterio</code> adapter takes that output and labels it into an xarray DataArray.</li>
+</ul>
+<p>The adapter could in principle be a separate package (e.g., the rasterio adapter lives in <code>rioxarray</code> for much of the work), but xarray’s entry-point system registers them under the same logical name for users. Showing both lanes makes the two roles visible, which is the point.</p>
+</section>
+<section id="stackstac-odc-stac-and-virtualizarr-adapters-that-do-more" class="level3">
+<h3 class="anchored" data-anchor-id="stackstac-odc-stac-and-virtualizarr-adapters-that-do-more">stackstac, odc-stac, and VirtualiZarr: adapters that do more</h3>
+<p>Three adapter entries in Lane 2 aren’t just 1:1 with a Lane-4 reader:</p>
+<ul>
+<li><strong>stackstac</strong> and <strong>odc-stac</strong> are <em>multi-file</em> adapters. They take a list of STAC items and orchestrate many rasterio reads into one lazy, chunked DataArray. They fit the adapter pattern (call readers, label output, wrap in container) but the “call readers” step is plural. In the main ecosystem diagram they’re Layer 3 (loader + read-time warp) — this is the same thing viewed from a different angle.</li>
+<li><strong>VirtualiZarr</strong> is an adapter that reads via a manifest (Lane 7). The novel artifact is the manifest format; the adapter is mostly standard zarr-engine plumbing that looks up byte ranges through the manifest before fetching. Listed in both Lane 2 (adapter) and Lane 7 (manifest format).</li>
+</ul>
+</section>
+<section id="why-non-xarray-containers-are-drawn" class="level3">
+<h3 class="anchored" data-anchor-id="why-non-xarray-containers-are-drawn">Why non-xarray containers are drawn</h3>
+<p>Much cloud-native raster work happens without xarray at all. <code>rasterio.open(...)</code> returns a <code>DatasetReader</code>, not a DataArray. <code>rio-tiler.Reader(...)</code> does similar. GDAL Python bindings return GDAL Datasets. These are first-class data containers with their own read/query/windowing APIs; to show only the xarray family would misrepresent the ecosystem. The green fill on the xarray family boxes marks the xarray sub-group visually; white boxes are non-xarray.</p>
+</section>
+<section id="chunked-vs-non-chunked-array-backends-lane-3" class="level3">
+<h3 class="anchored" data-anchor-id="chunked-vs-non-chunked-array-backends-lane-3">Chunked vs non-chunked array backends (lane 3)</h3>
+<p>Lane 3’s split matters because it determines how xarray’s containers interact with the underlying arrays:</p>
+<ul>
+<li><strong>Single-process</strong> (<code>NumPy</code>, <code>CuPy</code>, <code>Sparse</code>, <code>pyarrow</code>): the DataArray wraps them directly and operations execute immediately.</li>
+<li><strong>Parallel / chunked</strong> (<code>Dask</code>, <code>Cubed</code>): the DataArray wraps a chunked array; operations build a task graph that runs lazily.</li>
+</ul>
+<p>How xarray dispatches work to a particular chunked backend is parallelization plumbing, deliberately out of scope for this diagram. A separate parallelization-frameworks view is the right place for that story.</p>
+</section>
+</section>
+<section id="how-this-maps-to-the-main-ecosystem-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="how-this-maps-to-the-main-ecosystem-diagram">How this maps to the main ecosystem diagram</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>In the main Ecosystem diagram</th>
+<th>Here in the I/O stack</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Layer 1 “Bytes &amp; formats”</td>
+<td>Lane 8 (formats) + Lane 7 (virtualization) — combined</td>
+</tr>
+<tr class="even">
+<td>Layer 2 “Native-grid I/O”</td>
+<td>Lanes 2, 4, 5, 6 — most of the work happens here</td>
+</tr>
+<tr class="odd">
+<td>Layer 3 “Loader + read-time warp”</td>
+<td>Mostly Lane 2 adapters (<code>stackstac</code>, <code>odc-stac</code>, <code>lazycogs</code>) with the warp happening above the I/O stack</td>
+</tr>
+<tr class="even">
+<td>Layer 4 “Grid math (post-load)”</td>
+<td>Above this diagram — consumes xarray, no format/byte concerns</td>
+</tr>
+</tbody>
+</table>
+<p>So the main diagram’s Layer 1–2 is this diagram’s lanes 2–8. Layer 3 loaders are a subset of Lane 2 engines. Layer 4 is above all of this.</p>
+</section>
+<section id="tools-that-cross-lanes" class="level2">
+<h2 class="anchored" data-anchor-id="tools-that-cross-lanes">Tools that cross lanes</h2>
+<p>Some tools appear in one primary lane but touch others:</p>
+<ul>
+<li><strong>Icechunk</strong> — primarily virtualization (lane 7); also a filesystem interface (lane 6). Listed in both.</li>
+<li><strong>stackstac / odc-stac</strong> — xarray engines (lane 2) that internally use GDAL/rasterio (lane 4 sync). Placed in lane 2 as their user-facing role.</li>
+<li><strong>GDAL</strong> — C library (lane 4 sync) with its own VFS (lane 6) and VRT/GTI (lane 7). Placed in lane 4 as primary.</li>
+<li><strong>rasterio</strong> — Python wrapper on GDAL (lane 4 sync) and an Xarray engine via rioxarray (lane 2). Placed in both.</li>
+<li><strong>VirtualiZarr</strong> — both an Xarray engine (lane 2) and produces manifests (lane 7). Placed in both.</li>
+</ul>
+<p>The diagram shows primary placement. This list is where to look for cross-lane connections when tracing a specific workflow.</p>
+</section>
+<section id="out-of-scope-for-this-diagram" class="level2">
+<h2 class="anchored" data-anchor-id="out-of-scope-for-this-diagram">Out of scope for this diagram</h2>
+<ul>
+<li><strong>Resampling methods</strong> — those live on the main ecosystem diagram (Layers 3 and 4).</li>
+<li><strong>In-memory array operations</strong> — basic array math; once you’re in a DataArray, you’re out of this diagram’s scope.</li>
+<li><strong>Specific encoding schemes</strong> inside codecs (predictor transforms, filter chains) — this is one level of detail deeper than the diagram aims for.</li>
+<li><strong>Non-Python bindings</strong> (Julia, Rust, R, JS) — this diagram is the Python-ecosystem view. Analogous diagrams in other languages would differ.</li>
+</ul>
+</section>
+<section id="further-reading" class="level2">
+<h2 class="anchored" data-anchor-id="further-reading">Further reading</h2>
+<section id="ecosystem-overviews" class="level3">
+<h3 class="anchored" data-anchor-id="ecosystem-overviews">Ecosystem overviews</h3>
+<ul>
+<li><a href="../pages/ecosystem.html">Main ecosystem diagram &amp; roadmap</a> — the resampling-centric view this page complements.</li>
+<li><a href="https://zarr.dev/">zarr-developers · Resampling-workflows diagram</a> — a broader data-flow view that also covers resampling methods and in-memory representations. Some overlap with this page; different organizing axis.</li>
+</ul>
+</section>
+<section id="standards-specs" class="level3">
+<h3 class="anchored" data-anchor-id="standards-specs">Standards &amp; specs</h3>
+<ul>
+<li><a href="https://stacspec.org">STAC</a> — spatio-temporal asset catalog (lane 1).</li>
+<li><a href="https://github.com/xarray-contrib/xdggs">xdggs</a> — DGGS metadata for Zarr (lane 2).</li>
+<li><a href="https://github.com/zarr-developers/geozarr-spec">GeoZarr</a> — rectilinear/CF Zarr metadata (lane 8).</li>
+<li><a href="https://github.com/zarr-developers/VirtualiZarr">VirtualiZarr manifest spec</a> — manifest format (lane 7).</li>
+<li><a href="https://fsspec.github.io/kerchunk/">Kerchunk format</a> — reference-file spec (lane 7).</li>
+</ul>
+</section>
+<section id="commentary" class="level3">
+<h3 class="anchored" data-anchor-id="commentary">Commentary</h3>
+<ul>
+<li><a href="https://discourse.pangeo.io/t/can-a-reprojection-change-of-crs-operation-be-done-lazily-using-rioxarray/4468">Pangeo lazy-reprojection thread (Sep 2024)</a> — touches on the sync/async readers debate.</li>
+<li><a href="https://gist.github.com/sharkinsspatial/f1c3a8f871b58416fa30c377178b5f9c">Sean Harkins’ modular-libraries gist</a> — advocates splitting I/O, indexing, and resampling (parts of which this page makes visible).</li>
+</ul>
+<hr>
+<p><em>This page lists pieces by role; placement is informed but opinionated. Corrections and additions welcome via issue or PR at <a href="https://github.com/developmentseed/warp-resample-profiling">github.com/developmentseed/warp-resample-profiling</a>.</em></p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1193,13 +1300,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../examples/resample-netcdf-xesmfcached-h5netcdf-.html" class="pagination-link" aria-label="H5NetCDF Driver (S3 storage)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">H5NetCDF Driver (S3 storage)</span>
+      <a href="../pages/ecosystem.html" class="pagination-link" aria-label="Ecosystem &amp; Roadmap">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Ecosystem &amp; Roadmap</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../examples/resample-netcdf-xesmfcached-zarr-kerchunk.html" class="pagination-link" aria-label="Zarr Reader + Kerchunk virtualization (S3 storage)">
-        <span class="nav-page-text">Zarr Reader + Kerchunk virtualization (S3 storage)</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../pages/slides.html" class="pagination-link" aria-label="Overview Slides">
+        <span class="nav-page-text">Overview Slides</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1211,7 +1318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.dev/developmentseed/warp-resample-profiling/blob/main/examples/resample-netcdf-xesmfcached-zarr-icechunk.ipynb" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/developmentseed/warp-resample-profiling/edit/main/pages/io-stack.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/developmentseed/warp-resample-profiling/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
