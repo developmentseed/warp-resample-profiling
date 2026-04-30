@@ -7,7 +7,7 @@ project:
 
 website:
   page-navigation: true
-  title: "Geospatial reprojection in Python (2024)"
+  title: "Cloud-native resampling and reprojection in Python"
   repo-url: https://github.com/developmentseed/warp-resample-profiling
   repo-actions: [edit, issue]
 
@@ -18,14 +18,18 @@ website:
     style: "docked"
     search: true
     collapse-level: 2
-    title: "Warp resampling"
+    title: "Resampling & reprojection"
     tools:
       - icon: github
         href: https://github.com/developmentseed/warp-resample-profiling
-        text: "Warp resampling"
+        text: "Resampling & reprojection"
     contents:
       - href: index.qmd
         text: Welcome
+      - href: pages/ecosystem.qmd
+        text: Ecosystem & Roadmap
+      - href: pages/io-stack.qmd
+        text: I/O & Storage Stack
       - href: pages/slides.qmd
         text: Overview Slides
       - href: resources.qmd

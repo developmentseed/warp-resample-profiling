@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 1090" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1240" height="1090" fill="white"/>
+
+  <!-- Title -->
+  <text x="620" y="36" font-size="22" font-weight="700" text-anchor="middle" fill="#1a1a1a">Cloud-native raster ecosystem — by architectural layer</text>
+  <text x="620" y="58" font-size="12" fill="#666" text-anchor="middle">where each tool lives · which resampling families it covers · read-time vs. post-load · native-grid I/O vs. integrated warp</text>
+
+  <!-- Family chip legend -->
+  <g transform="translate(30, 80)">
+    <text x="0" y="0" font-size="11" font-weight="700" fill="#333" letter-spacing="0.4">FAMILY CHIPS</text>
+    <g font-size="10" fill="white" text-anchor="middle">
+      <rect x="0"   y="10" width="56" height="18" rx="9" fill="#1976d2"/><text x="28"  y="23">F1 kernel</text>
+      <rect x="60"  y="10" width="62" height="18" rx="9" fill="#7b1fa2"/><text x="91"  y="23">F2 scatter</text>
+      <rect x="126" y="10" width="80" height="18" rx="9" fill="#00695c"/><text x="166" y="23">F3 conservative</text>
+      <rect x="210" y="10" width="66" height="18" rx="9" fill="#e65100"/><text x="243" y="23">F4 stat-agg</text>
+      <rect x="280" y="10" width="56" height="18" rx="9" fill="#5d4037"/><text x="308" y="23">F5 mesh</text>
+    </g>
+  </g>
+
+  <!-- Operation legend -->
+  <g transform="translate(600, 80)">
+    <text x="0" y="0" font-size="11" font-weight="700" fill="#333" letter-spacing="0.4">WHEN RESAMPLING HAPPENS</text>
+    <rect x="0"   y="10" width="80" height="18" rx="9" fill="#fff" stroke="#1565c0" stroke-width="1.5"/>
+    <text x="40" y="23" font-size="10" fill="#1565c0" text-anchor="middle" font-weight="700">READ-TIME</text>
+    <text x="86" y="23" font-size="10" fill="#555">inside the loader (per chunk)</text>
+
+    <rect x="240" y="10" width="80" height="18" rx="9" fill="#fff" stroke="#6a1b9a" stroke-width="1.5"/>
+    <text x="280" y="23" font-size="10" fill="#6a1b9a" text-anchor="middle" font-weight="700">POST-LOAD</text>
+    <text x="326" y="23" font-size="10" fill="#555">separate step on lazy xarray</text>
+
+    <rect x="500" y="10" width="70" height="18" rx="9" fill="#fff" stroke="#555" stroke-width="1.5" stroke-dasharray="3,2"/>
+    <text x="535" y="23" font-size="10" fill="#555" text-anchor="middle" font-weight="700">NATIVE</text>
+    <text x="574" y="23" font-size="10" fill="#555">no resampling, native grid only</text>
+  </g>
+
+  <line x1="30" y1="118" x2="1210" y2="118" stroke="#ccc"/>
+
+  <!-- ============================================================ -->
+  <!-- LAYER 4 CONTAINER — Grid math (post-load) · 5 sublayers       -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="128" width="1180" height="470" fill="#f3e5f5" stroke="#6a1b9a" stroke-width="1.5"/>
+    <text x="48" y="152" font-size="15" font-weight="700" fill="#4a148c">Layer 4 — Grid math (post-load resampling &amp; regridding)</text>
+    <text x="48" y="170" font-size="11" fill="#4a148c">Separable from loading. Same layer, multiple input→output variants. Community is consolidating here for correctness-critical work.</text>
+
+    <!-- ================ Sub-row 4a: Grid → Grid ================ -->
+    <text x="48" y="198" font-size="12" font-weight="700" fill="#4a148c">4a · Grid → Grid</text>
+    <text x="140" y="198" font-size="10" fill="#6a1b9a">(reprojection &amp; regridding)</text>
+
+    <g transform="translate(48, 206)">
+      <rect x="0" y="0" width="180" height="50" rx="5" fill="white" stroke="#1565c0" stroke-width="1.2"/>
+      <text x="90" y="15" font-size="12" font-weight="700" text-anchor="middle">odc-geo xr_reproject</text>
+      <text x="90" y="29" font-size="9" fill="#555" text-anchor="middle">dask-lazy CRS warp</text>
+      <rect x="66" y="34" width="48" height="14" rx="7" fill="#1976d2"/>
+      <text x="90" y="44" font-size="9" fill="white" text-anchor="middle">F1 kernel</text>
+    </g>
+
+    <g transform="translate(240, 206)">
+      <rect x="0" y="0" width="210" height="50" rx="5" fill="white" stroke="#6a1b9a" stroke-width="1.2"/>
+      <text x="105" y="15" font-size="12" font-weight="700" text-anchor="middle">grid-weights + grid-indexing</text>
+      <text x="105" y="29" font-size="9" fill="#555" text-anchor="middle">sparse W · polygon-cell regrid</text>
+      <rect x="73" y="34" width="64" height="14" rx="7" fill="#00695c"/>
+      <text x="105" y="44" font-size="9" fill="white" text-anchor="middle">F3 conservative</text>
+    </g>
+
+    <g transform="translate(462, 206)">
+      <rect x="0" y="0" width="140" height="50" rx="5" fill="white" stroke="#6a1b9a" stroke-width="1.2"/>
+      <text x="70" y="15" font-size="12" font-weight="700" text-anchor="middle">xESMF</text>
+      <text x="70" y="29" font-size="9" fill="#555" text-anchor="middle">ESMF · regular &amp; mesh</text>
+      <rect x="18"  y="34" width="44" height="14" rx="7" fill="#00695c"/>
+      <text x="40"  y="44" font-size="9" fill="white" text-anchor="middle">F3</text>
+      <rect x="70"  y="34" width="52" height="14" rx="7" fill="#5d4037"/>
+      <text x="96"  y="44" font-size="9" fill="white" text-anchor="middle">F5 mesh</text>
+    </g>
+
+    <g transform="translate(614, 206)">
+      <rect x="0" y="0" width="160" height="50" rx="5" fill="white" stroke="#1565c0" stroke-width="1.2"/>
+      <text x="80" y="15" font-size="12" font-weight="700" text-anchor="middle">pyresample</text>
+      <text x="80" y="29" font-size="9" fill="#555" text-anchor="middle">resample_blocks (grid mode)</text>
+      <rect x="56" y="34" width="48" height="14" rx="7" fill="#1976d2"/>
+      <text x="80" y="44" font-size="9" fill="white" text-anchor="middle">F1 kernel</text>
+    </g>
+
+    <g transform="translate(786, 206)">
+      <rect x="0" y="0" width="180" height="50" rx="5" fill="white" stroke="#6a1b9a" stroke-width="1.2"/>
+      <text x="90" y="15" font-size="12" font-weight="700" text-anchor="middle">xarray-regrid</text>
+      <text x="90" y="29" font-size="9" fill="#555" text-anchor="middle">rectilinear climate grids</text>
+      <rect x="22" y="34" width="32" height="14" rx="7" fill="#1976d2"/>
+      <text x="38" y="44" font-size="9" fill="white" text-anchor="middle">F1</text>
+      <rect x="64" y="34" width="72" height="14" rx="7" fill="#00695c"/>
+      <text x="100" y="44" font-size="9" fill="white" text-anchor="middle">F3 conservative</text>
+    </g>
+
+    <!-- Divider 4a/4b -->
+    <line x1="48" y1="266" x2="1192" y2="266" stroke="#9c27b0" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.5"/>
+
+    <!-- ================ Sub-row 4b: Points → Grid ================ -->
+    <text x="48" y="282" font-size="12" font-weight="700" fill="#4a148c">4b · Points → Grid</text>
+    <text x="158" y="282" font-size="10" fill="#6a1b9a">(scattered interpolation + point-cloud aggregation)</text>
+
+    <g transform="translate(48, 290)">
+      <rect x="0" y="0" width="220" height="50" rx="5" fill="white" stroke="#6a1b9a" stroke-width="1.2"/>
+      <text x="110" y="15" font-size="12" font-weight="700" text-anchor="middle">scipy · pyKrige · verde</text>
+      <text x="110" y="29" font-size="9" fill="#555" text-anchor="middle">scatter → grid · kriging · RBF</text>
+      <rect x="78" y="34" width="64" height="14" rx="7" fill="#7b1fa2"/>
+      <text x="110" y="44" font-size="9" fill="white" text-anchor="middle">F2 scatter</text>
+    </g>
+
+    <g transform="translate(280, 290)">
+      <rect x="0" y="0" width="200" height="50" rx="5" fill="white" stroke="#6a1b9a" stroke-width="1.2"/>
+      <text x="100" y="15" font-size="12" font-weight="700" text-anchor="middle">pyresample (kd-tree)</text>
+      <text x="100" y="29" font-size="9" fill="#555" text-anchor="middle">scatter via neighbors</text>
+      <rect x="70" y="34" width="60" height="14" rx="7" fill="#7b1fa2"/>
+      <text x="100" y="44" font-size="9" fill="white" text-anchor="middle">F2 scatter</text>
+    </g>
+
+    <g transform="translate(492, 290)">
+      <rect x="0" y="0" width="200" height="50" rx="5" fill="white" stroke="#e65100" stroke-width="1.2"/>
+      <text x="100" y="15" font-size="12" font-weight="700" text-anchor="middle">zagg</text>
+      <text x="100" y="29" font-size="9" fill="#555" text-anchor="middle">point-cloud → DGGS (generalizing)</text>
+      <rect x="62" y="34" width="76" height="14" rx="7" fill="#e65100"/>
+      <text x="100" y="44" font-size="9" fill="white" text-anchor="middle">F4 pt→cell</text>
+    </g>
+
+    <text x="710" y="308" font-size="10" fill="#4a148c" font-style="italic">F2 (scatter) and F4-point-to-cell (zagg) share</text>
+    <text x="710" y="322" font-size="10" fill="#4a148c" font-style="italic">the Points → Grid track, different math families.</text>
+
+    <!-- Divider 4b/4c -->
+    <line x1="48" y1="350" x2="1192" y2="350" stroke="#9c27b0" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.5"/>
+
+    <!-- ================ Sub-row 4c: Grid → Polygon ================ -->
+    <text x="48" y="366" font-size="12" font-weight="700" fill="#4a148c">4c · Grid → Polygon</text>
+    <text x="168" y="366" font-size="10" fill="#6a1b9a">(zonal statistics — raster values aggregated onto polygon geometries)</text>
+
+    <g transform="translate(48, 374)">
+      <rect x="0" y="0" width="120" height="50" rx="5" fill="white" stroke="#e65100" stroke-width="1.2"/>
+      <text x="60" y="15" font-size="12" font-weight="700" text-anchor="middle">xagg</text>
+      <text x="60" y="29" font-size="9" fill="#555" text-anchor="middle">xarray-native zonal</text>
+      <rect x="18" y="34" width="84" height="14" rx="7" fill="#e65100"/>
+      <text x="60" y="44" font-size="9" fill="white" text-anchor="middle">F4 stat-agg · F3</text>
+    </g>
+
+    <g transform="translate(180, 374)">
+      <rect x="0" y="0" width="170" height="50" rx="5" fill="white" stroke="#e65100" stroke-width="1.2"/>
+      <text x="85" y="15" font-size="12" font-weight="700" text-anchor="middle">exactextract</text>
+      <text x="85" y="29" font-size="9" fill="#555" text-anchor="middle">exact polygon-raster intersection</text>
+      <rect x="37" y="34" width="96" height="14" rx="7" fill="#e65100"/>
+      <text x="85" y="44" font-size="9" fill="white" text-anchor="middle">F4 stat-agg · F3 weighted</text>
+    </g>
+
+    <g transform="translate(362, 374)">
+      <rect x="0" y="0" width="150" height="50" rx="5" fill="white" stroke="#e65100" stroke-width="1.2"/>
+      <text x="75" y="15" font-size="12" font-weight="700" text-anchor="middle">rasterstats</text>
+      <text x="75" y="29" font-size="9" fill="#555" text-anchor="middle">rasterio + shapely zonal</text>
+      <rect x="33" y="34" width="84" height="14" rx="7" fill="#e65100"/>
+      <text x="75" y="44" font-size="9" fill="white" text-anchor="middle">F4 stat-agg</text>
+    </g>
+
+    <text x="530" y="390" font-size="10" fill="#4a148c" font-style="italic">Same family as 4a F3/F4, different output shape (polygon zones, not a grid).</text>
+    <text x="530" y="404" font-size="10" fill="#4a148c" font-style="italic">xagg and exactextract support area-weighted mode (F3); rasterstats does stat-agg (F4).</text>
+
+    <!-- Divider 4c/4d -->
+    <line x1="48" y1="434" x2="1192" y2="434" stroke="#9c27b0" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.5"/>
+
+    <!-- ================ Sub-row 4d: Points → Polygon ================ -->
+    <text x="48" y="450" font-size="12" font-weight="700" fill="#4a148c">4d · Points → Polygon</text>
+    <text x="178" y="450" font-size="10" fill="#6a1b9a">(scattered observations aggregated onto polygon zones)</text>
+
+    <g transform="translate(48, 458)">
+      <rect x="0" y="0" width="250" height="50" rx="5" fill="white" stroke="#e65100" stroke-width="1.2"/>
+      <text x="125" y="15" font-size="12" font-weight="700" text-anchor="middle">geopandas sjoin + groupby</text>
+      <text x="125" y="29" font-size="9" fill="#555" text-anchor="middle">ad-hoc spatial-join pattern</text>
+      <rect x="87" y="34" width="76" height="14" rx="7" fill="#e65100"/>
+      <text x="125" y="44" font-size="9" fill="white" text-anchor="middle">F4 pt→zone</text>
+    </g>
+
+    <g transform="translate(310, 458)">
+      <rect x="0" y="0" width="230" height="50" rx="5" fill="white" stroke="#e65100" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="115" y="15" font-size="12" font-weight="700" text-anchor="middle">zagg (polygon-zones)</text>
+      <text x="115" y="29" font-size="9" fill="#555" text-anchor="middle">Phase 2 generalization (design in progress)</text>
+      <rect x="77" y="34" width="76" height="14" rx="7" fill="#e65100"/>
+      <text x="115" y="44" font-size="9" fill="white" text-anchor="middle">F4 pt→zone</text>
+    </g>
+
+    <text x="560" y="474" font-size="10" fill="#4a148c" font-style="italic">zagg's polygon-zone output (Phase 2) lands here — same math family as 4c,</text>
+    <text x="560" y="488" font-size="10" fill="#4a148c" font-style="italic">same output shape, different input substrate (sparse observations vs. raster).</text>
+
+    <!-- Divider 4d/4e -->
+    <line x1="48" y1="518" x2="1192" y2="518" stroke="#9c27b0" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.5"/>
+
+    <!-- ================ Sub-row 4e: Grid → Points ================ -->
+    <text x="48" y="534" font-size="12" font-weight="700" fill="#4a148c">4e · Grid → Points</text>
+    <text x="160" y="534" font-size="10" fill="#6a1b9a">(sampling — raster values at query locations)</text>
+
+    <g transform="translate(48, 542)">
+      <rect x="0" y="0" width="140" height="50" rx="5" fill="white" stroke="#1565c0" stroke-width="1.2"/>
+      <text x="70" y="15" font-size="12" font-weight="700" text-anchor="middle">rio-tiler</text>
+      <text x="70" y="29" font-size="9" fill="#555" text-anchor="middle">point queries on COGs</text>
+      <rect x="46" y="34" width="48" height="14" rx="7" fill="#1976d2"/>
+      <text x="70" y="44" font-size="9" fill="white" text-anchor="middle">F1 kernel</text>
+    </g>
+
+    <g transform="translate(200, 542)">
+      <rect x="0" y="0" width="180" height="50" rx="5" fill="white" stroke="#1565c0" stroke-width="1.2"/>
+      <text x="90" y="15" font-size="12" font-weight="700" text-anchor="middle">rioxarray.sample</text>
+      <text x="90" y="29" font-size="9" fill="#555" text-anchor="middle">xarray-native point sample</text>
+      <rect x="66" y="34" width="48" height="14" rx="7" fill="#1976d2"/>
+      <text x="90" y="44" font-size="9" fill="white" text-anchor="middle">F1 kernel</text>
+    </g>
+
+    <g transform="translate(392, 542)">
+      <rect x="0" y="0" width="120" height="50" rx="5" fill="white" stroke="#1565c0" stroke-width="1.2"/>
+      <text x="60" y="15" font-size="12" font-weight="700" text-anchor="middle">xvec</text>
+      <text x="60" y="29" font-size="9" fill="#555" text-anchor="middle">vector indexing on xarray</text>
+      <rect x="36" y="34" width="48" height="14" rx="7" fill="#1976d2"/>
+      <text x="60" y="44" font-size="9" fill="white" text-anchor="middle">F1 kernel</text>
+    </g>
+
+    <g transform="translate(524, 542)">
+      <rect x="0" y="0" width="190" height="50" rx="5" fill="white" stroke="#1565c0" stroke-width="1.2"/>
+      <text x="95" y="15" font-size="12" font-weight="700" text-anchor="middle">torchgeo samplers</text>
+      <text x="95" y="29" font-size="9" fill="#555" text-anchor="middle">ML feature extraction</text>
+      <rect x="71" y="34" width="48" height="14" rx="7" fill="#1976d2"/>
+      <text x="95" y="44" font-size="9" fill="white" text-anchor="middle">F1 kernel</text>
+    </g>
+
+    <text x="730" y="558" font-size="10" fill="#4a148c" font-style="italic">F1 kernel convolution at sparse query points — same math as 4a reprojection,</text>
+    <text x="730" y="572" font-size="10" fill="#4a148c" font-style="italic">different target structure. Common in ML pipelines and tile-server APIs.</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LAYER 3 — Loader + read-time warp                             -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="608" width="1180" height="138" fill="#e3f2fd" stroke="#1565c0"/>
+    <text x="48" y="636" font-size="15" font-weight="700" fill="#0d47a1">Layer 3 — Loader + read-time warp (STAC → lazy xarray)</text>
+    <text x="48" y="654" font-size="11" fill="#0d47a1">Fetches pixels &amp; warps inside each dask chunk. Fast (overview-aware) but commits to a target grid at open time. Family 1 only.</text>
+
+    <g transform="translate(48, 666)">
+      <rect x="0" y="0" width="200" height="68" rx="6" fill="white" stroke="#1565c0" stroke-width="1.5"/>
+      <text x="100" y="20" font-size="13" font-weight="700" text-anchor="middle">stackstac</text>
+      <text x="100" y="36" font-size="10" fill="#555" text-anchor="middle">WarpedVRT per chunk · GDAL full set</text>
+      <rect x="10" y="46" width="56" height="16" rx="8" fill="#1976d2"/>
+      <text x="38" y="58" font-size="9" fill="white" text-anchor="middle">F1 kernel</text>
+      <rect x="72" y="46" width="48" height="16" rx="8" fill="#e65100"/>
+      <text x="96" y="58" font-size="9" fill="white" text-anchor="middle">F4</text>
+    </g>
+
+    <g transform="translate(268, 666)">
+      <rect x="0" y="0" width="200" height="68" rx="6" fill="white" stroke="#1565c0" stroke-width="1.5"/>
+      <text x="100" y="20" font-size="13" font-weight="700" text-anchor="middle">odc-stac</text>
+      <text x="100" y="36" font-size="10" fill="#555" text-anchor="middle">odc-loader · EO3 · pixel fusion</text>
+      <rect x="10" y="46" width="56" height="16" rx="8" fill="#1976d2"/>
+      <text x="38" y="58" font-size="9" fill="white" text-anchor="middle">F1 kernel</text>
+      <rect x="72" y="46" width="48" height="16" rx="8" fill="#e65100"/>
+      <text x="96" y="58" font-size="9" fill="white" text-anchor="middle">F4</text>
+    </g>
+
+    <g transform="translate(488, 666)">
+      <rect x="0" y="0" width="240" height="68" rx="6" fill="white" stroke="#1565c0" stroke-width="1.5"/>
+      <text x="120" y="20" font-size="13" font-weight="700" text-anchor="middle">lazycogs</text>
+      <text x="120" y="36" font-size="10" fill="#555" text-anchor="middle">async-geotiff · pyproj+numpy · no GDAL</text>
+      <rect x="10"  y="46" width="110" height="16" rx="8" fill="#90a4ae"/>
+      <text x="65"  y="58" font-size="9" fill="white" text-anchor="middle">F1 nearest only</text>
+      <rect x="126" y="46" width="88"  height="16" rx="8" fill="#e65100"/>
+      <text x="170" y="58" font-size="9" fill="white" text-anchor="middle">F4 mosaic methods</text>
+    </g>
+
+    <text x="748" y="684" font-size="10" fill="#0d47a1" font-style="italic">stackstac / odc-stac inherit GDAL's full kernel menu.</text>
+    <text x="748" y="700" font-size="10" fill="#0d47a1">lazycogs trades that for async + no-GDAL operational simplicity.</text>
+    <text x="748" y="716" font-size="10" fill="#0d47a1">Read-time warp is only sound when the target grid is known early</text>
+    <text x="748" y="732" font-size="10" fill="#0d47a1">and the operation is local — i.e., only Family 1.</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LAYER 2 — Cloud I/O native-grid                                -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="756" width="1180" height="120" fill="#e8f5e9" stroke="#2e7d32"/>
+    <text x="48" y="784" font-size="15" font-weight="700" fill="#1b5e20">Layer 2 — Cloud I/O (native grid, no resampling)</text>
+    <text x="48" y="802" font-size="11" fill="#1b5e20">Returns pixels in their native CRS/grid; defers resampling to the consumer. Mix of metadata indices, virtualization manifests, and async readers — the full filesystem / codec / reader stack is detailed separately.</text>
+
+    <g transform="translate(48, 814)">
+      <rect x="0" y="0" width="230" height="52" rx="6" fill="white" stroke="#555" stroke-width="1.3" stroke-dasharray="4,2"/>
+      <text x="115" y="22" font-size="13" font-weight="700" text-anchor="middle">rasteret</text>
+      <text x="115" y="40" font-size="10" fill="#555" text-anchor="middle">Parquet metadata index · byte-range reads</text>
+    </g>
+
+    <g transform="translate(298, 814)">
+      <rect x="0" y="0" width="230" height="52" rx="6" fill="white" stroke="#555" stroke-width="1.3" stroke-dasharray="4,2"/>
+      <text x="115" y="22" font-size="13" font-weight="700" text-anchor="middle">virtual-tiff</text>
+      <text x="115" y="40" font-size="10" fill="#555" text-anchor="middle">VirtualiZarr manifest · TIFF as virtual Zarr</text>
+    </g>
+
+    <g transform="translate(548, 814)">
+      <rect x="0" y="0" width="230" height="52" rx="6" fill="white" stroke="#555" stroke-width="1.3" stroke-dasharray="4,2"/>
+      <text x="115" y="22" font-size="13" font-weight="700" text-anchor="middle">async-tiff</text>
+      <text x="115" y="40" font-size="10" fill="#555" text-anchor="middle">Rust async TIFF reader · pipelined GETs</text>
+    </g>
+
+    <g transform="translate(798, 814)">
+      <rect x="0" y="0" width="230" height="52" rx="6" fill="white" stroke="#555" stroke-width="1.3" stroke-dasharray="4,2"/>
+      <text x="115" y="22" font-size="13" font-weight="700" text-anchor="middle">zarr-python v3 async</text>
+      <text x="115" y="40" font-size="10" fill="#555" text-anchor="middle">async chunk reads · obstore-backed</text>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LAYER 1 — Bytes/Formats                                        -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="886" width="1180" height="74" fill="#f5f5f5" stroke="#9e9e9e"/>
+    <text x="48" y="912" font-size="14" font-weight="700" fill="#424242">Layer 1 — Bytes &amp; formats</text>
+    <text x="48" y="930" font-size="11" fill="#555">Formats: COG · GeoTIFF · NetCDF · HDF5 · HDF4 · Zarr v2/v3 · GeoZarr · GRIB2. Virtualization: Kerchunk · VirtualiZarr · GDAL VRT · GDAL GTI · DMR++ · Icechunk.</text>
+    <text x="48" y="948" font-size="11" fill="#555">Object storage: S3 · GCS · Azure · HTTPS · local. Access via fsspec / obstore / GDAL VFS / Icechunk. Readers (sync + async) and codecs sit above.</text>
+
+    <!-- Cross-reference pill to I/O stack -->
+    <rect x="960" y="896" width="240" height="22" rx="11" fill="white" stroke="#616161" stroke-width="1.5"/>
+    <text x="1080" y="911" font-size="10.5" font-weight="700" fill="#424242" text-anchor="middle">→ See I/O &amp; Storage Stack diagram</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- BOTTOM COMMENTARY                                              -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="964" width="1180" height="118" fill="#fffbe6" stroke="#e6c84a"/>
+    <text x="44" y="990" font-size="13" font-weight="700" fill="#6d5200">Key architectural tension</text>
+
+    <text x="44" y="1012" font-size="11" fill="#333"><tspan font-weight="700">Loader-integrated warp</tspan> (Layer 3) saves I/O via overview selection but bakes the target grid into the loader API and is limited to Family 1.</text>
+    <text x="44" y="1030" font-size="11" fill="#333"><tspan font-weight="700">Separable pattern</tspan> (Layer 2 → any Layer 4 sublayer) composes any family with any loader but can't do overview-aware reads.</text>
+    <text x="44" y="1054" font-size="11" fill="#333"><tspan font-weight="700">Direction</tspan>: loaders should expose a "native-grid" mode. Grid-math tools across Layer 4 should share a grid protocol so indexing, sharding,</text>
+    <text x="44" y="1072" font-size="11" fill="#333">and cell-assignment are reusable primitives. OpenEO's reference implementation has already picked the separable side.</text>
+  </g>
+</svg>

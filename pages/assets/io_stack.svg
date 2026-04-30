@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 1000" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1240" height="1000" fill="white"/>
+
+  <!-- Title -->
+  <text x="620" y="36" font-size="22" font-weight="700" text-anchor="middle" fill="#1a1a1a">Cloud-native I/O &amp; storage stack</text>
+  <text x="620" y="58" font-size="12" fill="#666" text-anchor="middle">Layers 1–2 expanded — how bytes on S3 become arrays in Python · companion to the main ecosystem diagram</text>
+
+  <!-- Reading-direction hint -->
+  <g transform="translate(30, 82)">
+    <text x="0" y="0" font-size="11" font-weight="700" fill="#333" letter-spacing="0.4">READ TOP-DOWN</text>
+    <text x="0" y="14" font-size="10" fill="#555">User calls xarray or a reader → calls flow downward through the stack → bytes at the bottom. Each lane is a distinct architectural role.</text>
+  </g>
+
+  <!-- Color legend -->
+  <g transform="translate(820, 82)">
+    <text x="0" y="0" font-size="10" fill="#666">Lane color encodes role category:</text>
+    <rect x="0"  y="6" width="16" height="10" fill="#e1f5fe" stroke="#0277bd" stroke-width="0.8"/><text x="20" y="15" font-size="9" fill="#555">discovery</text>
+    <rect x="70" y="6" width="16" height="10" fill="#e8f5e9" stroke="#2e7d32" stroke-width="0.8"/><text x="90" y="15" font-size="9" fill="#555">user-facing</text>
+    <rect x="142" y="6" width="16" height="10" fill="#f5f5f5" stroke="#9e9e9e" stroke-width="0.8"/><text x="162" y="15" font-size="9" fill="#555">arrays</text>
+    <rect x="196" y="6" width="16" height="10" fill="#fff3e0" stroke="#e65100" stroke-width="0.8"/><text x="216" y="15" font-size="9" fill="#555">readers</text>
+    <rect x="256" y="6" width="16" height="10" fill="#fbe9e7" stroke="#d84315" stroke-width="0.8"/><text x="276" y="15" font-size="9" fill="#555">codecs</text>
+    <rect x="310" y="6" width="16" height="10" fill="#f3e5f5" stroke="#6a1b9a" stroke-width="0.8"/><text x="330" y="15" font-size="9" fill="#555">filesystem</text>
+    <rect x="380" y="6" width="16" height="10" fill="#e0f2f1" stroke="#00695c" stroke-width="0.8"/><text x="400" y="15" font-size="9" fill="#555">virtualization</text>
+    <rect x="450" y="6" width="16" height="10" fill="#fffbe6" stroke="#f9a825" stroke-width="0.8"/><text x="470" y="15" font-size="9" fill="#555">formats</text>
+  </g>
+
+  <line x1="30" y1="118" x2="1210" y2="118" stroke="#ccc"/>
+
+  <!-- ============================================================ -->
+  <!-- LANE 1 — Discovery / catalog                                  -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="128" width="1180" height="56" fill="#e1f5fe" stroke="#0277bd" stroke-width="1"/>
+    <text x="44" y="146" font-size="13" font-weight="700" fill="#01579b">1 · Discovery / catalog</text>
+    <text x="200" y="146" font-size="10" fill="#01579b" font-style="italic">how you find the data before touching bytes</text>
+
+    <g font-size="11" font-weight="600" text-anchor="middle">
+      <rect x="44"  y="154" width="78" height="24" rx="3" fill="white" stroke="#0277bd" stroke-width="1"/><text x="83"  y="170" fill="#01579b">STAC</text>
+      <rect x="128" y="154" width="115" height="24" rx="3" fill="white" stroke="#0277bd" stroke-width="1"/><text x="185" y="170" fill="#01579b">pystac-client</text>
+      <rect x="249" y="154" width="70" height="24" rx="3" fill="white" stroke="#0277bd" stroke-width="1"/><text x="284" y="170" fill="#01579b">rustac</text>
+      <rect x="325" y="154" width="138" height="24" rx="3" fill="white" stroke="#0277bd" stroke-width="1"/><text x="394" y="170" fill="#01579b">STAC-GeoParquet</text>
+      <rect x="469" y="154" width="75" height="24" rx="3" fill="white" stroke="#0277bd" stroke-width="1"/><text x="506" y="170" fill="#01579b">Intake</text>
+      <rect x="550" y="154" width="70" height="24" rx="3" fill="white" stroke="#0277bd" stroke-width="1"/><text x="585" y="170" fill="#01579b">CMR</text>
+      <rect x="626" y="154" width="100" height="24" rx="3" fill="white" stroke="#0277bd" stroke-width="1"/><text x="676" y="170" fill="#01579b">earthaccess</text>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LANE 2 — User-facing data representation                      -->
+  <!-- 3 sub-bands: engines, containers, accessors                   -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="192" width="1180" height="152" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+    <text x="44" y="210" font-size="13" font-weight="700" fill="#1b5e20">2 · User-facing data representation</text>
+    <text x="290" y="210" font-size="10" fill="#1b5e20" font-style="italic">the API surface and data structures user code touches directly</text>
+
+    <!-- Sub-band A: Xarray adapters (what xarray calls 'engines') -->
+    <text x="44" y="244" font-size="11" font-weight="700" fill="#1b5e20">xarray adapters →</text>
+    <g font-size="10" font-weight="600" text-anchor="middle">
+      <rect x="192" y="232" width="80"  height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="232" y="246" fill="#1b5e20">h5netcdf</text>
+      <rect x="278" y="232" width="75"  height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="316" y="246" fill="#1b5e20">netCDF4</text>
+      <rect x="359" y="232" width="60"  height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="389" y="246" fill="#1b5e20">zarr</text>
+      <rect x="425" y="232" width="80"  height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="465" y="246" fill="#1b5e20">rasterio</text>
+      <rect x="511" y="232" width="85"  height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="554" y="246" fill="#1b5e20">stackstac</text>
+      <rect x="602" y="232" width="85"  height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="645" y="246" fill="#1b5e20">odc-stac</text>
+      <rect x="693" y="232" width="110" height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="748" y="246" fill="#1b5e20">VirtualiZarr</text>
+    </g>
+    <text x="815" y="246" font-size="9" fill="#1b5e20" font-style="italic">label reader output with dims/coords/attrs; wrap in containers</text>
+
+    <!-- Sub-band divider -->
+    <line x1="44" y1="266" x2="1196" y2="266" stroke="#66bb6a" stroke-width="0.6" stroke-dasharray="3,2" opacity="0.6"/>
+
+    <!-- Sub-band B: Containers (xarray + non-xarray) -->
+    <text x="44" y="288" font-size="11" font-weight="700" fill="#1b5e20">containers →</text>
+    <text x="119" y="288" font-size="9" fill="#1b5e20" font-style="italic">what user code holds</text>
+    <g font-size="10" font-weight="600" text-anchor="middle">
+      <!-- xarray family (slight visual grouping) -->
+      <rect x="214" y="276" width="145" height="22" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/><text x="286" y="290" fill="#1b5e20">DataArray / Dataset</text>
+      <rect x="365" y="276" width="75"  height="22" rx="3" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1"/><text x="402" y="290" fill="#1b5e20">DataTree</text>
+      <!-- non-xarray containers -->
+      <rect x="454" y="276" width="150" height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="529" y="290" fill="#1b5e20">rasterio DatasetReader</text>
+      <rect x="612" y="276" width="105" height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="664" y="290" fill="#1b5e20">GDAL Dataset</text>
+      <rect x="725" y="276" width="110" height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="780" y="290" fill="#1b5e20">rio-tiler Reader</text>
+      <rect x="843" y="276" width="170" height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="928" y="290" fill="#1b5e20">pyresample ImageContainer</text>
+      <rect x="1021" y="276" width="100" height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="1071" y="290" fill="#1b5e20">geoutils Raster</text>
+    </g>
+    <text x="214" y="312" font-size="9" fill="#1b5e20" font-style="italic">green = xarray family · white = non-xarray geospatial containers · also: raster_tools Raster, ODC GeoBox (metadata-only)</text>
+
+    <!-- Sub-band divider -->
+    <line x1="44" y1="320" x2="1196" y2="320" stroke="#66bb6a" stroke-width="0.6" stroke-dasharray="3,2" opacity="0.6"/>
+
+    <!-- Sub-band C: Accessors -->
+    <text x="44" y="334" font-size="11" font-weight="700" fill="#1b5e20">accessors →</text>
+    <text x="127" y="334" font-size="9" fill="#1b5e20" font-style="italic">domain-specific namespaces on xarray containers</text>
+    <g font-size="10" font-weight="600" text-anchor="middle">
+      <rect x="384" y="326" width="80"  height="18" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="424" y="338" fill="#1b5e20">rioxarray</text>
+      <rect x="470" y="326" width="120" height="18" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="530" y="338" fill="#1b5e20">xcube accessors</text>
+      <rect x="596" y="326" width="75"  height="18" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="633" y="338" fill="#1b5e20">odc.geo</text>
+      <rect x="677" y="326" width="55"  height="18" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/><text x="704" y="338" fill="#1b5e20">xvec</text>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LANE 3 — Array backends (split: non-chunked vs chunked)       -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="352" width="1180" height="68" fill="#f5f5f5" stroke="#9e9e9e" stroke-width="1"/>
+    <text x="44" y="370" font-size="13" font-weight="700" fill="#424242">3 · Array backends</text>
+    <text x="200" y="370" font-size="10" fill="#424242" font-style="italic">what a DataArray/Dataset actually holds · single-process vs parallel/chunked</text>
+
+    <text x="44" y="392" font-size="10" font-weight="700" fill="#424242">single-process →</text>
+    <g font-size="10" font-weight="600" text-anchor="middle">
+      <rect x="158" y="382" width="70"  height="20" rx="3" fill="white" stroke="#9e9e9e" stroke-width="1"/><text x="193" y="396" fill="#424242">NumPy</text>
+      <rect x="234" y="382" width="60"  height="20" rx="3" fill="white" stroke="#9e9e9e" stroke-width="1"/><text x="264" y="396" fill="#424242">CuPy</text>
+      <rect x="300" y="382" width="65"  height="20" rx="3" fill="white" stroke="#9e9e9e" stroke-width="1"/><text x="333" y="396" fill="#424242">Sparse</text>
+      <rect x="371" y="382" width="70"  height="20" rx="3" fill="white" stroke="#9e9e9e" stroke-width="1"/><text x="406" y="396" fill="#424242">pyarrow</text>
+    </g>
+
+    <text x="460" y="392" font-size="10" font-weight="700" fill="#424242">parallel / chunked →</text>
+    <g font-size="10" font-weight="600" text-anchor="middle">
+      <rect x="594" y="382" width="65" height="20" rx="3" fill="white" stroke="#616161" stroke-width="1.5"/><text x="626" y="396" fill="#212121">Dask</text>
+      <rect x="665" y="382" width="70" height="20" rx="3" fill="white" stroke="#616161" stroke-width="1.5"/><text x="700" y="396" fill="#212121">Cubed</text>
+    </g>
+
+    <text x="750" y="396" font-size="9" fill="#666" font-style="italic">Dask is the dominant choice; Cubed targets serverless / embarrassingly-parallel work</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LANE 4 — Readers / serializers (sync + async)                  -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="428" width="1180" height="98" fill="#fff3e0" stroke="#e65100" stroke-width="1"/>
+    <text x="44" y="446" font-size="13" font-weight="700" fill="#bf360c">4 · Readers &amp; serializers</text>
+    <text x="236" y="446" font-size="10" fill="#bf360c" font-style="italic">bytes → numpy arrays · the sync/async split is the cloud-native battle line</text>
+
+    <!-- Row A: Sync -->
+    <text x="44" y="468" font-size="10" font-weight="700" fill="#bf360c">sync →</text>
+    <g font-size="10" font-weight="600" text-anchor="middle">
+      <rect x="90"  y="458" width="70"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="125" y="472" fill="#bf360c">GDAL</text>
+      <rect x="166" y="458" width="90"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="211" y="472" fill="#bf360c">HDF5 C lib</text>
+      <rect x="262" y="458" width="100" height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="312" y="472" fill="#bf360c">NetCDF C lib</text>
+      <rect x="368" y="458" width="80"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="408" y="472" fill="#bf360c">rasterio</text>
+      <rect x="454" y="458" width="60"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="484" y="472" fill="#bf360c">h5py</text>
+      <rect x="520" y="458" width="100" height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="570" y="472" fill="#bf360c">netCDF4-py</text>
+      <rect x="626" y="458" width="70"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="661" y="472" fill="#bf360c">tifffile</text>
+      <rect x="702" y="458" width="75"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1"/><text x="740" y="472" fill="#bf360c">zarr-python</text>
+    </g>
+
+    <!-- Row B: Async (emphasized) -->
+    <text x="44" y="504" font-size="10" font-weight="700" fill="#bf360c">async →</text>
+    <g font-size="10" font-weight="600" text-anchor="middle">
+      <rect x="90"  y="494" width="85"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1.8" stroke-dasharray="3,2"/><text x="133" y="508" fill="#bf360c">async-tiff</text>
+      <rect x="181" y="494" width="110" height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1.8" stroke-dasharray="3,2"/><text x="236" y="508" fill="#bf360c">async-geotiff</text>
+      <rect x="297" y="494" width="100" height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1.8" stroke-dasharray="3,2"/><text x="347" y="508" fill="#bf360c">async-hdf5</text>
+      <rect x="403" y="494" width="75"  height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1.8" stroke-dasharray="3,2"/><text x="440" y="508" fill="#bf360c">h5coro</text>
+      <rect x="484" y="494" width="110" height="22" rx="3" fill="white" stroke="#e65100" stroke-width="1.8" stroke-dasharray="3,2"/><text x="539" y="508" fill="#bf360c">zarr-python v3 async</text>
+    </g>
+    <text x="610" y="508" font-size="10" fill="#bf360c" font-style="italic">dashed = async; the cloud-native frontier</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LANE 5 — Codecs                                               -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="534" width="1180" height="56" fill="#fbe9e7" stroke="#d84315" stroke-width="1"/>
+    <text x="44" y="552" font-size="13" font-weight="700" fill="#bf360c">5 · Codecs (compression / transformation)</text>
+    <text x="340" y="552" font-size="10" fill="#bf360c" font-style="italic">invoked by readers during byte-range decode</text>
+
+    <g font-size="11" font-weight="600" text-anchor="middle">
+      <rect x="44"  y="560" width="90"  height="24" rx="3" fill="white" stroke="#d84315" stroke-width="1"/><text x="89"  y="576" fill="#bf360c">numcodecs</text>
+      <rect x="140" y="560" width="100" height="24" rx="3" fill="white" stroke="#d84315" stroke-width="1"/><text x="190" y="576" fill="#bf360c">imagecodecs</text>
+      <rect x="246" y="560" width="60"  height="24" rx="3" fill="white" stroke="#d84315" stroke-width="1"/><text x="276" y="576" fill="#bf360c">blosc</text>
+      <rect x="312" y="560" width="50"  height="24" rx="3" fill="white" stroke="#d84315" stroke-width="1"/><text x="337" y="576" fill="#bf360c">zstd</text>
+      <rect x="368" y="560" width="45"  height="24" rx="3" fill="white" stroke="#d84315" stroke-width="1"/><text x="390" y="576" fill="#bf360c">lz4</text>
+      <rect x="419" y="560" width="45"  height="24" rx="3" fill="white" stroke="#d84315" stroke-width="1"/><text x="441" y="576" fill="#bf360c">zlib</text>
+      <rect x="470" y="560" width="50"  height="24" rx="3" fill="white" stroke="#d84315" stroke-width="1"/><text x="495" y="576" fill="#bf360c">jpeg</text>
+      <rect x="526" y="560" width="55"  height="24" rx="3" fill="white" stroke="#d84315" stroke-width="1"/><text x="553" y="576" fill="#bf360c">webp</text>
+      <rect x="587" y="560" width="55"  height="24" rx="3" fill="white" stroke="#d84315" stroke-width="1"/><text x="614" y="576" fill="#bf360c">LERC</text>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LANE 6 — Object store / Virtual filesystem                    -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="598" width="1180" height="72" fill="#f3e5f5" stroke="#6a1b9a" stroke-width="1"/>
+    <text x="44" y="616" font-size="13" font-weight="700" fill="#4a148c">6 · Object store / virtual filesystem</text>
+    <text x="306" y="616" font-size="10" fill="#4a148c" font-style="italic">cloud-agnostic access · the entry point to remote bytes</text>
+
+    <g font-size="11" font-weight="600" text-anchor="middle">
+      <rect x="44"  y="624" width="75"  height="24" rx="3" fill="white" stroke="#6a1b9a" stroke-width="1"/><text x="81"  y="640" fill="#4a148c">fsspec</text>
+      <rect x="125" y="624" width="75"  height="24" rx="3" fill="white" stroke="#6a1b9a" stroke-width="1"/><text x="162" y="640" fill="#4a148c">obstore</text>
+      <rect x="206" y="624" width="80"  height="24" rx="3" fill="white" stroke="#6a1b9a" stroke-width="1"/><text x="246" y="640" fill="#4a148c">GDAL VFS</text>
+      <rect x="292" y="624" width="90"  height="24" rx="3" fill="white" stroke="#6a1b9a" stroke-width="1"/><text x="337" y="640" fill="#4a148c">Icechunk</text>
+      <rect x="388" y="624" width="85"  height="24" rx="3" fill="white" stroke="#6a1b9a" stroke-width="1"/><text x="430" y="640" fill="#4a148c">botocore</text>
+      <rect x="479" y="624" width="105" height="24" rx="3" fill="white" stroke="#6a1b9a" stroke-width="1"/><text x="531" y="640" fill="#4a148c">google-cloud</text>
+    </g>
+    <text x="608" y="640" font-size="10" fill="#4a148c" font-style="italic">backends: S3 · GCS · Azure · HTTPS · local · FTP</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LANE 7 — Virtualization / reference files                     -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="678" width="1180" height="72" fill="#e0f2f1" stroke="#00695c" stroke-width="1"/>
+    <text x="44" y="696" font-size="13" font-weight="700" fill="#004d40">7 · Virtualization &amp; reference files</text>
+    <text x="300" y="696" font-size="10" fill="#004d40" font-style="italic">bytes-to-chunks maps · address chunks inside archival formats without rewriting them</text>
+
+    <g font-size="11" font-weight="600" text-anchor="middle">
+      <rect x="44"  y="704" width="140" height="24" rx="3" fill="white" stroke="#00695c" stroke-width="1"/><text x="114" y="720" fill="#004d40">Kerchunk (JSON)</text>
+      <rect x="190" y="704" width="155" height="24" rx="3" fill="white" stroke="#00695c" stroke-width="1"/><text x="267" y="720" fill="#004d40">Kerchunk (Parquet)</text>
+      <rect x="351" y="704" width="180" height="24" rx="3" fill="white" stroke="#00695c" stroke-width="1"/><text x="441" y="720" fill="#004d40">VirtualiZarr manifest</text>
+      <rect x="537" y="704" width="120" height="24" rx="3" fill="white" stroke="#00695c" stroke-width="1"/><text x="597" y="720" fill="#004d40">GDAL VRT (XML)</text>
+      <rect x="663" y="704" width="90"  height="24" rx="3" fill="white" stroke="#00695c" stroke-width="1"/><text x="708" y="720" fill="#004d40">GDAL GTI</text>
+      <rect x="759" y="704" width="95"  height="24" rx="3" fill="white" stroke="#00695c" stroke-width="1"/><text x="806" y="720" fill="#004d40">DMR++</text>
+      <rect x="860" y="704" width="100" height="24" rx="3" fill="white" stroke="#00695c" stroke-width="1"/><text x="910" y="720" fill="#004d40">Icechunk</text>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LANE 8 — Storage formats                                      -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="758" width="1180" height="72" fill="#fffbe6" stroke="#f9a825" stroke-width="1"/>
+    <text x="44" y="776" font-size="13" font-weight="700" fill="#6d5200">8 · Storage formats (on-disk / at-rest)</text>
+    <text x="324" y="776" font-size="10" fill="#6d5200" font-style="italic">where bytes actually live on object storage</text>
+
+    <g font-size="11" font-weight="600" text-anchor="middle">
+      <rect x="44"  y="784" width="55"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1.6"/><text x="72"  y="800" fill="#6d5200">COG</text>
+      <rect x="105" y="784" width="80"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1"/><text x="145" y="800" fill="#6d5200">GeoTIFF</text>
+      <rect x="191" y="784" width="80"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1"/><text x="231" y="800" fill="#6d5200">NetCDF4</text>
+      <rect x="277" y="784" width="60"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1"/><text x="307" y="800" fill="#6d5200">HDF5</text>
+      <rect x="343" y="784" width="60"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1"/><text x="373" y="800" fill="#6d5200">HDF4</text>
+      <rect x="409" y="784" width="70"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1"/><text x="444" y="800" fill="#6d5200">Zarr v2</text>
+      <rect x="485" y="784" width="70"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1.6"/><text x="520" y="800" fill="#6d5200">Zarr v3</text>
+      <rect x="561" y="784" width="75"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1"/><text x="598" y="800" fill="#6d5200">GRIB2</text>
+      <rect x="642" y="784" width="75"  height="24" rx="3" fill="white" stroke="#f9a825" stroke-width="1.6"/><text x="679" y="800" fill="#6d5200">GeoZarr</text>
+    </g>
+    <text x="735" y="800" font-size="10" fill="#6d5200" font-style="italic">bold outline = cloud-native by design; thin = legacy</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- Footer commentary                                             -->
+  <!-- ============================================================ -->
+  <g>
+    <rect x="30" y="846" width="1180" height="140" fill="#fffbe6" stroke="#e6c84a"/>
+    <text x="44" y="872" font-size="13" font-weight="700" fill="#6d5200">How to read this</text>
+
+    <text x="44" y="894" font-size="11" fill="#333"><tspan font-weight="700">Direction:</tspan> user code at top (lane 1–2) calls down through the stack; bytes on object storage are at the bottom (lane 8).</text>
+    <text x="44" y="912" font-size="11" fill="#333"><tspan font-weight="700">Lane 2 has three sub-roles</tspan> — engines (bytes → arrays), containers (what user code holds; xarray family + non-xarray geospatial), accessors (domain namespaces).</text>
+    <text x="44" y="930" font-size="11" fill="#333"><tspan font-weight="700">Lane 3 splits</tspan> single-process arrays (NumPy, CuPy, Sparse, pyarrow) from parallel / chunked arrays (Dask, Cubed). Parallelization deserves its own diagram; this one stops at "what does the array hold."</text>
+    <text x="44" y="948" font-size="11" fill="#333"><tspan font-weight="700">Sync/async split in lane 4</tspan> is the cloud-native battle line. Async readers pipeline byte-range GETs; central to lazycogs, async-tiff, h5coro.</text>
+    <text x="44" y="966" font-size="11" fill="#333"><tspan font-weight="700">Lane 7 (virtualization)</tspan> is the newer role: reference/manifest files indexing chunk byte ranges inside legacy formats.</text>
+    <text x="44" y="982" font-size="11" fill="#333"><tspan font-weight="700">Main ecosystem diagram's Layer 1 &amp; 2</tspan> collapse lanes 1–8 above; this companion expands them.</text>
+  </g>
+</svg>
