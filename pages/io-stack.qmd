@@ -23,7 +23,7 @@ User code sits at the top. A call like `xr.open_dataset(store)` or `rasterio.ope
 4. **Readers & serializers**: C libraries or Python readers that turn bytes into arrays. Sync and async variants diverge here.
 5. **Codecs**: invoked by readers to decompress or de-transform byte ranges.
 6. **Object store / virtual filesystem**: cloud-agnostic access; sits between readers and the actual storage.
-7. **Virtualization & reference files**: byte-range-to-chunk maps that make legacy formats look like Zarr. Optional layer — only present when virtualization is used.
+7. **Virtualization & reference files**: byte-range-to-chunk maps that address chunks inside archival formats without rewriting the underlying bytes. Optional layer — only present when virtualization is used.
 8. **Storage formats**: what's at rest on object storage.
 
 The diagram is a reference atlas, not a call graph — not every call visits every lane (virtualization is optional; some codecs are built into format readers; discovery can be skipped when you already have a URI). Treat the layers as slots that may or may not be filled for a given workflow.
@@ -32,11 +32,11 @@ The diagram is a reference atlas, not a call graph — not every call visits eve
 
 Four observations that the diagram surfaces:
 
-### The sync/async divide in lane 4 is a cloud-native battle line
+### The sync/async split in lane 4 is the cloud-native frontier
 
-Sync readers block on every byte-range GET. Async readers (`async-tiff`, `async-geotiff`, `async-hdf5`, `h5coro`, `zarr-py v3 async`) pipeline many GETs concurrently — crucial when latency, not throughput, dominates (cloud object storage). The async lane's dashed borders in the diagram highlight this frontier. It's also the layer where lazycogs's no-GDAL bet lives.
+Sync readers block on every byte-range GET. Async readers (`async-tiff`, `async-geotiff`, `async-hdf5`, `h5coro`, `zarr-python v3 async`) pipeline many GETs concurrently, which matters when latency rather than throughput dominates — i.e., cloud object storage. The async lane's dashed borders in the diagram mark this newer track.
 
-GDAL's own async story has historically been weaker; many of the async entries are clean-room Rust-backed readers that skip GDAL entirely. This is a real architectural divergence, not a style preference.
+The two tracks are load-bearing for different workloads. Sync GDAL remains the workhorse for production tile serving, batch ETL, and most of the rasterio / rioxarray ecosystem; its breadth of format support is unmatched. The async entries are clean-room Rust-backed readers that skip GDAL — trading format coverage for tighter control over concurrency and dependencies. `lazycogs` takes the no-GDAL path explicitly. This is a real architectural divergence, not a style preference, but it isn't a horse race: most production workflows still ride on sync GDAL.
 
 ### Virtualization (lane 7) is a genuinely new architectural role
 
@@ -44,27 +44,27 @@ Five years ago the stack was: reader → format. Virtualization inserts a byte-r
 
 Icechunk is a hybrid case — it's a virtualization format *and* an object-store-like repository, hence it appears in both lane 6 (object store / VFS) and lane 7.
 
-### Object stores have consolidated around fsspec vs. obstore
+### Two distinct object-store lineages: fsspec and obstore
 
-`fsspec` is the incumbent filesystem abstraction. `obstore` is the Rust-backed, async-first challenger. Most cloud-native projects now choose between them, and the choice correlates strongly with sync-vs-async readers in lane 4: sync tools use fsspec, async Rust tools use obstore. GDAL's VFS is a third option, architecturally separate because it's embedded in GDAL.
+`fsspec` is the long-established Python filesystem abstraction; nearly every Python tool that opens a remote URL touches it directly or indirectly, and it is not going anywhere. `obstore` is a newer Rust-backed, async-first object-store library that pairs naturally with the async readers above it. Most cloud-native projects pick one of the two, and the choice correlates with sync-vs-async readers in lane 4: sync tools generally route through fsspec, async Rust-backed tools generally route through obstore. GDAL's VFS is a third lineage, architecturally separate because it's embedded in GDAL.
 
-### User-facing data representation (lane 2) has three drawn sub-roles — and a fourth invisible one
+### User-facing data representation (lane 2) has three sub-roles
 
-Lane 2 is the API surface user code touches directly. It covers three sub-roles visibly and a fourth implicitly:
+Lane 2 is the API surface user code touches directly. It covers three sub-roles:
 
 - **Xarray adapters** (`h5netcdf`, `netCDF4`, `zarr`, `rasterio`, `stackstac`, `odc-stac`, `VirtualiZarr`) register via the `xarray.backends` entry point. Their distinctive work is **labeling**: parsing format-specific metadata (HDF5 dimension_scales, GeoTIFF affine transform + CRS, Zarr `_ARRAY_DIMENSIONS` attrs, CF conventions for `_FillValue` / scale / offset) and translating it into xarray's conventions — dimension names, coordinate arrays, attributes — then wrapping the reader's output in a `DataArray` or `Dataset`. A rasterio reader gives you a `(bands, y, x)` ndarray plus a transform and CRS string; the rasterio adapter turns that into a DataArray with named `band/y/x` dims, coord arrays computed from the transform, and a spatial reference attribute. The interpretation work is the distinctive part — wrapping is the obvious part. Triggered by `xr.open_dataset(..., engine=...)`. *(The xarray codebase calls these "engines"; "adapter" is more architecturally accurate because the work is a Gang-of-Four Adapter — bridging one interface to another.)*
-- **Containers** — the actual data structures users hold and operate on. The xarray family (`DataArray`, `Dataset`, `DataTree`) plus non-xarray geospatial containers (`rasterio.DatasetReader`, `GDAL.Dataset`, `rio-tiler.Reader`, `pyresample.ImageContainer`, `geoutils.Raster`, `raster_tools.Raster`, and metadata-only `odc.geo.GeoBox`). The non-xarray containers are shown to honest-ly represent the cloud-native raster ecosystem, not just the xarray world.
+- **Containers** — the actual data structures users hold and operate on. The xarray family (`DataArray`, `Dataset`, `DataTree`) plus non-xarray geospatial containers (`rasterio.DatasetReader`, `GDAL.Dataset`, `rio-tiler.Reader`, `pyresample.ImageContainer`, `geoutils.Raster`, `raster_tools.Raster`, and metadata-only `odc.geo.GeoBox`). The non-xarray containers are shown to honestly represent the cloud-native raster ecosystem, not just the xarray world.
 - **Accessors** (`rioxarray`, `xcube accessors`, `odc.geo`, `xvec`) register via accessor-registration hooks and add namespaces (`.rio`, `.xcube`, `.odc`, `.xvec`) to xarray containers for domain-specific operations. Invoked as method-like calls: `da.rio.reproject(...)`.
-- **ChunkManager plugins** — a fourth extension pattern that's not drawn because it's internal dispatch plumbing. Registered via the `xarray.chunkmanagers` entry-point group, these are dispatch adapters connecting xarray's API surface to a specific chunked-array library's parallel primitives. They implement a ~15-method ABC (`ChunkManagerEntrypoint` in `xarray/namedarray/parallelcompat.py`) covering `from_array`, `rechunk`, `compute`, `persist`, `reduction`, `scan`, `map_blocks`, `blockwise`, `apply_gufunc`, `shuffle`, `store`, `normalize_chunks`, `get_auto_chunk_size`, and `array_api`. xarray ships `DaskManager` internally; [`cubed-xarray`](https://github.com/xarray-contrib/cubed-xarray) provides `CubedManager`. Invisible to user code — you never import cubed-xarray; xarray discovers it via entry points when you pass `chunked_array_type='cubed'` or when Dask isn't installed.
 
-The four patterns are frequently conflated. They're architecturally distinct:
+The three patterns are frequently conflated. They're architecturally distinct:
 
 | Pattern | Registered via | User-facing call | Job |
 |---|---|---|---|
 | Xarray adapter (= "engine") | `xarray.backends` entry point | `xr.open_dataset(engine=...)` | label reader output (dims / coords / attrs) and wrap in containers |
 | Container | (core class or third-party class) | construction / receiving from adapters | hold the data |
 | Accessor | accessor decorator / entry point | `da.NAMESPACE.method()` | add domain-specific methods |
-| ChunkManager | `xarray.chunkmanagers` entry point | *(indirect — via `.compute()`, `.mean()`, `.chunk()`, etc.)* | dispatch parallel primitives to Dask or Cubed |
+
+Parallelization (which chunked-array library xarray uses internally — Dask, Cubed) is its own concern and is intentionally out of scope for this diagram; see the parallelization view for that.
 
 ### Why Lane 2 adapters and Lane 4 readers share names
 
@@ -90,10 +90,10 @@ Much cloud-native raster work happens without xarray at all. `rasterio.open(...)
 
 Lane 3's split matters because it determines how xarray's containers interact with the underlying arrays:
 
-- **Single-process** (`NumPy`, `CuPy`, `Sparse`, `pyarrow`): the DataArray wraps them directly; operations execute immediately; no ChunkManager involved.
-- **Parallel / chunked** (`Dask`, `Cubed`): the DataArray wraps a chunked array; operations build a task graph; xarray routes `.compute()`, `.mean()`, `.chunk()`, etc. through the appropriate ChunkManager.
+- **Single-process** (`NumPy`, `CuPy`, `Sparse`, `pyarrow`): the DataArray wraps them directly and operations execute immediately.
+- **Parallel / chunked** (`Dask`, `Cubed`): the DataArray wraps a chunked array; operations build a task graph that runs lazily.
 
-This is why the ChunkManager interface exists at all — it's the adapter that lets xarray support a chunked backend *without* baking that specific backend (historically Dask) into core.
+How xarray dispatches work to a particular chunked backend is parallelization plumbing, deliberately out of scope for this diagram. A separate parallelization-frameworks view is the right place for that story.
 
 ## How this maps to the main ecosystem diagram
 
